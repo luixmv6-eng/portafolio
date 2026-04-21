@@ -1,0 +1,93 @@
+[
+  {
+    "id": "castilla_agricola",
+    "title": "Castilla Agrícola",
+    "description": "Desarrollo web integral para Castilla Agrícola, enfocado en una experiencia de usuario moderna y dinámica. El proyecto abarcó desde la investigación inicial y diseño de interfaces hasta la codificación final utilizando Next.js y Tailwind CSS. La galería de imágenes muestra diferentes facetas del sitio, incluyendo su diseño responsive y sus secciones clave.",
+    "tech": ["Next.js", "Tailwind CSS", "UI/UX"],
+    "image": "/imagenes/castilla/Captura de pantalla 2026-04-21 102654.png",
+    "gallery": [
+      "/imagenes/castilla/Captura de pantalla 2026-04-21 102654.png",
+      "/imagenes/castilla/Captura de pantalla 2026-04-21 104054.png",
+      "/imagenes/castilla/Captura de pantalla 2026-04-21 104202.png",
+      "/imagenes/castilla/Captura de pantalla 2026-04-21 104223.png"
+    ],
+    "category": "web",
+    "live": "https://castillaagricola.com.co/",
+    "featured": true
+  },
+  {
+    "id": "diseno_grafico",
+    "title": "Diseño Gráfico",
+    "description": "Colección de trabajos de diseño gráfico que exploran diversas técnicas y estilos. Este proyecto incluye la creación de un póster con una estética grunge, demostrando habilidades en composición, tipografía y tratamiento de imágenes para lograr un impacto visual fuerte y cohesivo.",
+    "tech": ["Photoshop", "Illustrator"],
+    "image": "/imagenes/diseño/poster grunge.jpg",
+    "gallery": [
+      "/imagenes/diseño/poster grunge.jpg"
+    ],
+    "category": "design",
+    "featured": true
+  },
+  {
+    "id": "fotografia_creativa",
+    "title": "Fotografía Creativa",
+    "description": "Una selección de fotografías que capturan momentos y escenas con una perspectiva única. Este portafolio visual demuestra un ojo para el detalle, la composición y la iluminación, transformando escenarios cotidianos en imágenes evocadoras y artísticas.",
+    "tech": ["Photoshop", "Lightroom"],
+    "image": "/imagenes/fotografia/Captura de pantalla 2026-04-21 103549.png",
+    "gallery": [
+      "/imagenes/fotografia/Captura de pantalla 2026-04-21 103549.png",
+      "/imagenes/fotografia/Captura de pantalla 2026-04-21 103614.png",
+      "/imagenes/fotografia/Captura de pantalla 2026-04-21 103625.png",
+      "/imagenes/fotografia/Captura de pantalla 2026-04-21 103643.png"
+    ],
+    "category": "photo",
+    "featured": true
+  },
+  {
+    "id": "modelado_3d",
+    "title": "Modelado 3D",
+    "description": "Exploración del modelado y renderizado 3D a través de una serie de proyectos. Se incluye la creación de assets realistas como una lata de Coca-Cola en dos versiones, una esfera texturizada y una representación de la luna. Este conjunto de trabajos muestra la habilidad para crear objetos detallados y visualmente atractivos en un entorno tridimensional.",
+    "tech": ["Blender", "Cinema 4D"],
+    "image": "/imagenes/modelado 3d/coca cola4k .jpg",
+    "gallery": [
+      "/imagenes/modelado 3d/ball.jpg",
+      "/imagenes/modelado 3d/coca cola4k .jpg",
+      "/imagenes/modelado 3d/coca cola4kblackversion .jpg",
+      "/imagenes/modelado 3d/luna .jpg",
+      { "type": "video", "src": "/imagenes/modelado 3d/Lavande 31 - Comercial.mp4" }
+    ],
+    "category": "3d",
+    "featured": true
+  },
+  {
+    "id": "riopaila_agricola",
+    "title": "Riopaila Agrícola",
+    "description": "Proyecto de desarrollo web para Riopaila Agrícola. Se diseñó y construyó una plataforma digital que refleja la identidad de la marca y comunica eficazmente sus servicios. Las imágenes de la galería destacan las características clave de la interfaz de usuario y la experiencia de navegación del sitio.",
+    "tech": ["Next.js", "Figma"],
+    "image": "/imagenes/riopaila/Captura de pantalla 2026-04-21 104422.png",
+    "gallery": [
+      "/imagenes/riopaila/Captura de pantalla 2026-04-21 104422.png",
+      "/imagenes/riopaila/Captura de pantalla 2026-04-21 104434.png",
+      "/imagenes/riopaila/Captura de pantalla 2026-04-21 104448.png"
+    ],
+    "category": "web",
+    "live": "https://riopailaagricola.com.co/",
+    "featured": false
+  },
+  {
+    "id": "tessuti_web",
+    "title": "Tessuti",
+    "description": "Diseño y desarrollo de una plataforma web para Tessuti. El proyecto se centró en crear una interfaz elegante y funcional que resalte los productos de la marca. La galería de imágenes ofrece un vistazo a las diferentes secciones del sitio, mostrando el diseño limpio y la navegación intuitiva.",
+    "tech": ["React", "JavaScript"],
+    "image": "/imagenes/tessuti/Captura de pantalla 2026-04-21 104610.png",
+    "gallery": [
+      "/imagenes/tessuti/Captura de pantalla 2026-04-21 104610.png",
+      "/imagenes/tessuti/Captura de pantalla 2026-04-21 104619.png",
+      "/imagenes/tessuti/Captura de pantalla 2026-04-21 104628.png",
+      "/imagenes/tessuti/Captura de pantalla 2026-04-21 104641.png",
+      "/imagenes/tessuti/Captura de pantalla 2026-04-21 104653.png"
+    ],
+    "category": "web",
+    "live": "https://tessuti-inky.vercel.app/",
+    "featured": false
+  }
+]

@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Photoshop",
+    "slug": "adobephotoshop",
+    "category": "design",
+    "color": "#31A8FF",
+    "image": "/imagenes/Adobe_Photoshop_CC_icon.svg.png",
+    "level": 4,
+    "description": "Advanced photo editing and compositing",
+    "link": "https://photoshop.com"
+  },
+  {
+    "name": "Illustrator",
+    "slug": "adobeillustrator",
+    "category": "design",
+    "color": "#FF9A00",
+    "image": "/imagenes/illustrator.png",
+    "level": 4,
+    "description": "Vector graphics and illustration",
+    "link": "https://illustrator.com"
+  },
+  {
+    "name": "After Effects",
+    "slug": "adobeaftereffects",
+    "category": "motion",
+    "color": "#CF96FD",
+    "image": "/imagenes/Adobe_After_Effects_CC_icon.svg.png",
+    "level": 4,
+    "description": "Motion graphics and visual effects",
+    "link": "https://aftereffects.com"
+  },
+  {
+    "name": "Premiere Pro",
+    "slug": "adobepremierepro",
+    "category": "video",
+    "color": "#9999FF",
+    "image": "/imagenes/premiere.png",
+    "level": 5,
+    "description": "Professional video editing suite",
+    "link": "https://premierepro.com"
+  },
+  {
+    "name": "JavaScript",
+    "slug": "javascript",
+    "category": "dev",
+    "color": "#F7DF1E",
+    "image": "/imagenes/javascript.png",
+    "level": 4,
+    "description": "Core web development language",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+  },
+  {
+    "name": "React",
+    "slug": "react",
+    "category": "dev",
+    "color": "#61DAFB",
+    "level": 4,
+    "description": "Modern UI library for building apps",
+    "link": "https://react.dev",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+  },
+  {
+    "name": "Next.js",
+    "slug": "nextdotjs",
+    "category": "dev",
+    "color": "#000000",
+    "level": 4,
+    "description": "React framework for production",
+    "link": "https://nextjs.org",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+  },
+  {
+    "name": "Tailwind CSS",
+    "slug": "tailwindcss",
+    "category": "dev",
+    "color": "#06B6D4",
+    "level": 4,
+    "description": "Utility-first CSS framework",
+    "link": "https://tailwindcss.com",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+  },
+  {
+    "name": "HTML5",
+    "slug": "html5",
+    "category": "dev",
+    "color": "#E34F26",
+    "level": 4,
+    "description": "Markup language for web structure",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+  },
+  {
+    "name": "CSS3",
+    "slug": "css3",
+    "category": "dev",
+    "color": "#1572B6",
+    "image": "/imagenes/CSS3_logo_and_wordmark.svg.png",
+    "level": 4,
+    "description": "Stylesheet language for modern interfaces",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+  },
+  {
+    "name": "Three.js",
+    "slug": "threejs",
+    "category": "3d",
+    "color": "#000000",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg",
+    "level": 3,
+    "description": "JavaScript 3D library",
+    "link": "https://threejs.org"
+  },
+  {
+    "name": "Framer Motion",
+    "slug": "framer",
+    "category": "anim",
+    "color": "#FF4F96",
+    "level": 4,
+    "description": "Animation library for React",
+    "link": "https://framer.com/motion",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg"
+  },
+  {
+    "name": "Supabase",
+    "slug": "supabase",
+    "category": "backend",
+    "color": "#3ECF8E",
+    "level": 3,
+    "description": "Open source Firebase alternative",
+    "link": "https://supabase.com",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg"
+  },
+  {
+    "name": "Vercel",
+    "slug": "vercel",
+    "category": "deploy",
+    "color": "#000000",
+    "level": 4,
+    "description": "Frontend cloud platform",
+    "link": "https://vercel.com",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg"
+  },
+  {
+    "name": "TypeScript",
+    "slug": "typescript",
+    "category": "dev",
+    "color": "#3178C6",
+    "level": 3,
+    "description": "Typed JavaScript superset",
+    "link": "https://typescriptlang.org",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+  },
+  {
+    "name": "Python",
+    "slug": "python",
+    "category": "backend",
+    "color": "#3776AB",
+    "level": 3,
+    "description": "General purpose programming language",
+    "link": "https://python.org",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+  },
+  {
+    "name": "Blender",
+    "slug": "blender",
+    "category": "3d",
+    "color": "#F5792A",
+    "level": 3,
+    "description": "3D creation suite",
+    "link": "https://blender.org",
+    "image": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg"
+  }
+]

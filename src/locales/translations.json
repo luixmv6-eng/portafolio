@@ -1,0 +1,164 @@
+{
+  "es": {
+    "nav": {
+      "about": "SOBRE MÍ",
+      "stack": "STACK",
+      "projects": "PROYECTOS",
+      "contact": "CONTACTO"
+    },
+    "hero": {
+      "title1": "DISEÑO",
+      "title2": "DIGITAL",
+      "subtitle": "INGENIERO MULTIMEDIA & DESARROLLADOR WEB",
+      "description": "Ingeniero Multimedia en formación por la Universidad de San Buenaventura. Combino una base en producción audiovisual y 3D con un enfoque principal en la ingeniería de plataformas web y Progressive Web Apps (PWAs), construyendo soluciones digitales de alto rendimiento.",
+      "cta": "EXPLORAR VISION"
+    },
+    "about": {
+      "title": "SOBRE MÍ",
+      "quote": "Maximizando el valor digital: donde la robustez de la web se potencia con medios interactivos.",
+      "p1": "Mi perfil técnico abarca la integración de diversas disciplinas, desde la composición audiovisual hasta el arte 3D. Sin embargo, mi mayor experiencia y enfoque se centran en el desarrollo web moderno. Me especializo en la estructuración, optimización e innovación funcional de Progressive Web Apps (PWAs) escalables.",
+      "p2": "Busco aportar mi energía creativa y conocimientos técnicos en mi práctica profesional dentro del sector corporativo. Ofrezco un balance estratégico: el rigor analítico para mejorar continuamente el código y el ecosistema de software, combinado con el criterio visual para elevar la experiencia del usuario final."
+    },
+    "stack": {
+      "title": "HERRAMIENTAS",
+      "subtitle": "MI ARSENAL TÉCNICO Y CREATIVO"
+    },
+    "stats": {
+      "projects": "PROYECTOS",
+      "years": "AÑOS DE EXPERIENCIA",
+      "clients": "CLIENTES",
+      "satisfaction": "SATISFACCIÓN"
+    },
+    "testimonials": {
+      "title": "LO QUE DICEN LOS CLIENTES"
+    },
+    "projects": {
+      "title": "MIS PROYECTOS",
+      "subtitle": "06 CASOS DE ESTUDIO SELECCIONADOS",
+      "view": "VER CASO DE ESTUDIO",
+      "liveDemo": "VER PROYECTO EN VIVO",
+      "items": {
+        "neo_nexus": {
+          "category": "ARQUITECTURA 3D / WEB",
+          "description": "Una exploración de interfaces tridimensionales donde la profundidad y el minimalismo convergen. Desarrollé una experiencia inmersiva que desafía la navegación tradicional."
+        },
+        "cyber_forge": {
+          "category": "E-COMMERCE INDUSTRIAL",
+          "description": "Plataforma escalable diseñada para el comercio de alta gama. Implementé un sistema de filtrado avanzado y visualización de productos en tiempo real integrando Supabase y Next.js."
+        },
+        "pulse_ui": {
+          "category": "SISTEMA DE DISEÑO",
+          "description": "Un sistema de componentes refinado que prioriza la claridad y la elegancia editorial. Lideré la dirección de arte y la publicación del paquete npm para uso interno."
+        },
+        "industrial_flow": {
+          "category": "DISEÑO DE PRODUCTO / UX",
+          "description": "Optimización de flujos de trabajo industriales mediante el diseño de interfaces de control e inteligencia de datos, reduciendo los tiempos de capacitación en un 40%."
+        },
+        "the_gallery": {
+          "category": "VISUALIZACIÓN WEBGL",
+          "description": "Recorrido virtual interactivo para exposiciones de arte contemporáneo. Motor de renderizado ligero desarrollado emparejando Vanilla JS con shaders GLSL puros."
+        },
+        "editorial_one": {
+          "category": "REVISTA DIGITAL",
+          "description": "Publicación con enfoque en tipografía fluida y macro-espacios en blanco. Arquitectura headless CMS que permite actualizaciones simultáneas en la redacción."
+        }
+      }
+    },
+    "contact": {
+      "title": "¿LISTO PARA CONSTRUIR ALGO EXCEPCIONAL?",
+      "cta": "INICIEMOS UN PROYECTO",
+      "name": "NOMBRE",
+      "namePlaceholder": "Tu nombre",
+      "email": "CORREO",
+      "emailPlaceholder": "tu@email.com",
+      "message": "MENSAJE",
+      "messagePlaceholder": "Cuéntame sobre tu proyecto...",
+      "send": "ENVIAR MENSAJE",
+      "success": "¡Mensaje enviado!",
+      "error": "Error al enviar el mensaje",
+      "emailSubject": "Exploremos una oportunidad de desarrollo interactivo",
+      "emailBody": "Hola Pedro,\n\nTu perfil como desarrollador y tu dominio construyendo arquitecturas web modernas llamó mi atención.\n\nEn [Nombre de tu empresa] tenemos un proyecto estratégico en puerta y consideramos que tu nivel técnico y tu enfoque en interfaces inmersivas encajan perfectamente con nuestra visión y estándares de calidad.\n\nMe gustaría agendar una rápida reunión para charlar sobre la posibilidad de generar sinergia y hacer equipo.\n\nSaludos cordiales,\n[Tu Nombre - Tu Cargo]"
+    }
+  },
+  "en": {
+    "nav": {
+      "about": "ABOUT",
+      "stack": "TOOLS",
+      "projects": "PROJECTS",
+      "contact": "CONTACT"
+    },
+    "hero": {
+      "title1": "DIGITAL",
+      "title2": "DESIGN",
+      "subtitle": "MULTIMEDIA ENGINEER & WEB DEVELOPER",
+      "description": "A final-year Multimedia Engineering student at U. de San Buenaventura. I combine a foundation in audiovisual and 3D production with a primary focus on web platform engineering and Progressive Web Apps (PWAs), building high-performance solutions.",
+      "cta": "EXPLORE VISION"
+    },
+    "about": {
+      "title": "ABOUT ME",
+      "quote": "Maximizing digital value: where robust web architecture is enriched by interactive media.",
+      "p1": "My technical background encompasses the integration of diverse disciplines, from audiovisual editing to 3D modeling. However, my strongest expertise lies in advanced web development. I specialize in designing, optimizing, and improving the functionality of scalable Progressive Web Apps (PWAs).",
+      "p2": "I'm looking to bring my drive and technical skills to my first corporate internship. I offer a strategic balance: the analytical rigor necessary to continuously improve codebases and architectures, paired with the visual criteria to elevate the end-user experience."
+    },
+    "stack": {
+      "title": "TOOLKIT",
+      "subtitle": "MY TECHNICAL AND CREATIVE ARSENAL"
+    },
+    "stats": {
+      "projects": "PROJECTS",
+      "years": "YEARS OF EXPERIENCE",
+      "clients": "CLIENTS",
+      "satisfaction": "SATISFACTION"
+    },
+    "testimonials": {
+      "title": "WHAT CLIENTS SAY"
+    },
+    "projects": {
+      "title": "MY PROJECTS",
+      "subtitle": "06 SELECTED CASE STUDIES",
+      "view": "VIEW CASE STUDY",
+      "liveDemo": "VIEW LIVE PROJECT",
+      "items": {
+        "neo_nexus": {
+          "category": "3D ARCHITECTURE / WEB",
+          "description": "An exploration of immersive interfaces where depth and minimalism converge. I developed a three-dimensional experience that challenges traditional web navigation norms."
+        },
+        "cyber_forge": {
+          "category": "INDUSTRIAL E-COMMERCE",
+          "description": "A scalable platform designed for high-end commerce. Implemented an advanced filtering system and real-time product rendering integrating Next.js and Supabase."
+        },
+        "pulse_ui": {
+          "category": "DESIGN SYSTEM",
+          "description": "A refined component system prioritizing clarity and editorial elegance. Led the art direction and the internal publication of the npm package."
+        },
+        "industrial_flow": {
+          "category": "PRODUCT DESIGN / UX",
+          "description": "Optimization of industrial workflows through control interface design and data intelligence, reducing operational onboarding times by 40%."
+        },
+        "the_gallery": {
+          "category": "WEBGL VISUALS",
+          "description": "Interactive virtual walkthrough for contemporary art exhibitions. Built a lightweight rendering engine pairing Vanilla JS with pure GLSL shaders."
+        },
+        "editorial_one": {
+          "category": "DIGITAL MAGAZINE",
+          "description": "A publication focused on fluid typography and macro white-space. Headless CMS architecture enabling live collaborative updates across the newsroom."
+        }
+      }
+    },
+    "contact": {
+      "title": "READY TO BUILD SOMETHING EXCEPTIONAL?",
+      "cta": "START A PROJECT",
+      "name": "NAME",
+      "namePlaceholder": "Your name",
+      "email": "EMAIL",
+      "emailPlaceholder": "your@email.com",
+      "message": "MESSAGE",
+      "messagePlaceholder": "Tell me about your project...",
+      "send": "SEND MESSAGE",
+      "success": "Message sent!",
+      "error": "Error sending message",
+      "emailSubject": "Exploring a High-End Digital Collaboration",
+      "emailBody": "Hi Pedro,\n\nYour profile as a scalable Web Developer and your expertise in modern software architecture caught my attention.\n\nAt [Company Name] we have a strategic project in mind and we firmly believe your technical rigor and focus on immersive interfaces align perfectly with our vision and quality standards.\n\nI'd like to schedule a quick sync to discuss how we could generate synergies together.\n\nBest regards,\n[Your Name - Your Title]"
+    }
+  }
+}
