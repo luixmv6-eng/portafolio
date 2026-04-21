@@ -62,7 +62,7 @@ export default function TechStack() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '2rem',
+                padding: '1.5rem',
                 borderRadius: '24px',
                 background: 'rgba(255, 255, 255, 0.5)',
                 backdropFilter: 'blur(10px)',
@@ -92,9 +92,12 @@ export default function TechStack() {
             >
               <div style={{
                 position: 'absolute',
-                top: '20px',
+                top: '16px',
+                left: 0,
+                right: 0,
                 display: 'flex',
-                gap: '2px',
+                justifyContent: 'center',
+                gap: '3px',
                 opacity: hoveredTool === tool.slug ? 1 : 0,
                 transform: hoveredTool === tool.slug ? 'translateY(0)' : 'translateY(-10px)',
                 transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)'
@@ -115,7 +118,8 @@ export default function TechStack() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: '1.5rem',
+                marginBottom: '1rem',
+                marginTop: '1.5rem',
                 position: 'relative'
               }}>
                 <Image
