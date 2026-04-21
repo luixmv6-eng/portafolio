@@ -142,7 +142,7 @@ export default function Projects() {
                   marginBottom: '1rem',
                   display: 'block'
                 }}>
-                  {project.category}
+                  {t(`projects.items.${project.id}.category`) || project.category}
                 </span>
                 <p style={{ 
                   fontFamily: 'var(--font-sans)', 
@@ -151,7 +151,7 @@ export default function Projects() {
                   opacity: 0.6,
                   marginBottom: '2rem'
                 }}>
-                  {project.description}
+                  {t(`projects.items.${project.id}.description`) || project.description}
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '3rem' }}>
                   {project.tech.map((tech, i) => (

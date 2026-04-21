@@ -38,29 +38,29 @@
       "view": "VER PROYECTO",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
-        "neo_nexus": {
-          "category": "ARQUITECTURA 3D / WEB",
-          "description": "Una exploración de interfaces tridimensionales donde la profundidad y el minimalismo convergen. Desarrollé una experiencia inmersiva que desafía la navegación tradicional."
+        "castilla_agricola": {
+          "category": "DESARROLLO WEB / UI-UX",
+          "description": "Desarrollo web integral para Castilla Agrícola, enfocado en ofrecer una experiencia de usuario moderna y dinámica. El proyecto abarcó desde la investigación inicial y el diseño de interfaces (UI/UX) hasta la codificación final utilizando Next.js y Tailwind CSS. La galería de imágenes ilustra diferentes facetas de la plataforma, destacando su adaptabilidad responsiva y la arquitectura de sus secciones clave."
         },
-        "cyber_forge": {
-          "category": "E-COMMERCE INDUSTRIAL",
-          "description": "Plataforma escalable diseñada para el comercio de alta gama. Implementé un sistema de filtrado avanzado y visualización de productos en tiempo real integrando Supabase y Next.js."
+        "diseno_grafico": {
+          "category": "DISEÑO DIGITAL / DIRECCIÓN DE ARTE",
+          "description": "Desarrollo conceptual de un póster para el artista musical Post Malone. El proceso de diseño integró diversas técnicas de composición, fundamentadas en la creación de un moodboard estratégico que definió la dirección artística. El resultado final logra una estética altamente coherente con la identidad visual que el artista ha proyectado en los últimos años de su carrera."
         },
-        "pulse_ui": {
-          "category": "SISTEMA DE DISEÑO",
-          "description": "Un sistema de componentes refinado que prioriza la claridad y la elegancia editorial. Lideré la dirección de arte y la publicación del paquete npm para uso interno."
+        "fotografia_creativa": {
+          "category": "FOTOGRAFÍA / RETOQUE",
+          "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras."
         },
-        "industrial_flow": {
-          "category": "DISEÑO DE PRODUCTO / UX",
-          "description": "Optimización de flujos de trabajo industriales mediante el diseño de interfaces de control e inteligencia de datos, reduciendo los tiempos de capacitación en un 40%."
+        "modelado_3d": {
+          "category": "MODELADO 3D / ANIMACIÓN",
+          "description": "Exploración avanzada en modelado y renderizado 3D estructurada en múltiples fases. El portafolio incluye la creación de assets fotorrealistas basados en productos comerciales, tales como latas de Coca-Cola, artículos deportivos y un envase de perfumería fina, sumado a una simulación a escala de la luna. El proceso productivo abarcó el modelado poligonal, despliegue de mapas UV, texturizado PBR, diseño de etiquetas, iluminación física y animación tridimensional; demostrando una gran destreza en la creación de entornos virtuales de gran impacto."
         },
-        "the_gallery": {
-          "category": "VISUALIZACIÓN WEBGL",
-          "description": "Recorrido virtual interactivo para exposiciones de arte contemporáneo. Motor de renderizado ligero desarrollado emparejando Vanilla JS con shaders GLSL puros."
+        "riopaila_agricola": {
+          "category": "DESARROLLO CORPORATIVO / CLOUD",
+          "description": "Desarrollo y diseño de la arquitectura web de Riopaila Agrícola. Se construyó una plataforma digital corporativa que proyecta la solidez de la marca y comunica sus servicios de forma excepcional. El ciclo del proyecto integró la investigación del usuario, levantamiento técnico de requerimientos, consultoría UX, diseño riguroso de interfaces y la ingeniería Frontend. Adicionalmente, se gestionó la infraestructura en la nube y la vinculación de dominios para asegurar un despliegue de alto rendimiento en producción."
         },
-        "editorial_one": {
-          "category": "REVISTA DIGITAL",
-          "description": "Publicación con enfoque en tipografía fluida y macro-espacios en blanco. Arquitectura headless CMS que permite actualizaciones simultáneas en la redacción."
+        "tessuti_web": {
+          "category": "PROGRESSIVE WEB APP / IA MISTRAL",
+          "description": "Aplicación Web Progresiva (PWA) de ecosistema integral. La ingeniería combinó desarrollo Frontend reactivo con una arquitectura Backend robusta gestionada a través de Supabase, garantizando sincronización en tiempo real multiplataforma. Como factor diferenciador, la solución integra un Agente de IA basado en Mistral que funge como asesor de alta costura, interactuando de forma nativa con el catálogo textil. La plataforma permite a los usuarios gestionar insumos, recibir recomendaciones enriquecidas algorítmicamente y generar moodboards dinámicos."
         }
       }
     },
@@ -119,29 +119,29 @@
       "view": "VIEW PROJECT",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
-        "neo_nexus": {
-          "category": "3D ARCHITECTURE / WEB",
-          "description": "An exploration of immersive interfaces where depth and minimalism converge. I developed a three-dimensional experience that challenges traditional web navigation norms."
+        "castilla_agricola": {
+          "category": "WEB DEVELOPMENT / UI-UX",
+          "description": "Comprehensive web development for Castilla Agrícola, focused on delivering a modern and immersive user experience. The project bridged the gap between initial UX research and final deployment, utilizing Next.js and Tailwind CSS. The interface emphasizes usability, featuring a highly responsive grid system and dynamic architectural layouts."
         },
-        "cyber_forge": {
-          "category": "INDUSTRIAL E-COMMERCE",
-          "description": "A scalable platform designed for high-end commerce. Implemented an advanced filtering system and real-time product rendering integrating Next.js and Supabase."
+        "diseno_grafico": {
+          "category": "DIGITAL DESIGN / ART DIRECTION",
+          "description": "Conceptual design of a poster and visual identity for musical artist Post Malone. The creative pipeline integrated diverse digital composition techniques rooted in a carefully curated moodboard to define the art direction. The final rendition achieves a profound visual coherence with the artist's contemporary aesthetic."
         },
-        "pulse_ui": {
-          "category": "DESIGN SYSTEM",
-          "description": "A refined component system prioritizing clarity and editorial elegance. Led the art direction and the internal publication of the npm package."
+        "fotografia_creativa": {
+          "category": "PHOTOGRAPHY / RETOUCHING",
+          "description": "A curated photographic selection capturing ephemeral moments and scenes from a unique perspective. Professional camera operations and rigorous light staging highlight a comprehensive mastery of the medium. The visual portfolio leverages framing and photorealism to transform everyday scenarios into evocative pieces of art."
         },
-        "industrial_flow": {
-          "category": "PRODUCT DESIGN / UX",
-          "description": "Optimization of industrial workflows through control interface design and data intelligence, reducing operational onboarding times by 40%."
+        "modelado_3d": {
+          "category": "3D MODELING / ANIMATION",
+          "description": "Advanced exploration into 3D modeling and rendering logic. The portfolio showcases the creation of photorealistic commercial assets—spanning from a Coca-Cola can to high-end perfumery bottles—alongside a realistic lunar simulation. The production workflow encompassed polygonal modeling, UV unwrapping, PBR texturing, spatial lighting, and fluid animation to yield high-impact virtual environments."
         },
-        "the_gallery": {
-          "category": "WEBGL VISUALS",
-          "description": "Interactive virtual walkthrough for contemporary art exhibitions. Built a lightweight rendering engine pairing Vanilla JS with pure GLSL shaders."
+        "riopaila_agricola": {
+          "category": "CORPORATE DEVELOPMENT / CLOUD",
+          "description": "Corporate web architecture for Riopaila Agrícola. A scalable digital platform was engineered to mirror the brand's solidity and effectively distribute its services. The project lifecycle unified user research, requirement engineering, UI planning, and Frontend coding. Furthermore, DNS management and cloud infrastructure were configured to assure high-performance deployments."
         },
-        "editorial_one": {
-          "category": "DIGITAL MAGAZINE",
-          "description": "A publication focused on fluid typography and macro white-space. Headless CMS architecture enabling live collaborative updates across the newsroom."
+        "tessuti_web": {
+          "category": "PROGRESSIVE WEB APP / MISTRAL AI",
+          "description": "Comprehensive Progressive Web App (PWA) incorporating reactive Frontend environments with a solid Backend layer powered by Supabase. Setting a unique precedent, the system embeds an AI Assistant powered by Mistral that serves as a high-fashion advisor, natively navigating the app's inventory. Users can orchestrate fabrics, interact with algorithmically enriched recommendations, and construct dynamic moodboards via contextual data."
         }
       }
     },
