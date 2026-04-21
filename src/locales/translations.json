@@ -34,8 +34,8 @@
     },
     "projects": {
       "title": "MIS PROYECTOS",
-      "subtitle": "06 CASOS DE ESTUDIO SELECCIONADOS",
-      "view": "VER CASO DE ESTUDIO",
+      "subtitle": "06 PROYECTOS SELECCIONADOS",
+      "view": "VER PROYECTO",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
         "neo_nexus": {
@@ -115,8 +115,8 @@
     },
     "projects": {
       "title": "MY PROJECTS",
-      "subtitle": "06 SELECTED CASE STUDIES",
-      "view": "VIEW CASE STUDY",
+      "subtitle": "06 SELECTED PROJECTS",
+      "view": "VIEW PROJECT",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
         "neo_nexus": {

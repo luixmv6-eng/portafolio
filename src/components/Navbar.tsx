@@ -12,6 +12,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const [isMobile, setIsMobile] = useState(false);
   const lastScrollY = useRef(0);
@@ -24,6 +25,14 @@ export default function Navbar() {
   }, []);
 
   const sections = ['about', 'stack', 'projects', 'contact'];
+
+  useEffect(() => {
+    const handleModalToggle = (e: CustomEvent<{isOpen: boolean}>) => {
+      setIsModalOpen(e.detail.isOpen);
+    };
+    window.addEventListener('modalToggle', handleModalToggle as EventListener);
+    return () => window.removeEventListener('modalToggle', handleModalToggle as EventListener);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,10 +105,15 @@ export default function Navbar() {
       WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
       transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
       borderBottom: scrolled ? '1px solid var(--border-subtle)' : 'none',
-      transform: hidden ? 'translateY(-110%)' : 'translateY(0)',
+      transform: hidden || isModalOpen ? 'translateY(-110%)' : 'translateY(0)',
       willChange: 'transform',
+      opacity: isModalOpen ? 0 : 1,
+      pointerEvents: isModalOpen ? 'none' : 'auto',
     }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', letterSpacing: '-0.03em', display: 'flex', alignItems: 'center', gap: '4px' }}>
+      <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', letterSpacing: '-0.03em', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: '2rem', height: '2rem' }}>
+          <text x="48" y="76" fontFamily="var(--font-serif)" fontSize="78" fontWeight="700" textAnchor="middle" fill="currentColor" letterSpacing="-3">PM</text>
+        </svg>
         PEDRO LUIS MARTINEZ<span style={{ color: 'var(--accent)', fontSize: '1.8rem', lineHeight: 1 }}>.</span>
       </div>
 

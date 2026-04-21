@@ -18,6 +18,16 @@ export default function Projects() {
   const closeModal = () => setSelectedProject(null);
 
   useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+      window.dispatchEvent(new CustomEvent('modalToggle', { detail: { isOpen: true } }));
+    } else {
+      document.body.style.overflow = 'unset';
+      window.dispatchEvent(new CustomEvent('modalToggle', { detail: { isOpen: false } }));
+    }
+  }, [selectedProject]);
+
+  useEffect(() => {
     const entries = document.querySelectorAll('.project-entry');
     
     const observer = new IntersectionObserver((observedEntries) => {

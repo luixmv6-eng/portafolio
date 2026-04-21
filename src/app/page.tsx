@@ -44,12 +44,8 @@ export default function Home() {
       <TechStack />
       <Projects />
 
-      <section id="contact-form" style={{ padding: '6rem 4vw', background: 'var(--background)' }}>
-        <ContactForm />
-      </section>
-
       <section id="contact" style={{ 
-        padding: '12rem 4vw 6rem', 
+        padding: '8rem 4vw 6rem', 
         background: 'var(--background)',
         borderTop: '1px solid var(--border-subtle)'
       }}>
@@ -59,7 +55,7 @@ export default function Home() {
             flexDirection: 'column', 
             alignItems: 'center',
             textAlign: 'center',
-            gap: '3rem',
+            gap: '4rem',
             width: '100%',
             maxWidth: '900px',
             margin: '0 auto'
@@ -74,47 +70,16 @@ export default function Home() {
               {t('contact.title')}
             </h2>
             
-            <a 
-              href={`mailto:${email}?subject=${encodeURIComponent(t('contact.emailSubject'))}&body=${encodeURIComponent(t('contact.emailBody'))}`}
-              style={{ 
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '1.5rem',
-                padding: '1.5rem 3rem',
-                background: 'var(--foreground)',
-                color: 'var(--background)',
-                borderRadius: '100px',
-                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                fontFamily: 'var(--font-sans)',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
-                textDecoration: 'none',
-                transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 30px 60px rgba(0,0,0,0.2)';
-                e.currentTarget.style.background = 'var(--accent)';
-                e.currentTarget.style.color = '#fff';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)';
-                e.currentTarget.style.background = 'var(--foreground)';
-                e.currentTarget.style.color = 'var(--background)';
-              }}
-            >
-              {t('contact.cta')}
-              <ArrowUpRight strokeWidth={2} size={24} />
-            </a>
+            <div style={{ width: '100%' }}>
+              <ContactForm />
+            </div>
 
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               gap: '2rem',
-              marginTop: '4rem',
+              marginTop: '2rem',
               paddingTop: '4rem',
               borderTop: '1px solid var(--border-subtle)',
               width: '100%'
