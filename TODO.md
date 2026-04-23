@@ -1,15 +1,10 @@
-# Projects Aesthetic + Animation Refresh
+# Task: Add L'ESSENCE project to portfolio
 
-## Objective
-Remove the new 3D folder implementation and improve aesthetics, animations, and dynamism in the Projects section using anime.js and refined UI styles.
+## Steps:
+- [x] 1. Create TODO.md with steps
+- [x] 2. Edit src/data/projects.json to add new project entry
+- [x] 3. Update TODO.md with completion
+- [x] 4. Test by running dev server and checking Projects section
+- [x] 5. Complete task
 
-**Status:** In progress.
-
-## Steps
-- [x] Remove `ProjectsFolder3D` integration from `src/components/Projects.tsx`.
-- [x] Enhance Projects section animations (header + entries + hover microinteractions) with anime.js.
-- [x] Add scoped visual polish styles in `src/app/globals.css` for Projects.
-- [x] Remove `src/components/ProjectsFolder3D.jsx` if no longer used.
-- [ ] Validate in browser (scroll, interactions, modal, visual consistency).
-- [x] Update TODO.md on complete.
-- [ ] attempt_completion.
+✅ Task completed!

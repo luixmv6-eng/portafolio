@@ -113,7 +113,6 @@ export default function Projects() {
             {t('projects.subtitle')}
           </p>
           <span className="projects-counter" style={{ display: 'inline-block', marginTop: '0.9rem', fontFamily: 'var(--font-sans)', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)', opacity: 0 }}>
-            {projectsData.length.toString().padStart(2, '0')} {itemsLabel}
           </span>
         </header>
 

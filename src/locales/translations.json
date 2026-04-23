@@ -34,7 +34,7 @@
     },
     "projects": {
       "title": "MIS PROYECTOS",
-      "subtitle": "06 PROYECTOS SELECCIONADOS",
+      "subtitle": "07 PROYECTOS SELECCIONADOS",
       "view": "VER PROYECTO",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
@@ -56,11 +56,15 @@
         },
         "riopaila_agricola": {
           "category": "DESARROLLO CORPORATIVO / CLOUD",
-          "description": "Desarrollo y diseño de la arquitectura web de Riopaila Agrícola. Se construyó una plataforma digital corporativa que proyecta la solidez de la marca y comunica sus servicios de forma excepcional. El ciclo del proyecto integró la investigación del usuario, levantamiento técnico de requerimientos, consultoría UX, diseño riguroso de interfaces y la ingeniería Frontend. Adicionalmente, se gestionó la infraestructura en la nube y la vinculación de dominios para asegurar un despliegue de alto rendimiento en producción."
+          "description": "Desarrollo y diseño de la arquitectura web de Riopaila Agrícola. Se construyó una plataforma digital corporativa que proyecta la solidez de la marca y comunica sus servicios de forma excepcional. El ciclo del proyecto integró la investigación del usuario, levantamiento técnico de requerimientos, consultoría UX, diseño riguroro de interfaces y la ingeniería Frontend. Adicionalmente, se gestionó la infraestructura en la nube y la vinculación de dominios para asegurar un despliegue de alto rendimiento en producción."
         },
         "tessuti_web": {
           "category": "PROGRESSIVE WEB APP / IA MISTRAL",
           "description": "Aplicación Web Progresiva (PWA) de ecosistema integral. La ingeniería combinó desarrollo Frontend reactivo con una arquitectura Backend robusta gestionada a través de Supabase, garantizando sincronización en tiempo real multiplataforma. Como factor diferenciador, la solución integra un Agente de IA basado en Mistral que funge como asesor de alta costura, interactuando de forma nativa con el catálogo textil. La plataforma permite a los usuarios gestionar insumos, recibir recomendaciones enriquecidas algorítmicamente y generar moodboards dinámicos."
+        },
+        "lessence_catalogo": {
+          "category": "CATÁLOGO WEB / E-COMMERCE",
+          "description": "Desarrollo de catálogo web premium para la marca de lujo L'ESSENCE. Plataforma elegante con galería inmersiva de productos, navegación intuitiva y diseño totalmente responsivo optimizado para dispositivos móviles y desktop. Implementado con Next.js 14 y Tailwind CSS para rendimiento superior, carga ultrarrápida y escalabilidad. El proyecto destaca por su arquitectura modular preparada para futuras expansiones: integración de pasarela de pagos (Stripe/PayPal), sistema de autenticación de usuarios, carrito de compras inteligente y analíticas avanzadas. Una solución completa con alto potencial de monetización y mejora continua."
         }
       }
     },
@@ -115,7 +119,7 @@
     },
     "projects": {
       "title": "MY PROJECTS",
-      "subtitle": "06 SELECTED PROJECTS",
+      "subtitle": "07 SELECTED PROJECTS",
       "view": "VIEW PROJECT",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
@@ -142,6 +146,10 @@
         "tessuti_web": {
           "category": "PROGRESSIVE WEB APP / MISTRAL AI",
           "description": "Comprehensive Progressive Web App (PWA) incorporating reactive Frontend environments with a solid Backend layer powered by Supabase. Setting a unique precedent, the system embeds an AI Assistant powered by Mistral that serves as a high-fashion advisor, natively navigating the app's inventory. Users can orchestrate fabrics, interact with algorithmically enriched recommendations, and construct dynamic moodboards via contextual data."
+        },
+        "lessence_catalogo": {
+          "category": "WEB CATALOG / E-COMMERCE",
+          "description": "Premium web catalog development for luxury brand L'ESSENCE. Elegant platform featuring immersive product gallery, intuitive navigation, and fully responsive design optimized for mobile and desktop. Built with Next.js 14 and Tailwind CSS for superior performance, ultra-fast loading, and scalability. Modular architecture ready for future enhancements: payment gateway integration (Stripe/PayPal), user authentication, intelligent shopping cart, and advanced analytics. A complete solution with high monetization potential and continuous improvement roadmap."
         }
       }
     },

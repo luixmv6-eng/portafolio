@@ -3,11 +3,7 @@
     "id": "castilla_agricola",
     "title": "Castilla Agrícola",
     "description": "Desarrollo web integral para Castilla Agrícola, enfocado en ofrecer una experiencia de usuario moderna y dinámica. El proyecto abarcó desde la investigación inicial y el diseño de interfaces (UI/UX) hasta la codificación final utilizando Next.js y Tailwind CSS. La galería de imágenes ilustra diferentes facetas de la plataforma, destacando su adaptabilidad responsiva y la arquitectura de sus secciones clave.",
-    "tech": [
-      "Next.js",
-      "Tailwind CSS",
-      "UI/UX"
-    ],
+    "tech": ["Next.js", "Tailwind CSS", "UI/UX"],
     "image": "/imagenes/castilla/Captura de pantalla 2026-04-21 102654.png",
     "gallery": [
       "/imagenes/castilla/Captura de pantalla 2026-04-21 102654.png",
@@ -23,14 +19,9 @@
     "id": "diseno_grafico",
     "title": "Diseño Gráfico",
     "description": "Desarrollo conceptual de un póster para el artista musical Post Malone. El proceso de diseño integró diversas técnicas de composición, fundamentadas en la creación de un moodboard estratégico que definió la dirección artística. El resultado final logra una estética altamente coherente con la identidad visual que el artista ha proyectado en los últimos años de su carrera.",
-    "tech": [
-      "Photoshop",
-      "Illustrator"
-    ],
+    "tech": ["Photoshop", "Illustrator"],
     "image": "/imagenes/diseño/poster grunge.jpg",
-    "gallery": [
-      "/imagenes/diseño/poster grunge.jpg"
-    ],
+    "gallery": ["/imagenes/diseño/poster grunge.jpg"],
     "category": "design",
     "featured": true
   },
@@ -38,10 +29,7 @@
     "id": "fotografia_creativa",
     "title": "Fotografía Creativa",
     "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras.",
-    "tech": [
-      "Photoshop",
-      "Lightroom"
-    ],
+    "tech": ["Photoshop", "Lightroom"],
     "image": "/imagenes/fotografia/Captura de pantalla 2026-04-21 103549.png",
     "gallery": [
       "/imagenes/fotografia/Captura de pantalla 2026-04-21 103549.png",
@@ -56,9 +44,7 @@
     "id": "modelado_3d",
     "title": "Modelado 3D",
     "description": "Exploración avanzada en modelado y renderizado 3D estructurada en múltiples fases. El portafolio incluye la creación de assets fotorrealistas basados en productos comerciales, tales como latas de Coca-Cola, artículos deportivos y un envase de perfumería fina, sumado a una simulación a escala de la luna. El proceso productivo abarcó el modelado poligonal, despliegue de mapas UV, texturizado PBR, diseño de etiquetas, iluminación física y animación tridimensional; demostrando una gran destreza en la creación de entornos virtuales de gran impacto.",
-    "tech": [
-      "Blender"
-    ],
+    "tech": ["Blender"],
     "image": "/imagenes/modelado 3d/coca cola4k .jpg",
     "gallery": [
       "/imagenes/modelado 3d/ball.jpg",
@@ -77,9 +63,7 @@
     "id": "riopaila_agricola",
     "title": "Riopaila Agrícola",
     "description": "Desarrollo y diseño de la arquitectura web de Riopaila Agrícola. Se construyó una plataforma digital corporativa que proyecta la solidez de la marca y comunica sus servicios de forma excepcional. El ciclo del proyecto integró la investigación del usuario, levantamiento técnico de requerimientos, consultoría UX, diseño riguroso de interfaces y la ingeniería Frontend. Adicionalmente, se gestionó la infraestructura en la nube y la vinculación de dominios para asegurar un despliegue de alto rendimiento en producción.",
-    "tech": [
-      "Next.js"
-    ],
+    "tech": ["Next.js"],
     "image": "/imagenes/riopaila/Captura de pantalla 2026-04-21 104422.png",
     "gallery": [
       "/imagenes/riopaila/Captura de pantalla 2026-04-21 104422.png",
@@ -94,10 +78,7 @@
     "id": "tessuti_web",
     "title": "Tessuti",
     "description": "Aplicación Web Progresiva (PWA) de ecosistema integral. La ingeniería combinó desarrollo Frontend reactivo con una arquitectura Backend robusta gestionada a través de Supabase, garantizando sincronización en tiempo real multiplataforma. Como factor diferenciador, la solución integra un Agente de IA basado en Mistral que funge como asesor de alta costura, interactuando de forma nativa con el catálogo textil. La plataforma permite a los usuarios gestionar insumos, recibir recomendaciones enriquecidas algorítmicamente y generar moodboards dinámicos.",
-    "tech": [
-      "React",
-      "JavaScript"
-    ],
+    "tech": ["React", "JavaScript"],
     "image": "/imagenes/tessuti/Captura de pantalla 2026-04-21 104610.png",
     "gallery": [
       "/imagenes/tessuti/Captura de pantalla 2026-04-21 104610.png",
@@ -108,6 +89,21 @@
     ],
     "category": "web",
     "live": "https://tessuti-inky.vercel.app/",
+    "featured": false
+  },
+  {
+    "id": "lessence_catalogo",
+    "title": "L'ESSENCE Catálogo Web",
+    "description": "Catálogo web elegante e interactivo para L'ESSENCE, destacando productos con galería dinámica y diseño responsivo. Desarrollado con tecnologías modernas para una experiencia premium.",
+    "tech": ["Next.js", "Tailwind CSS"],
+    "image": "/imagenes/LEESSENSE/Captura de pantalla 2026-04-23 145542.png",
+    "gallery": [
+      "/imagenes/LEESSENSE/Captura de pantalla 2026-04-23 145542.png",
+      "/imagenes/LEESSENSE/Captura de pantalla 2026-04-23 145552.png",
+      "/imagenes/LEESSENSE/Captura de pantalla 2026-04-23 145620.png"
+    ],
+    "category": "web",
+    "live": "https://catalogo-6t7m-4j4jtbavm-luixmv6-8333s-projects.vercel.app/",
     "featured": false
   }
 ]
