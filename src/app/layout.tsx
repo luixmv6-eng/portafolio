@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import Scene3D from "@/components/Scene3D";
 import Cursor from "@/components/Cursor";
 import Navbar from "@/components/Navbar";
 import SmoothScrolling from "@/components/SmoothScrolling";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
-import AmbientBackground from "@/components/AmbientBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,10 +56,8 @@ export default function RootLayout({
           <LanguageProvider>
             <SmoothScrolling>
               <ScrollProgress />
-              <AmbientBackground />
               <Navbar />
               <Cursor />
-              <Scene3D />
               <main>{children}</main>
               <BackToTop />
             </SmoothScrolling>

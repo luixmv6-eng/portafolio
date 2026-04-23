@@ -20,20 +20,20 @@ export default function Home() {
   const { t } = useLanguage();
 
   const socialLinks = [
-    { 
-      name: 'Instagram', 
+    {
+      name: 'Instagram',
       icon: <InstagramIcon />,
-      href: 'https://instagram.com' 
+      href: 'https://www.instagram.com/luixmv6/'
     },
-    { 
-      name: 'LinkedIn', 
+    {
+      name: 'LinkedIn',
       icon: <LinkedinIcon />,
-      href: 'https://linkedin.com' 
+      href: 'https://www.linkedin.com/in/pedro-martinez-aa8378233/?skipRedirect=true'
     },
-    { 
-      name: 'Twitter', 
+    {
+      name: 'X',
       icon: <TwitterIcon />,
-      href: 'https://twitter.com' 
+      href: 'https://x.com/LuixMv'
     },
   ];
 

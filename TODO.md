@@ -1,7 +1,15 @@
-# TODO - Arreglo de imágenes en TechStack
+# Projects Aesthetic + Animation Refresh
 
-- [x] Revisar `src/components/TechStack.tsx` para confirmar origen de imágenes (`tool.image`).
-- [x] Revisar `src/data/tech.json` para detectar entradas con URLs externas rotas.
-- [x] Identificar causa del nuevo problema: desalineación nombre ↔ icono por reemplazos genéricos.
-- [x] Corregir `src/data/tech.json` para restaurar iconos correctos por cada tecnología.
-- [ ] Validar visualmente que las tarjetas muestren los logos correctos en TechStack.
+## Objective
+Remove the new 3D folder implementation and improve aesthetics, animations, and dynamism in the Projects section using anime.js and refined UI styles.
+
+**Status:** In progress.
+
+## Steps
+- [x] Remove `ProjectsFolder3D` integration from `src/components/Projects.tsx`.
+- [x] Enhance Projects section animations (header + entries + hover microinteractions) with anime.js.
+- [x] Add scoped visual polish styles in `src/app/globals.css` for Projects.
+- [x] Remove `src/components/ProjectsFolder3D.jsx` if no longer used.
+- [ ] Validate in browser (scroll, interactions, modal, visual consistency).
+- [x] Update TODO.md on complete.
+- [ ] attempt_completion.
