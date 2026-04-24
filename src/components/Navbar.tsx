@@ -111,10 +111,12 @@ export default function Navbar() {
       pointerEvents: isModalOpen ? 'none' : 'auto',
     }}>
       <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', letterSpacing: '-0.03em', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: '2rem', height: '2rem' }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: '2rem', height: '2rem', flexShrink: 0 }}>
           <text x="48" y="76" fontFamily="var(--font-serif)" fontSize="78" fontWeight="700" textAnchor="middle" fill="currentColor" letterSpacing="-3">PM</text>
         </svg>
-        PEDRO LUIS MARTINEZ<span style={{ color: 'var(--accent)', fontSize: '1.8rem', lineHeight: 1 }}>.</span>
+        <span className="nav-logo-text" style={{ transition: 'opacity 0.3s ease' }}>
+          PEDRO LUIS MARTINEZ<span style={{ color: 'var(--accent)', fontSize: '1.8rem', lineHeight: 1 }}>.</span>
+        </span>
       </div>
 
       <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
@@ -252,6 +254,16 @@ export default function Navbar() {
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
+      <style>{`
+        @media (max-width: 900px) {
+          .nav-logo-text { display: none; }
+        }
+        @media (max-width: 640px) {
+          nav {
+            padding: ${scrolled ? '0.8rem 5vw' : '1.5rem 5vw'} !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 }

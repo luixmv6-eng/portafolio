@@ -154,10 +154,9 @@ export default function Projects() {
               </div>
 
               <div
-                className="mobile-col-full"
+                className="project-content-col mobile-col-full"
                 style={{
                   gridColumn: index % 2 === 0 ? '8 / 13' : '1 / 6',
-                  gridRow: '1',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -203,6 +202,24 @@ export default function Projects() {
 
         <ProjectModal project={selectedProject} onClose={closeModal} />
       </div>
+        <style>{`
+          @media (max-width: 900px) {
+            .project-entry {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 2rem !important;
+              padding: 1.5rem !important;
+            }
+            .project-content-col {
+              order: 2;
+              text-align: center;
+              align-items: center;
+            }
+            .project-content-col p {
+              max-width: 100%;
+            }
+          }
+        `}</style>
     </section>
   );
 }

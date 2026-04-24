@@ -58,19 +58,20 @@ export default function Hero() {
       id="hero"
       style={{ justifyContent: 'center', overflow: 'hidden', minHeight: '100vh' }}
     >
-      {/* 3D floating element — right side, desktop only */}
+      {/* 3D floating element */}
       <div
         className="hero-3d-wrap"
         style={{
           position: 'absolute',
-          right: '-2vw',
+          right: 'var(--hero-3d-right, -2vw)',
           top: '50%',
           transform: `translateY(calc(-50% + ${offsetY * 0.08}px))`,
-          width: 'min(580px, 48vw)',
-          height: 'min(580px, 48vw)',
+          width: 'var(--hero-3d-size, min(580px, 48vw))',
+          height: 'var(--hero-3d-size, min(580px, 48vw))',
           pointerEvents: 'none',
           willChange: 'transform',
           zIndex: 5,
+          opacity: 'var(--hero-3d-opacity, 1)',
         }}
       >
         <Hero3D />
@@ -79,28 +80,29 @@ export default function Hero() {
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         {/* Title block */}
         <div
+          className="hero-title-wrap"
           style={{
             marginBottom: '3rem',
             transform: `translateY(${offsetY * 0.12}px)`,
             willChange: 'transform',
             transition: 'transform 0.05s linear',
-            maxWidth: '70%',
+            maxWidth: 'var(--hero-title-max-width, 70%)',
           }}
         >
           <div style={{ overflow: 'hidden', lineHeight: 1.0 }}>
             <h1
               className="title-reveal"
-              style={{ fontSize: 'clamp(3rem, 8.5vw, 9.5rem)', marginBottom: '0.15rem' }}
+              style={{ fontSize: 'clamp(2.5rem, 8.5vw, 9.5rem)', marginBottom: '0.15rem' }}
             >
               <span style={{ display: 'inline-block' }}>{t('hero.title1')}</span>
             </h1>
           </div>
           <div style={{ overflow: 'hidden', lineHeight: 1.0 }}>
             <h1
-              className="title-reveal"
+              className="title-reveal hero-title-italic"
               style={{
-                fontSize: 'clamp(3rem, 8.5vw, 9.5rem)',
-                marginLeft: 'clamp(1rem, 14vw, 16rem)',
+                fontSize: 'clamp(2.5rem, 8.5vw, 9.5rem)',
+                marginLeft: 'var(--hero-title-indent, clamp(1rem, 14vw, 16rem))',
                 fontStyle: 'italic',
                 color: 'var(--accent)',
               }}
@@ -111,10 +113,10 @@ export default function Hero() {
         </div>
 
         {/* Bottom row */}
-        <div className="grid-12" style={{ alignItems: 'flex-end', marginTop: '1.5rem', maxWidth: '68%' }}>
+        <div className="grid-12 hero-bottom-row" style={{ alignItems: 'flex-end', marginTop: '1.5rem', maxWidth: 'var(--hero-bottom-max-width, 68%)' }}>
           {/* Left: badge + CTA */}
           <div
-            className="subtitle-fade mobile-col-full"
+            className="subtitle-fade mobile-col-full hero-cta-container"
             style={{
               gridColumn: '1 / 6',
               opacity: 0,
@@ -145,7 +147,7 @@ export default function Hero() {
               <span
                 style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '0.7rem',
+                  fontSize: '0.65rem',
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
                   opacity: 0.65,
@@ -165,13 +167,13 @@ export default function Hero() {
                 gap: '0.6rem',
                 opacity: 0,
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.7rem',
+                fontSize: '0.65rem',
                 letterSpacing: '0.16em',
                 textTransform: 'uppercase',
                 fontWeight: 700,
                 color: 'var(--foreground)',
                 textDecoration: 'none',
-                padding: '1rem 2rem',
+                padding: '0.9rem 1.8rem',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '4px',
                 width: 'fit-content',
@@ -198,17 +200,17 @@ export default function Hero() {
 
           {/* Right: description */}
           <div
-            className="subtitle-fade mobile-col-full"
+            className="subtitle-fade mobile-col-full hero-desc-container"
             style={{ gridColumn: '7 / 12', opacity: 0 }}
           >
             <p
               style={{
-                fontSize: '1.05rem',
+                fontSize: 'clamp(0.95rem, 1.2vw, 1.05rem)',
                 fontFamily: 'var(--font-sans)',
-                lineHeight: 1.95,
+                lineHeight: 1.8,
                 opacity: 0.8,
-                borderLeft: '1px solid var(--border-subtle)',
-                paddingLeft: '2rem',
+                borderLeft: 'var(--hero-desc-border, 1px solid var(--border-subtle))',
+                paddingLeft: 'var(--hero-desc-padding, 2rem)',
               }}
             >
               {t('hero.description')}
@@ -359,14 +361,55 @@ export default function Hero() {
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 900px) {
-          .hero-3d-wrap { display: none !important; }
-          .vertical-tech-label { display: none !important; }
+        @media (max-width: 1200px) {
+          .hero-3d-wrap {
+            --hero-3d-size: 40vw;
+            --hero-3d-right: -5vw;
+          }
+          .hero-title-wrap { --hero-title-max-width: 85%; }
+          .hero-bottom-row { --hero-bottom-max-width: 85%; }
         }
 
-        @media (max-width: 768px) {
-          #hero .container > div:first-child { max-width: 100% !important; }
-          #hero .grid-12 { max-width: 100% !important; }
+        @media (max-width: 900px) {
+          .hero-3d-wrap {
+            --hero-3d-size: 300px;
+            --hero-3d-right: 50%;
+            top: 25%;
+            transform: translate(50%, -50%) !important;
+            opacity: 0.4;
+            z-index: 1;
+          }
+          .vertical-tech-label { display: none !important; }
+          .hero-title-wrap {
+             --hero-title-max-width: 100%;
+             text-align: center;
+          }
+          .hero-title-italic { --hero-title-indent: 0; }
+          .hero-bottom-row {
+             --hero-bottom-max-width: 100%;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             text-align: center;
+             gap: 3rem;
+          }
+          .hero-cta-container { align-items: center; }
+          .hero-desc-container {
+             border-left: none;
+             padding-left: 0;
+             --hero-desc-border: none;
+             --hero-desc-padding: 0;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .hero-3d-wrap {
+            --hero-3d-size: 220px;
+            top: 20%;
+          }
+          .hero-title-wrap h1 {
+            font-size: clamp(2.5rem, 15vw, 4.5rem) !important;
+          }
         }
       `}</style>
     </section>

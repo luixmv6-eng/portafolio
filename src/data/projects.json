@@ -106,5 +106,20 @@
     "category": "web",
     "live": "https://catalogo-6t7m-4j4jtbavm-luixmv6-8333s-projects.vercel.app/",
     "featured": false
+  },
+  {
+    "id": "lumina",
+    "title": "Lumina",
+    "description": "Lumina es una landing page interactiva desarrollada con Next.js como proyecto personal, cuyo objetivo es demostrar la implementación de interfaces de alto nivel con especial atención a los micro-detalles y la experiencia de usuario (UX). Adicionalmente, gracias a su arquitectura modular, proyecta cómo se puede integrar fácilmente un flujo completo de autoservicio para gestionar pedidos desde la selección de productos hasta la coordinación de envíos, sirviendo como una base escalable para futuras integraciones.",
+    "tech": ["Next.js", "Tailwind CSS"],
+    "image": "/imagenes/lumina/Captura de pantalla 2026-04-24 162437.png",
+    "gallery": [
+      "/imagenes/lumina/Captura de pantalla 2026-04-24 162437.png",
+      "/imagenes/lumina/Captura de pantalla 2026-04-24 162455.png",
+      "/imagenes/lumina/Captura de pantalla 2026-04-24 162515.png"
+    ],
+    "category": "web",
+    "live": "https://menu-xi-jade.vercel.app/",
+    "featured": true
   }
 ]

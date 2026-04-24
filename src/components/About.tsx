@@ -333,13 +333,14 @@ export default function About() {
             </div>
             <div style={{ overflow: 'hidden', marginBottom: '2.8rem' }}>
               <h2
+                className="about-title-italic"
                 style={{
                   fontSize: 'clamp(2.6rem, 4.8vw, 5.2rem)',
                   fontWeight: 400,
                   lineHeight: 1.06,
                   fontStyle: 'italic',
                   color: 'var(--accent)',
-                  marginLeft: '2.5rem',
+                  marginLeft: 'var(--about-title-indent, 2.5rem)',
                 }}
               >
                 <span className="about-word" style={{ display: 'inline-block', opacity: 0 }}>
@@ -461,10 +462,25 @@ export default function About() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           #about .container > div {
             grid-template-columns: 1fr !important;
-            gap: 3rem !important;
+            gap: 4rem !important;
+            text-align: center;
+          }
+          .about-title-italic { --about-title-indent: 0; }
+          .about-body {
+            max-width: 100% !important;
+            margin: 0 auto 3rem !important;
+          }
+          .about-accent-line { display: none; }
+          #about .container > div > div:first-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .discipline-pill {
+            justify-content: center;
           }
         }
       `}</style>

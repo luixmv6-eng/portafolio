@@ -34,7 +34,7 @@
     },
     "projects": {
       "title": "MIS PROYECTOS",
-      "subtitle": "07 PROYECTOS SELECCIONADOS",
+      "subtitle": "08 PROYECTOS SELECCIONADOS",
       "view": "VER PROYECTO",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
@@ -65,6 +65,10 @@
         "lessence_catalogo": {
           "category": "CATÁLOGO WEB / E-COMMERCE",
           "description": "Desarrollo de catálogo web premium para la marca de lujo L'ESSENCE. Plataforma elegante con galería inmersiva de productos, navegación intuitiva y diseño totalmente responsivo optimizado para dispositivos móviles y desktop. Implementado con Next.js 14 y Tailwind CSS para rendimiento superior, carga ultrarrápida y escalabilidad. El proyecto destaca por su arquitectura modular preparada para futuras expansiones: integración de pasarela de pagos (Stripe/PayPal), sistema de autenticación de usuarios, carrito de compras inteligente y analíticas avanzadas. Una solución completa con alto potencial de monetización y mejora continua."
+        },
+        "lumina": {
+          "category": "LANDING PAGE / E-COMMERCE",
+          "description": "Lumina es una landing page interactiva desarrollada con Next.js como proyecto personal, cuyo objetivo es demostrar la implementación de interfaces de alto nivel con especial atención a los micro-detalles y la experiencia de usuario (UX). Adicionalmente, gracias a su arquitectura modular, proyecta cómo se puede integrar fácilmente un flujo completo de autoservicio para gestionar pedidos desde la selección de productos hasta la coordinación de envíos, sirviendo como una base escalable para futuras integraciones."
         }
       }
     },
@@ -119,7 +123,7 @@
     },
     "projects": {
       "title": "MY PROJECTS",
-      "subtitle": "07 SELECTED PROJECTS",
+      "subtitle": "08 SELECTED PROJECTS",
       "view": "VIEW PROJECT",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
@@ -150,6 +154,10 @@
         "lessence_catalogo": {
           "category": "WEB CATALOG / E-COMMERCE",
           "description": "Premium web catalog development for luxury brand L'ESSENCE. Elegant platform featuring immersive product gallery, intuitive navigation, and fully responsive design optimized for mobile and desktop. Built with Next.js 14 and Tailwind CSS for superior performance, ultra-fast loading, and scalability. Modular architecture ready for future enhancements: payment gateway integration (Stripe/PayPal), user authentication, intelligent shopping cart, and advanced analytics. A complete solution with high monetization potential and continuous improvement roadmap."
+        },
+        "lumina": {
+          "category": "LANDING PAGE / E-COMMERCE",
+          "description": "Lumina is an interactive landing page developed with Next.js as a personal project, aimed at demonstrating the implementation of high-level interfaces with special attention to micro-details and user experience (UX). Additionally, thanks to its modular architecture, it showcases how easily a complete self-service order management flow—from product selection to shipping coordination—can be integrated, serving as a scalable foundation for future integrations."
         }
       }
     },
