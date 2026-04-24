@@ -45,12 +45,13 @@
     "title": "Modelado 3D",
     "description": "Exploración avanzada en modelado y renderizado 3D estructurada en múltiples fases. El portafolio incluye la creación de assets fotorrealistas basados en productos comerciales, tales como latas de Coca-Cola, artículos deportivos y un envase de perfumería fina, sumado a una simulación a escala de la luna. El proceso productivo abarcó el modelado poligonal, despliegue de mapas UV, texturizado PBR, diseño de etiquetas, iluminación física y animación tridimensional; demostrando una gran destreza en la creación de entornos virtuales de gran impacto.",
     "tech": ["Blender"],
-    "image": "/imagenes/modelado 3d/coca cola4k .jpg",
+    "image": "/imagenes/modelado 3d/coca cola4kblackversion .jpg",
     "gallery": [
       "/imagenes/modelado 3d/ball.jpg",
       "/imagenes/modelado 3d/coca cola4k .jpg",
       "/imagenes/modelado 3d/coca cola4kblackversion .jpg",
       "/imagenes/modelado 3d/luna .jpg",
+      "/imagenes/modelado 3d/chanel .jpg",
       {
         "type": "video",
         "src": "/imagenes/modelado 3d/Lavande 31 - Comercial.mp4"

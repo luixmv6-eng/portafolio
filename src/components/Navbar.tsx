@@ -100,7 +100,7 @@ export default function Navbar() {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      background: scrolled ? 'rgba(245, 245, 240, 0.85)' : 'transparent',
+      background: scrolled ? 'color-mix(in srgb, var(--background) 80%, transparent)' : 'transparent',
       backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
       WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
       transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',

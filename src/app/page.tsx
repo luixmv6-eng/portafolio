@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import ContactForm from "@/components/ContactForm";
+import ImmersiveJourney from "@/components/ImmersiveJourney";
 import { useLanguage } from '../context/LanguageContext';
 
 const TechStack = dynamic(() => import('@/components/TechStack'), { ssr: false });
@@ -40,6 +41,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ImmersiveJourney />
       <About />
       <TechStack />
       <Projects />
