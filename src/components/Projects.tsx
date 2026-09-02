@@ -11,7 +11,14 @@ export default function Projects() {
   const containerRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<ReturnType<typeof createTimeline> | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
+
+  // t() devuelve la clave cuando no encuentra traduccion, asi que el patron
+  // `t(k) || fallback` nunca caia al fallback: imprimia "projects.items.x.y".
+  const tr = (key: string, fallback: string) => {
+    const value = t(key);
+    return value === key ? fallback : value;
+  };
 
   const [selectedProject, setSelectedProject] = useState<(typeof projectsData)[number] | null>(null);
 
@@ -94,26 +101,19 @@ export default function Projects() {
     };
   }, []);
 
-  const rawItemsLabel = t('projects.itemsLabel');
-  const itemsLabel =
-    rawItemsLabel && rawItemsLabel !== 'projects.itemsLabel'
-      ? rawItemsLabel
-      : language === 'es'
-        ? 'proyectos seleccionados'
-        : 'projects selected';
-
   return (
     <section id="projects" ref={containerRef}>
       <div className="container">
         <header ref={headerRef} className="projects-header" style={{ marginBottom: '4.5rem' }}>
-          <h2 className="projects-headline" style={{ fontSize: 'clamp(2.2rem, 6vw, 4.2rem)', marginBottom: '1rem', letterSpacing: '-0.02em', opacity: 0 }}>
+          <h2 className="projects-headline display-caps" style={{ fontSize: 'var(--t-display-2)', marginBottom: '1rem', opacity: 0 }}>
             {t('projects.title')}
           </h2>
-          <p className="projects-subline" style={{ fontFamily: 'var(--font-sans)', opacity: 0, letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: '0.75rem' }}>
-            {t('projects.subtitle')}
+          {/* Antes eran dos elementos: un subtitulo que decia "08 PROYECTOS
+              SELECCIONADOS" a mano (ya son 9) y un contador que se renderizaba
+              vacio. Ahora es una linea y el numero sale de los datos. */}
+          <p className="projects-subline label" style={{ opacity: 0 }}>
+            {projectsData.length} {tr('projects.itemsLabel', 'proyectos seleccionados')}
           </p>
-          <span className="projects-counter" style={{ display: 'inline-block', marginTop: '0.9rem', fontFamily: 'var(--font-sans)', fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)', opacity: 0 }}>
-          </span>
         </header>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '7rem' }}>
@@ -162,39 +162,40 @@ export default function Projects() {
                   justifyContent: 'center',
                 }}
               >
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.68rem', letterSpacing: '0.2em', color: 'var(--accent)', fontWeight: 700, marginBottom: '0.7rem' }}>
-                  / 0{index + 1}
+                {/* La categoria va sobre el titulo. El "/ 0N" que estaba aqui
+                    solo numeraba tarjetas que el lector ya puede contar. */}
+                <span className="label-sm" style={{ color: 'var(--accent)', marginBottom: '0.7rem' }}>
+                  {tr(`projects.items.${project.id}.category`, project.category)}
                 </span>
-                <h3 style={{ fontSize: 'clamp(1.7rem, 3.2vw, 2.8rem)', marginBottom: '0.8rem', textTransform: 'uppercase' }}>
+                <h3 className="display-caps" style={{ fontSize: 'var(--t-display-3)', marginBottom: '1rem' }}>
                   {project.title}
                 </h3>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.66rem', letterSpacing: '0.12em', opacity: 0.6, marginBottom: '0.8rem', display: 'block', textTransform: 'uppercase' }}>
-                  {t(`projects.items.${project.id}.category`) || project.category}
-                </span>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.98rem', lineHeight: 1.7, opacity: 0.78, marginBottom: '1.5rem' }}>
-                  {t(`projects.items.${project.id}.description`) || project.description}
+                <p className="body-copy" style={{ fontSize: 'var(--t-body-sm)', marginBottom: '1.5rem' }}>
+                  {tr(`projects.items.${project.id}.description`, project.description)}
                 </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem', marginBottom: '1.6rem' }}>
-                  {project.tech.map((tech, i) => (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.6rem' }}>
+                  {project.tech.map((tech) => (
                     <span
-                      key={i}
+                      key={tech}
                       style={{
-                        fontSize: '0.66rem',
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: 'var(--t-label-sm)',
+                        color: 'var(--muted)',
                         background: 'transparent',
                         border: '1px solid var(--border-subtle)',
-                        padding: '0.35rem 0.7rem',
-                        borderRadius: '6px',
+                        padding: '0.35rem 0.75rem',
+                        borderRadius: 'var(--r-pill)',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
+                        letterSpacing: '0.06em',
                       }}
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-                <div className="premium-button" style={{ width: 'fit-content', borderRadius: '8px', padding: '0.85rem 1.35rem', letterSpacing: '0.1em' }}>
+                <span className="premium-button" style={{ width: 'fit-content' }}>
                   {t('projects.view')}
-                </div>
+                </span>
               </div>
             </article>
           ))}

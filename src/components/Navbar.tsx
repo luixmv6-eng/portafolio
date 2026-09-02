@@ -1,12 +1,24 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useRef, useSyncExternalStore } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-import { Sun, Moon, Menu, X, ChevronRight } from 'lucide-react';
+import { Sun, Moon, Monitor, Menu, X } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
+
+const SECTIONS = ['about', 'stack', 'projects', 'contact'];
+
+// Deteccion de hidratacion sin setState en un efecto. Hace falta porque el
+// idioma sale de localStorage: en el servidor las etiquetas siempre son 'es'.
+const emptySubscribe = () => () => {};
+const useIsHydrated = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,73 +26,66 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
-  const [isMobile, setIsMobile] = useState(false);
-  const lastScrollY = useRef(0);
+  const lastY = useRef(0);
   const { language, setLanguage, t } = useLanguage();
   const { theme, setTheme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsHydrated();
+
+  // Se reemplaza window.addEventListener('scroll') por el useScroll de Motion.
+  // Solo llamamos a setState cuando un booleano cambia, no en cada frame.
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    const diff = current - lastY.current;
+    lastY.current = current;
+
+    setScrolled((prev) => {
+      const next = current > 50;
+      return prev === next ? prev : next;
+    });
+
+    if (diff > 8 && current > 100) setHidden(true);
+    else if (diff < -5) setHidden(false);
+  });
 
   useEffect(() => {
-    setIsMounted(true);
+    const handleModalToggle = (e: Event) => {
+      setIsModalOpen((e as CustomEvent<{ isOpen: boolean }>).detail.isOpen);
+    };
+    window.addEventListener('modalToggle', handleModalToggle);
+    return () => window.removeEventListener('modalToggle', handleModalToggle);
   }, []);
 
-  const sections = ['about', 'stack', 'projects', 'contact'];
-
+  // Scrollspy
   useEffect(() => {
-    const handleModalToggle = (e: CustomEvent<{isOpen: boolean}>) => {
-      setIsModalOpen(e.detail.isOpen);
-    };
-    window.addEventListener('modalToggle', handleModalToggle as EventListener);
-    return () => window.removeEventListener('modalToggle', handleModalToggle as EventListener);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      const diff = currentY - lastScrollY.current;
-
-      setScrolled(currentY > 50);
-
-      if (diff > 8 && currentY > 100) {
-        setHidden(true);
-      } else if (diff < -5) {
-        setHidden(false);
-      }
-
-      lastScrollY.current = currentY;
-    };
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
-
-    handleResize();
-
-    // Scrollspy
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
       { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
     );
 
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
+
+  // El panel movil bloquea el scroll del fondo y cierra con Escape.
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileOpen(false);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isMobileOpen]);
 
   const navItems = [
     { name: t('nav.about'), href: '#about' },
@@ -89,181 +94,247 @@ export default function Navbar() {
     { name: t('nav.contact'), href: '#contact' },
   ];
 
+  const nextTheme: Record<Theme, Theme> = { light: 'dark', dark: 'system', system: 'light' };
+  const themeIcon =
+    theme === 'dark' ? <Moon size={17} /> : theme === 'light' ? <Sun size={17} /> : <Monitor size={17} />;
+
+  const iconButtonStyle: React.CSSProperties = {
+    background: 'none',
+    border: '1px solid var(--border-subtle)',
+    color: 'var(--foreground)',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '34px',
+    height: '34px',
+    borderRadius: 'var(--r-pill)',
+    transition: 'color var(--dur-fast) ease, border-color var(--dur-fast) ease',
+  };
+
   return (
-    <nav style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      zIndex: 1000,
-      padding: scrolled ? '1.2rem 4vw' : '2.5rem 4vw',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      background: scrolled ? 'color-mix(in srgb, var(--background) 80%, transparent)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
-      WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
-      transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
-      borderBottom: scrolled ? '1px solid var(--border-subtle)' : 'none',
-      transform: hidden || isModalOpen ? 'translateY(-110%)' : 'translateY(0)',
-      willChange: 'transform',
-      opacity: isModalOpen ? 0 : 1,
-      pointerEvents: isModalOpen ? 'none' : 'auto',
-    }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', letterSpacing: '-0.03em', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: '2rem', height: '2rem', flexShrink: 0 }}>
-          <text x="48" y="76" fontFamily="var(--font-serif)" fontSize="78" fontWeight="700" textAnchor="middle" fill="currentColor" letterSpacing="-3">PM</text>
-        </svg>
-        <span className="nav-logo-text" style={{ transition: 'opacity 0.3s ease' }}>
-          PEDRO LUIS MARTINEZ<span style={{ color: 'var(--accent)', fontSize: '1.8rem', lineHeight: 1 }}>.</span>
-        </span>
-      </div>
+    <>
+      <nav
+        className="site-nav"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 1000,
+          /* Techo de altura: 80px sin scroll, 64px con scroll. Antes el estado
+             inicial ocupaba ~112px de viewport. */
+          padding: scrolled ? '1rem var(--gutter)' : '1.5rem var(--gutter)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: scrolled ? 'color-mix(in srgb, var(--background) 82%, transparent)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
+          transition: 'padding var(--dur-mid) var(--ease-out), background var(--dur-mid) ease, transform var(--dur-mid) var(--ease-out), opacity var(--dur-fast) ease',
+          borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
+          transform: (hidden && !isMobileOpen) || isModalOpen ? 'translateY(-110%)' : 'translateY(0)',
+          willChange: 'transform',
+          opacity: isModalOpen ? 0 : 1,
+          pointerEvents: isModalOpen ? 'none' : 'auto',
+        }}
+      >
+        <a
+          href="#hero"
+          className="nav-logo"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '1.15rem',
+            letterSpacing: '-0.01em',
+            color: 'var(--foreground)',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <span className="nav-logo-full">PEDRO LUIS MARTINEZ</span>
+          <span className="nav-logo-short" aria-hidden="true">PM</span>
+          <span style={{ color: 'var(--accent)' }}>.</span>
+        </a>
 
-      <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
-        {/* Desktop Nav */}
-        {!isMobile && (
-          <div style={{ display: 'flex', gap: '2.5rem' }}>
-          {isMounted && navItems.map((item) => (
-            <a
-              key={item.name}
-                href={item.href}
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.2rem',
-                  fontWeight: 600,
-                  color: activeSection === item.href.slice(1) ? 'var(--accent)' : 'var(--foreground)',
-                  textDecoration: 'none',
-                  opacity: activeSection === item.href.slice(1) ? 1 : 0.5,
-                  transition: 'all 0.4s ease',
-                  position: 'relative',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                  e.currentTarget.style.letterSpacing = '0.25rem';
-                  e.currentTarget.style.color = 'var(--accent)';
-                }}
-                onMouseLeave={(e) => {
-                  if (activeSection !== item.href.slice(1)) {
-                    e.currentTarget.style.opacity = '0.5';
-                    e.currentTarget.style.letterSpacing = '0.2rem';
-                    e.currentTarget.style.color = 'var(--foreground)';
-                  }
-                }}
-              >
-                {item.name}
-                {activeSection === item.href.slice(1) && (
-                  <motion.div
-                    layoutId="activeIndicator"
+        <div style={{ display: 'flex', gap: '1.75rem', alignItems: 'center' }}>
+          <div className="nav-links" style={{ display: 'flex', gap: '2.25rem' }}>
+            {isMounted &&
+              navItems.map((item) => {
+                const isActive = activeSection === item.href.slice(1);
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="nav-link"
+                    aria-current={isActive ? 'true' : undefined}
                     style={{
-                      position: 'absolute',
-                      bottom: '-4px',
-                      left: 0,
-                      right: 0,
-                      height: '2px',
-                      background: 'var(--accent)',
-                      borderRadius: '1px',
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: 'var(--t-label-sm)',
+                      letterSpacing: 'var(--track-label)',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      color: isActive ? 'var(--accent)' : 'var(--muted)',
+                      textDecoration: 'none',
+                      transition: 'color var(--dur-fast) ease',
+                      position: 'relative',
+                      paddingBottom: '4px',
                     }}
-                  />
-                )}
-              </a>
-            ))}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeIndicator"
+                        style={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          height: '2px',
+                          background: 'var(--accent)',
+                          borderRadius: '1px',
+                        }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
           </div>
+
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <button
+              onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+              aria-label={language === 'es' ? 'Switch to English' : 'Cambiar a espanol'}
+              style={{
+                ...iconButtonStyle,
+                width: 'auto',
+                padding: '0 0.7rem',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'var(--t-label-sm)',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+              }}
+            >
+              {language === 'es' ? 'EN' : 'ES'}
+            </button>
+
+            <button
+              onClick={() => setTheme(nextTheme[theme])}
+              aria-label={`Tema: ${theme}`}
+              title={`Tema: ${theme}`}
+              style={iconButtonStyle}
+            >
+              {isMounted ? themeIcon : <Monitor size={17} />}
+            </button>
+
+            {/* Menu movil. Antes este boton no existia: en pantallas de 1024px
+                o menos no habia forma de navegar entre secciones. */}
+            <button
+              className="nav-burger"
+              onClick={() => setIsMobileOpen(true)}
+              aria-label={t('nav.menu')}
+              aria-expanded={isMobileOpen}
+              style={iconButtonStyle}
+            >
+              <Menu size={18} />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('nav.menu')}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 1500,
+              background: 'color-mix(in srgb, var(--background) 96%, transparent)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: '1.5rem var(--gutter)',
+              }}
+            >
+              <button
+                onClick={() => setIsMobileOpen(false)}
+                aria-label={t('projects.close')}
+                autoFocus
+                style={iconButtonStyle}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <nav
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                padding: '0 var(--gutter) 12vh',
+              }}
+            >
+              {navItems.map((item, i) => (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileOpen(false)}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'clamp(2rem, 9vw, 3.25rem)',
+                    color: activeSection === item.href.slice(1) ? 'var(--accent)' : 'var(--foreground)',
+                    textDecoration: 'none',
+                    padding: '0.5rem 0',
+                    borderBottom: '1px solid var(--border-subtle)',
+                  }}
+                >
+                  {item.name}
+                </motion.a>
+              ))}
+            </nav>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        <div style={{
-          height: '14px',
-          width: '1px',
-          background: 'var(--border-subtle)',
-          margin: '0 0.5rem'
-        }} />
-
-        <button
-          onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-          style={{
-            background: 'none',
-            border: '1px solid var(--border-subtle)',
-            color: 'var(--foreground)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.6rem',
-            fontWeight: 700,
-            letterSpacing: '0.15rem',
-            cursor: 'pointer',
-            opacity: 0.7,
-            padding: '0.4rem 0.8rem',
-            borderRadius: '100px',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = 'var(--accent)';
-            e.currentTarget.style.borderColor = 'var(--accent)';
-            e.currentTarget.style.opacity = '1';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = 'var(--foreground)';
-            e.currentTarget.style.borderColor = 'var(--border-subtle)';
-            e.currentTarget.style.opacity = '0.7';
-          }}
-        >
-          {language === 'es' ? 'EN' : 'ES'}
-        </button>
-
-        <div style={{
-          height: '14px',
-          width: '1px',
-          background: 'var(--border-subtle)',
-          margin: '0 0.5rem'
-        }} />
-
-        <button
-          onClick={() => {
-            const themes: Theme[] = ['light', 'dark', 'system'];
-            const currentIndex = themes.indexOf(theme);
-            setTheme(themes[(currentIndex + 1) % 3]);
-          }}
-          style={{
-            background: 'none',
-            border: '1px solid var(--border-subtle)',
-            color: 'var(--foreground)',
-            fontSize: '1rem',
-            cursor: 'pointer',
-            opacity: 0.7,
-            padding: '0.4rem',
-            borderRadius: '50%',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '32px',
-            height: '32px'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = 'var(--accent)';
-            e.currentTarget.style.borderColor = 'var(--accent)';
-            e.currentTarget.style.opacity = '1';
-            e.currentTarget.style.transform = 'scale(1.1) rotate(15deg)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = 'var(--foreground)';
-            e.currentTarget.style.borderColor = 'var(--border-subtle)';
-            e.currentTarget.style.opacity = '0.7';
-            e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-          }}
-          title={`Switch to ${theme === 'light' ? 'Dark' : theme === 'dark' ? 'System' : 'Light'} mode`}
-        >
-          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
-      </div>
       <style>{`
-        @media (max-width: 900px) {
-          .nav-logo-text { display: none; }
+        .site-nav .nav-link:hover { color: var(--accent) !important; }
+        .site-nav button:hover {
+          color: var(--accent);
+          border-color: var(--accent);
         }
-        @media (max-width: 640px) {
-          nav {
-            padding: ${scrolled ? '0.8rem 5vw' : '1.5rem 5vw'} !important;
-          }
+        .nav-logo-short { display: none; }
+        .nav-burger { display: none !important; }
+
+        /* Un solo punto de corte para la navegacion: los enlaces se van y el
+           menu aparece exactamente a la vez. */
+        @media (max-width: 1024px) {
+          .nav-links { display: none !important; }
+          .nav-burger { display: flex !important; }
+        }
+
+        @media (max-width: 620px) {
+          .nav-logo-full { display: none; }
+          .nav-logo-short { display: inline; }
         }
       `}</style>
-    </nav>
+    </>
   );
 }

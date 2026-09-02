@@ -3,23 +3,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate, stagger } from 'animejs';
 import { useLanguage } from '../context/LanguageContext';
+import projectsData from '../data/projects.json';
+import techData from '../data/tech.json';
 
-const stats = [
-  { value: 12, suffix: '+', label: 'Proyectos realizados' },
-  { value: 3, suffix: ' años', label: 'Aprendiendo & construyendo' },
-  { value: 100, suffix: '%', label: 'Orientado al rendimiento' },
-];
-
-const disciplines = ['Web Design', 'Motion Graphics', '3D Production', 'PWA Engineering', 'UI/UX', 'Audiovisual'];
+// Las cifras salen de los datos, no de constantes que se quedan viejas.
+// Antes decia "12+ proyectos" con 9 en projects.json, y un "100% orientado
+// al rendimiento" que no mide nada.
+const STAT_VALUES = {
+  projects: projectsData.length,
+  years: 3,
+  tools: techData.length,
+} as const;
 
 function StatCard({
-  stat,
+  suffix,
+  label,
   count,
-  index,
 }: {
-  stat: (typeof stats)[number];
+  suffix: string;
+  label: string;
   count: number;
-  index: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -35,7 +38,7 @@ function StatCard({
     const rotX = ((y - cy) / cy) * -6;
     const rotY = ((x - cx) / cx) * 6;
 
-    el.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(8px) translateX(6px)`;
+    el.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(8px)`;
     el.style.boxShadow = 'var(--card-shadow-hover)';
 
     if (glowRef.current) {
@@ -48,7 +51,7 @@ function StatCard({
   const handleMouseLeave = () => {
     const el = cardRef.current;
     if (!el) return;
-    el.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateZ(0px) translateX(0px)';
+    el.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
     el.style.boxShadow = 'var(--card-shadow)';
     if (glowRef.current) glowRef.current.style.opacity = '0';
   };
@@ -56,21 +59,16 @@ function StatCard({
   return (
     <div
       ref={cardRef}
-      className="about-stat"
+      className="about-stat surface-card"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
         opacity: 0,
-        padding: '2.2rem 2.5rem',
-        borderRadius: '18px',
-        border: '1px solid var(--border-subtle)',
-        background: 'color-mix(in srgb, var(--background) 55%, rgba(255,255,255,0.06))',
-        backdropFilter: 'blur(12px)',
-        boxShadow: 'var(--card-shadow)',
+        padding: '1.9rem 2.2rem',
         display: 'flex',
-        alignItems: 'center',
-        gap: '2rem',
-        transition: 'transform 0.08s ease-out, box-shadow 0.4s ease',
+        alignItems: 'baseline',
+        gap: '1.5rem',
+        transition: 'transform 0.08s ease-out, box-shadow var(--dur-mid) ease',
         cursor: 'default',
         position: 'relative',
         overflow: 'hidden',
@@ -78,73 +76,23 @@ function StatCard({
         transformStyle: 'preserve-3d',
       }}
     >
-      {/* Glow */}
-      <div
-        ref={glowRef}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          borderRadius: '18px',
-          background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(var(--accent-rgb), 0.08) 0%, transparent 65%)',
-          pointerEvents: 'none',
-          opacity: 0,
-          transition: 'opacity 0.3s ease',
-        }}
-      />
+      <div ref={glowRef} className="tilt-card-glow" aria-hidden="true" />
 
-      {/* Index number */}
       <div
         style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '0.58rem',
-          letterSpacing: '0.2em',
-          opacity: 0.3,
-          textTransform: 'uppercase',
-          position: 'absolute',
-          top: '1.2rem',
-          right: '1.4rem',
+          fontFamily: 'var(--font-serif)',
+          fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
+          fontWeight: 400,
+          lineHeight: 1,
+          letterSpacing: '-0.02em',
+          minWidth: '3.2ch',
         }}
       >
-        0{index + 1}
+        {count}
+        {suffix}
       </div>
-
-      <div
-        style={{
-          width: '5px',
-          height: '5px',
-          borderRadius: '50%',
-          background: 'var(--accent)',
-          flexShrink: 0,
-          boxShadow: '0 0 8px rgba(var(--accent-rgb), 0.5)',
-        }}
-      />
-
-      <div>
-        <div
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
-            fontWeight: 400,
-            lineHeight: 1,
-            color: 'var(--foreground)',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {count}
-          {stat.suffix}
-        </div>
-        <div
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.68rem',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            opacity: 0.42,
-            marginTop: '0.4rem',
-          }}
-        >
-          {stat.label}
-        </div>
+      <div className="label" style={{ maxWidth: '18ch' }}>
+        {label}
       </div>
     </div>
   );
@@ -153,77 +101,93 @@ function StatCard({
 export default function About() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const [counts, setCounts] = useState(stats.map(() => 0));
+  const [counts, setCounts] = useState<number[]>([0, 0, 0]);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [activeDiscipline, setActiveDiscipline] = useState(0);
 
+  const stats = [
+    { value: STAT_VALUES.projects, suffix: '', label: t('about.statProjects') },
+    { value: STAT_VALUES.years, suffix: '', label: t('about.statYears') },
+    { value: STAT_VALUES.tools, suffix: '', label: t('about.statTools') },
+  ];
+
+  const disciplines = t('about.disciplines').split('|');
+
   useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
+          if (!entry.isIntersecting || hasAnimated) return;
+          setHasAnimated(true);
+          observer.unobserve(entry.target);
 
-            animate('.about-word', {
-              translateY: ['110%', '0%'],
-              opacity: [0, 1],
-              delay: stagger(75),
-              duration: 1200,
-              easing: 'easeOutExpo',
-            });
-
-            animate('.about-body', {
-              opacity: [0, 1],
-              translateY: [24, 0],
-              delay: 550,
-              duration: 1000,
-              easing: 'easeOutExpo',
-            });
-
-            animate('.about-stat', {
-              opacity: [0, 1],
-              translateY: [36, 0],
-              scale: [0.94, 1],
-              delay: stagger(110, { start: 750 }),
-              duration: 900,
-              easing: 'easeOutExpo',
-            });
-
-            animate('.about-accent-line', {
-              scaleX: [0, 1],
-              opacity: [0, 1],
-              delay: 350,
-              duration: 1000,
-              easing: 'easeOutExpo',
-            });
-
-            animate('.discipline-pill', {
-              opacity: [0, 1],
-              translateX: [-16, 0],
-              delay: stagger(55, { start: 950 }),
-              duration: 700,
-              easing: 'easeOutExpo',
-            });
-
-            stats.forEach((stat, i) => {
-              let startTime: number | null = null;
-              const duration = 2200;
-              const step = (ts: number) => {
-                if (!startTime) startTime = ts;
-                const progress = Math.min((ts - startTime) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                setCounts((prev) => {
-                  const next = [...prev];
-                  next[i] = Math.floor(eased * stat.value);
-                  return next;
-                });
-                if (progress < 1) requestAnimationFrame(step);
-              };
-              setTimeout(() => requestAnimationFrame(step), 850 + i * 110);
-            });
-
-            observer.unobserve(entry.target);
+          if (reduced) {
+            // Sin animacion: las cifras se muestran en su valor final.
+            setCounts(Object.values(STAT_VALUES));
+            return;
           }
+
+          animate('.about-word', {
+            translateY: ['110%', '0%'],
+            opacity: [0, 1],
+            delay: stagger(75),
+            duration: 1200,
+            easing: 'easeOutExpo',
+          });
+
+          animate('.about-body', {
+            opacity: [0, 1],
+            translateY: [24, 0],
+            delay: 550,
+            duration: 1000,
+            easing: 'easeOutExpo',
+          });
+
+          animate('.about-stat', {
+            opacity: [0, 1],
+            translateY: [36, 0],
+            scale: [0.94, 1],
+            delay: stagger(110, { start: 750 }),
+            duration: 900,
+            easing: 'easeOutExpo',
+          });
+
+          animate('.about-accent-line', {
+            scaleX: [0, 1],
+            opacity: [0, 1],
+            delay: 350,
+            duration: 1000,
+            easing: 'easeOutExpo',
+          });
+
+          animate('.discipline-pill', {
+            opacity: [0, 1],
+            translateX: [-16, 0],
+            delay: stagger(55, { start: 950 }),
+            duration: 700,
+            easing: 'easeOutExpo',
+          });
+
+          const targets = Object.values(STAT_VALUES);
+          const frames: number[] = [];
+          targets.forEach((target, i) => {
+            let startTime: number | null = null;
+            const duration = 1800;
+            const step = (ts: number) => {
+              if (startTime === null) startTime = ts;
+              const progress = Math.min((ts - startTime) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              setCounts((prev) => {
+                const next = [...prev];
+                next[i] = Math.round(eased * target);
+                return next;
+              });
+              if (progress < 1) frames[i] = requestAnimationFrame(step);
+            };
+            frames[i] = requestAnimationFrame(step);
+          });
         });
       },
       { threshold: 0.12 }
@@ -233,9 +197,11 @@ export default function About() {
     return () => observer.disconnect();
   }, [hasAnimated]);
 
+  // Rotacion de la disciplina destacada. Se detiene con reduced-motion.
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const id = setInterval(() => {
-      setActiveDiscipline((p) => (p + 1) % disciplines.length);
+      setActiveDiscipline((p) => (p + 1) % 6);
     }, 1800);
     return () => clearInterval(id);
   }, []);
@@ -244,10 +210,11 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      style={{ padding: '10rem 4vw', background: 'var(--background)', overflow: 'hidden', position: 'relative' }}
+      style={{ background: 'var(--background)', overflow: 'hidden', position: 'relative' }}
     >
-      {/* Decorative ambient blobs */}
+      {/* Halos ambientales */}
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           top: '12%',
@@ -261,6 +228,7 @@ export default function About() {
         }}
       />
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           bottom: '8%',
@@ -274,35 +242,14 @@ export default function About() {
         }}
       />
 
-      {/* Decorative dot grid */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '22%',
-          right: '7%',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 8px)',
-          gap: '12px',
-          opacity: 0.12,
-          pointerEvents: 'none',
-        }}
-      >
-        {[...Array(25)].map((_, i) => (
-          <div
-            key={i}
-            style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--foreground)' }}
-          />
-        ))}
-      </div>
-
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
-
-          {/* LEFT: Editorial copy */}
-          <div>
+        <div className="about-grid">
+          {/* Copy editorial */}
+          <div className="about-copy">
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
               <div
                 className="about-accent-line"
+                aria-hidden="true"
                 style={{
                   width: '56px',
                   height: '1px',
@@ -311,58 +258,32 @@ export default function About() {
                   opacity: 0,
                 }}
               />
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.68rem',
-                  letterSpacing: '0.38em',
-                  textTransform: 'uppercase',
-                  opacity: 0.45,
-                }}
-              >
-                Sobre mí
-              </span>
+              <span className="label-sm">{t('about.eyebrow')}</span>
             </div>
 
             <div style={{ overflow: 'hidden', marginBottom: '0.3rem' }}>
-              <h2 style={{ fontSize: 'clamp(2.6rem, 4.8vw, 5.2rem)', fontWeight: 400, lineHeight: 1.06 }}>
+              <h2 style={{ fontSize: 'var(--t-display-2)' }}>
                 <span className="about-word" style={{ display: 'inline-block', opacity: 0 }}>
-                  Diseño
+                  {t('about.title1')}
                 </span>
               </h2>
             </div>
             <div style={{ overflow: 'hidden', marginBottom: '2.8rem' }}>
               <h2
-                className="about-title-italic"
+                className="about-title-italic display-italic"
                 style={{
-                  fontSize: 'clamp(2.6rem, 4.8vw, 5.2rem)',
-                  fontWeight: 400,
-                  lineHeight: 1.06,
-                  fontStyle: 'italic',
-                  color: 'var(--accent)',
+                  fontSize: 'var(--t-display-2)',
                   marginLeft: 'var(--about-title-indent, 2.5rem)',
                 }}
               >
                 <span className="about-word" style={{ display: 'inline-block', opacity: 0 }}>
-                  Digital
+                  {t('about.title2')}
                 </span>
               </h2>
             </div>
 
-            <p
-              className="about-body"
-              style={{
-                fontSize: '1.02rem',
-                fontFamily: 'var(--font-sans)',
-                lineHeight: 2,
-                opacity: 0.72,
-                maxWidth: '460px',
-                marginBottom: '3rem',
-              }}
-            >
-              Ingeniero Multimedia en formación por la Universidad de San Buenaventura.
-              Combino producción audiovisual y 3D con ingeniería de plataformas web y PWAs,
-              construyendo soluciones digitales de alto rendimiento.
+            <p className="about-body body-copy" style={{ maxWidth: '46ch', marginBottom: '3rem' }}>
+              {t('about.body')}
             </p>
 
             <div className="about-body" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem' }}>
@@ -372,17 +293,17 @@ export default function About() {
                   className="discipline-pill"
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.68rem',
-                    letterSpacing: '0.1em',
+                    fontSize: 'var(--t-label)',
+                    letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     padding: '0.5rem 1.1rem',
-                    borderRadius: '100px',
+                    borderRadius: 'var(--r-pill)',
                     border: '1px solid',
                     borderColor: activeDiscipline === i ? 'var(--accent)' : 'var(--border-subtle)',
                     background: activeDiscipline === i ? 'var(--accent)' : 'transparent',
-                    color: activeDiscipline === i ? '#fff' : 'inherit',
+                    color: activeDiscipline === i ? 'var(--accent-contrast)' : 'var(--muted)',
                     opacity: 0,
-                    transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transition: 'all var(--dur-mid) var(--ease-out)',
                   }}
                 >
                   {d}
@@ -391,24 +312,24 @@ export default function About() {
             </div>
           </div>
 
-          {/* RIGHT: Stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+          {/* Cifras */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {stats.map((stat, i) => (
-              <StatCard key={stat.label} stat={stat} count={counts[i]} index={i} />
+              <StatCard
+                key={stat.label}
+                suffix={stat.suffix}
+                label={stat.label}
+                count={counts[i]}
+              />
             ))}
 
-            {/* University badge */}
             <div
-              className="about-stat"
+              className="about-stat surface-card"
               style={{
                 opacity: 0,
-                padding: '1.6rem 2.2rem',
-                borderRadius: '18px',
-                border: '1px solid var(--border-subtle)',
+                padding: '1.5rem 2.2rem',
                 background:
-                  'linear-gradient(135deg, rgba(var(--accent-rgb), 0.06) 0%, color-mix(in srgb, var(--background) 55%, rgba(255,255,255,0.06)) 100%)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: 'var(--card-shadow)',
+                  'linear-gradient(135deg, rgba(var(--accent-rgb), 0.07) 0%, color-mix(in srgb, var(--surface) 70%, transparent) 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1.2rem',
@@ -418,16 +339,25 @@ export default function About() {
                 style={{
                   width: '38px',
                   height: '38px',
-                  borderRadius: '10px',
+                  borderRadius: 'var(--r-sm)',
                   background: 'var(--accent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
-                  boxShadow: '0 4px 16px rgba(var(--accent-rgb), 0.35)',
                 }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--accent-contrast)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                   <path d="M6 12v5c3 3 9 3 12 0v-5" />
                 </svg>
@@ -436,24 +366,14 @@ export default function About() {
                 <div
                   style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.82rem',
+                    fontSize: 'var(--t-body-sm)',
                     fontWeight: 700,
-                    letterSpacing: '0.03em',
                   }}
                 >
-                  U. de San Buenaventura
+                  {t('about.university')}
                 </div>
-                <div
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.65rem',
-                    opacity: 0.45,
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    marginTop: '0.2rem',
-                  }}
-                >
-                  Ingeniería Multimedia · En formación
+                <div className="label-sm" style={{ marginTop: '0.25rem' }}>
+                  {t('about.degree')}
                 </div>
               </div>
             </div>
@@ -462,26 +382,32 @@ export default function About() {
       </div>
 
       <style>{`
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 6rem;
+          align-items: center;
+        }
+
+        /* El colapso a una columna se declara aqui, con una clase propia.
+           Antes dependia de #about .container > div, que se rompe si cambia
+           el orden del markup. */
         @media (max-width: 900px) {
-          #about .container > div {
-            grid-template-columns: 1fr !important;
-            gap: 4rem !important;
+          .about-grid {
+            grid-template-columns: 1fr;
+            gap: 4rem;
             text-align: center;
           }
-          .about-title-italic { --about-title-indent: 0; }
-          .about-body {
-            max-width: 100% !important;
-            margin: 0 auto 3rem !important;
-          }
-          .about-accent-line { display: none; }
-          #about .container > div > div:first-child {
+          .about-copy {
             display: flex;
             flex-direction: column;
             align-items: center;
           }
-          .discipline-pill {
-            justify-content: center;
-          }
+          .about-title-italic { --about-title-indent: 0; }
+          .about-accent-line { display: none; }
+          .about-body { margin-left: auto; margin-right: auto; }
+          .about-copy .about-body:last-child { justify-content: center; }
+          .about-stat { text-align: left; }
         }
       `}</style>
     </section>

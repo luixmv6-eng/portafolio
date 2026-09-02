@@ -12,39 +12,58 @@ import { ThemeProvider } from "@/context/ThemeContext";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+  display: "swap",
 });
 
+const description =
+  "Pedro Luis Martinez, Ingeniero Multimedia. Diseno y construyo plataformas web, PWAs y piezas 3D con foco en rendimiento y detalle visual.";
+
+// La tarjeta OG necesita una URL absoluta. Se resuelve del entorno en vez de
+// fijar un dominio: en Vercel VERCEL_PROJECT_PRODUCTION_URL ya viene puesta, y
+// NEXT_PUBLIC_SITE_URL permite forzar un dominio propio.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined);
+
 export const metadata: Metadata = {
-  title: "Pedro | Creative Developer & Designer",
-  description:
-    "A premium personal portfolio with a warm minimalist aesthetic and refined interactivity, showcasing high-end digital design and development projects.",
+  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+  title: "Pedro Luis Martinez | Ingeniero Multimedia & Desarrollador Web",
+  description,
   openGraph: {
-    title: "Pedro | Creative Developer",
-    description: "Digital experiences that blend aesthetics with robust engineering.",
-    url: "https://tu-nombre.vercel.app",
-    siteName: "Pedro's Portfolio",
-    images: [
-      {
-        url: "https://fastly.picsum.photos/id/473/1200/630.jpg?hmac=320jOhZlOQY23C2Lh-YtFfL_lFzjA117m1f9z5j74jA",
-        width: 1200,
-        height: 630,
-      },
-    ],
+    title: "Pedro Luis Martinez | Ingeniero Multimedia & Desarrollador Web",
+    description,
+    siteName: "Pedro Luis Martinez",
     locale: "es_ES",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pedro | Creative Developer",
-    description: "Digital experiences that blend aesthetics with robust engineering.",
-    creator: "@tuusuario",
+    title: "Pedro Luis Martinez | Ingeniero Multimedia & Desarrollador Web",
+    description,
+    creator: "@LuixMv",
   },
 };
+
+// Corre antes del primer paint: sin esto, quien eligio tema oscuro ve un
+// destello del tema claro mientras React hidrata.
+const themeScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -53,6 +72,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className={`${inter.variable} ${playfair.variable}`}>
         <ThemeProvider>
           <LanguageProvider>

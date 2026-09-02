@@ -4,25 +4,21 @@ import { ReactElement, useEffect, useRef, useState } from 'react';
 
 const CHAPTERS = [
   {
-    index: '01',
     tag: 'ORIGEN',
     title: 'Curioso por\nnaturaleza',
-    body: 'Desde el primer render en Blender hasta el primer deploy en producción, siempre busqué la intersección entre lo visual y lo funcional. La ingeniería multimedia no fue una elección — fue un destino.',
+    body: 'Desde el primer render en Blender hasta el primer deploy en producción, siempre busqué la intersección entre lo visual y lo funcional. La ingeniería multimedia no fue una elección, fue un destino.',
   },
   {
-    index: '02',
     tag: 'DISEÑO',
-    title: 'Donde el arte\nmeets el código',
-    body: 'El diseño no es decoración — es arquitectura invisible. Cada píxel, cada transición, cada jerarquía tipográfica cuenta una historia antes de que el usuario lea una sola palabra.',
+    title: 'Donde el arte\nse encuentra con el código',
+    body: 'El diseño no es decoración, es arquitectura invisible. Cada píxel, cada transición, cada jerarquía tipográfica cuenta una historia antes de que el usuario lea una sola palabra.',
   },
   {
-    index: '03',
     tag: 'CONSTRUCCIÓN',
     title: 'PWAs que\nrespiran',
-    body: 'Construyo plataformas escalables con Next.js, Supabase e IA integrada. Plataformas que no solo funcionan — que piensan, aprenden y se adaptan a quien las usa.',
+    body: 'Construyo plataformas escalables con Next.js, Supabase e IA integrada. Plataformas que no solo funcionan: piensan, aprenden y se adaptan a quien las usa.',
   },
   {
-    index: '04',
     tag: 'VISIÓN',
     title: 'Contigo,\nlo siguiente',
     body: 'El mejor trabajo surge de la colaboración. Aporto rigor técnico, criterio visual y energía creativa. ¿Qué construimos juntos?',
@@ -33,68 +29,88 @@ export default function ImmersiveJourney() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [chapter, setChapter] = useState(0);
-  const [localProgress, setLocalProgress] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const smoothRef = useRef({ x: 0, y: 0 });
 
-  // Chapter-local progress [0..1] within current chapter
-  const chapterProgressRef = useRef(0);
-
+  // Un solo rAF para scroll y mouse, activo solo mientras la seccion se ve.
+  // Antes eran dos loops permanentes mas un listener de scroll que llamaba
+  // setLocalProgress en cada frame: la seccion entera re-renderizaba a 60fps.
   useEffect(() => {
-    const onScroll = () => {
-      if (!wrapperRef.current) return;
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const totalH = wrapperRef.current.offsetHeight - window.innerHeight;
-      if (totalH <= 0) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-      const scrolled = -rect.top;
-      const clamped = Math.min(Math.max(scrolled / totalH, 0), 1);
-      setLocalProgress(clamped);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const rawIdx = clamped * CHAPTERS.length;
-      const idx = Math.min(Math.floor(rawIdx), CHAPTERS.length - 1);
-      const cp = rawIdx - Math.floor(rawIdx);
-      chapterProgressRef.current = cp;
-      setChapter(idx);
-    };
+    const mouse = { x: 0, y: 0 };
+    const smooth = { x: 0, y: 0 };
+    let raf = 0;
+    let running = false;
+    let lastChapter = -1;
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseRef.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+      mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
     };
-    window.addEventListener('mousemove', onMove, { passive: true });
+
+    const readScroll = () => {
+      const totalH = wrapper.offsetHeight - window.innerHeight;
+      if (totalH <= 0) return;
+      const scrolled = -wrapper.getBoundingClientRect().top;
+      const progress = Math.min(Math.max(scrolled / totalH, 0), 1);
+
+      // La barra se escala con una custom property: cero trabajo en React.
+      progressRef.current?.style.setProperty('--ij-progress', String(progress));
+
+      const idx = Math.min(Math.floor(progress * CHAPTERS.length), CHAPTERS.length - 1);
+      // setState solo cuando el capitulo realmente cambia, no cada frame.
+      if (idx !== lastChapter) {
+        lastChapter = idx;
+        setChapter(idx);
+      }
+    };
 
     const loop = () => {
-      smoothRef.current.x += (mouseRef.current.x - smoothRef.current.x) * 0.07;
-      smoothRef.current.y += (mouseRef.current.y - smoothRef.current.y) * 0.07;
+      readScroll();
 
-      // Move cursor glow
-      const follower = stickyRef.current?.querySelector('.ij-follower') as HTMLElement | null;
-      if (follower) {
-        follower.style.transform = `translate(calc(-50% + ${smoothRef.current.x * 80}px), calc(-50% + ${smoothRef.current.y * 50}px))`;
+      if (!reduced) {
+        smooth.x += (mouse.x - smooth.x) * 0.07;
+        smooth.y += (mouse.y - smooth.y) * 0.07;
+
+        const follower = stickyRef.current?.querySelector('.ij-follower') as HTMLElement | null;
+        if (follower) {
+          follower.style.transform = `translate(calc(-50% + ${smooth.x * 80}px), calc(-50% + ${smooth.y * 50}px))`;
+        }
+        if (bgRef.current) {
+          bgRef.current.style.setProperty('--ij-bg-x', `${50 + smooth.x * 6}%`);
+          bgRef.current.style.setProperty('--ij-bg-y', `${42 + smooth.y * 5}%`);
+        }
       }
 
-      // Subtle radial bg shift
-      if (bgRef.current) {
-        const bx = 50 + smoothRef.current.x * 6;
-        const by = 42 + smoothRef.current.y * 5;
-        bgRef.current.style.background = `radial-gradient(ellipse 70% 55% at ${bx}% ${by}%, rgba(var(--accent-rgb), 0.065) 0%, transparent 70%)`;
-      }
-
-      rafRef.current = requestAnimationFrame(loop);
+      raf = requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !running) {
+          running = true;
+          if (!reduced) window.addEventListener('mousemove', onMove, { passive: true });
+          raf = requestAnimationFrame(loop);
+        } else if (!entry.isIntersecting && running) {
+          running = false;
+          window.removeEventListener('mousemove', onMove);
+          cancelAnimationFrame(raf);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(wrapper);
+    readScroll();
+
     return () => {
+      observer.disconnect();
       window.removeEventListener('mousemove', onMove);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -109,7 +125,7 @@ export default function ImmersiveJourney() {
         style={{
           position: 'sticky',
           top: 0,
-          height: '100vh',
+          height: '100dvh',
           overflow: 'hidden',
           background: 'var(--background)',
           display: 'flex',
@@ -117,14 +133,16 @@ export default function ImmersiveJourney() {
           justifyContent: 'center',
         }}
       >
-        {/* Radial gradient bg — mouse driven */}
+        {/* Radial gradient bg, sigue al mouse via custom properties */}
         <div
           ref={bgRef}
+          aria-hidden="true"
           style={{
             position: 'absolute',
             inset: 0,
             pointerEvents: 'none',
-            background: 'radial-gradient(ellipse 70% 55% at 50% 42%, rgba(var(--accent-rgb), 0.065) 0%, transparent 70%)',
+            background:
+              'radial-gradient(ellipse 70% 55% at var(--ij-bg-x, 50%) var(--ij-bg-y, 42%), rgba(var(--accent-rgb), 0.065) 0%, transparent 70%)',
           }}
         />
 
@@ -144,45 +162,20 @@ export default function ImmersiveJourney() {
           }}
         />
 
-        {/* Top meta row */}
-        <div style={{
-          position: 'absolute',
-          top: '2.5rem',
-          left: '4vw',
-          right: '4vw',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.5rem',
-        }}>
-          <span style={{
-            fontFamily: 'monospace',
-            fontSize: '0.58rem',
-            letterSpacing: '0.38em',
-            textTransform: 'uppercase',
-            color: 'var(--accent)',
-            opacity: 0.7,
-          }}>◆ HISTORIA</span>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }} />
-          <span style={{
-            fontFamily: 'monospace',
-            fontSize: '0.58rem',
-            letterSpacing: '0.28em',
-            opacity: 0.35,
-          }}>
-            {String(chapter + 1).padStart(2, '0')} / {String(CHAPTERS.length).padStart(2, '0')}
-          </span>
-        </div>
-
-        {/* Chapter stepper — right side */}
-        <div style={{
-          position: 'absolute',
-          right: '2.5vw',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}>
+        {/* Indicador de capitulo. Es la unica ayuda de posicion de la seccion:
+            reemplaza la fila superior con "◆ HISTORIA" y el contador "01 / 04". */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            right: '2.5vw',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+          }}
+        >
           {CHAPTERS.map((_, i) => (
             <div key={i} style={{
               width: i === chapter ? '26px' : '7px',
@@ -190,21 +183,27 @@ export default function ImmersiveJourney() {
               borderRadius: '2px',
               background: i === chapter ? 'var(--accent)' : 'var(--border-subtle)',
               opacity: i <= chapter ? 1 : 0.4,
-              transition: 'all 0.45s cubic-bezier(0.16,1,0.3,1)',
+              transition: 'all var(--dur-mid) var(--ease-out)',
             }} />
           ))}
         </div>
 
-        {/* Progress bar */}
-        <div style={{
-          position: 'absolute',
-          left: 0, bottom: 0,
-          height: '2px',
-          width: `${localProgress * 100}%`,
-          background: 'var(--accent)',
-          opacity: 0.6,
-          transition: 'width 0.06s linear',
-        }} />
+        {/* Barra de progreso. scaleX en vez de width: no fuerza layout. */}
+        <div
+          ref={progressRef}
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            bottom: 0,
+            height: '2px',
+            width: '100%',
+            transformOrigin: 'left center',
+            transform: 'scaleX(var(--ij-progress, 0))',
+            background: 'var(--accent)',
+            opacity: 0.6,
+          }}
+        />
 
         {/* Chapter slides — all stacked with CSS crossfade */}
         <div style={{ position: 'relative', width: '100%', maxWidth: '1100px', padding: '0 5vw', zIndex: 2 }}>
@@ -215,14 +214,10 @@ export default function ImmersiveJourney() {
             const opacity = isActive ? 1 : 0;
             const ty = isActive ? 0 : (isPast ? -45 : 45);
 
-            // Progress within active chapter for SVG visuals
-            const raw = localProgress * CHAPTERS.length;
-            const chLocal = Math.min(Math.max(raw - i, 0), 1);
-            const visualProgress = isActive ? Math.min(chLocal * 3, 1) : (isPast ? 1 : 0);
-
             return (
               <div
                 key={i}
+                aria-hidden={!isActive}
                 style={{
                   position: 'absolute',
                   top: '50%',
@@ -232,60 +227,48 @@ export default function ImmersiveJourney() {
                   opacity,
                   pointerEvents: isActive ? 'auto' : 'none',
                   willChange: 'transform, opacity',
-                  transition: 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)',
+                  transition: 'opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out)',
                 }}
               >
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: 'clamp(2rem, 5vw, 6rem)',
-                  alignItems: 'center',
-                }}>
+                <div className="ij-slide-grid">
                   {/* Left: text */}
                   <div>
+                    {/* El nombre del capitulo. Antes venia con un numero
+                        monospace "01" delante que solo repetia el indicador
+                        lateral. */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.8rem' }}>
-                      <span style={{
-                        fontFamily: 'monospace',
-                        fontSize: '0.6rem',
-                        letterSpacing: '0.4em',
-                        color: 'var(--accent)',
-                        opacity: 0.85,
-                      }}>{ch.index}</span>
-                      <div style={{ width: '30px', height: '1px', background: 'var(--accent)', opacity: 0.45 }} />
-                      <span style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.6rem',
-                        letterSpacing: '0.35em',
-                        textTransform: 'uppercase',
-                        opacity: 0.5,
-                      }}>{ch.tag}</span>
+                      <div
+                        aria-hidden="true"
+                        style={{ width: '30px', height: '1px', background: 'var(--accent)', opacity: 0.45 }}
+                      />
+                      <span className="label-sm">{ch.tag}</span>
                     </div>
 
                     <h2 style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: 'clamp(2.4rem, 5vw, 5rem)',
-                      lineHeight: 1.1,
-                      fontWeight: 400,
+                      fontSize: 'var(--t-display-2)',
                       marginBottom: '2.2rem',
                       whiteSpace: 'pre-line',
                     }}>
                       {ch.title}
                     </h2>
 
-                    <p style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: 'clamp(0.95rem, 1.15vw, 1.12rem)',
-                      lineHeight: 1.9,
-                      opacity: 0.7,
-                      maxWidth: '440px',
-                    }}>
+                    <p className="body-copy" style={{ maxWidth: '440px' }}>
                       {ch.body}
                     </p>
                   </div>
 
-                  {/* Right: visual */}
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <ChapterVisual index={i} progress={visualProgress} />
+                  {/* Right: visual. Aparece con una transicion CSS al activarse
+                      en vez de recalcular opacidades en cada frame. */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      opacity: isActive || isPast ? 1 : 0,
+                      transition: 'opacity var(--dur-slow) var(--ease-out)',
+                    }}
+                  >
+                    <ChapterVisual index={i} />
                   </div>
                 </div>
               </div>
@@ -295,37 +278,14 @@ export default function ImmersiveJourney() {
           {/* Spacer so absolute children have context */}
           <div style={{ height: '60vh', pointerEvents: 'none' }} />
         </div>
-
-        {/* Scroll hint */}
-        <div style={{
-          position: 'absolute',
-          bottom: '2.5rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '0.5rem',
-          opacity: localProgress > 0.88 ? 0 : 0.38,
-          transition: 'opacity 0.6s ease',
-        }}>
-          <span style={{ fontFamily: 'monospace', fontSize: '0.48rem', letterSpacing: '0.35em', textTransform: 'uppercase' }}>
-            SCROLL
-          </span>
-          <div style={{
-            width: '1px',
-            height: '26px',
-            background: 'var(--foreground)',
-            transformOrigin: 'top center',
-            animation: 'ij-hint 1.9s ease-in-out infinite',
-          }} />
-        </div>
       </div>
 
       <style>{`
-        @keyframes ij-hint {
-          0%, 100% { transform: scaleY(0.25); opacity: 0.25; }
-          55%       { transform: scaleY(1); opacity: 0.65; }
+        .ij-slide-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(2rem, 5vw, 6rem);
+          align-items: center;
         }
         @keyframes ij-spin {
           to { transform: rotate(360deg); }
@@ -338,16 +298,21 @@ export default function ImmersiveJourney() {
           50%       { transform: scale(1.14); opacity: 0.14; }
         }
         @media (max-width: 768px) {
-          #journey > div > div[style*="grid-template-columns"] {
-            grid-template-columns: 1fr !important;
+          .ij-slide-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+            justify-items: center;
           }
+          .ij-slide-grid .body-copy { margin: 0 auto; }
         }
       `}</style>
     </div>
   );
 }
 
-function ChapterVisual({ index, progress }: { index: number; progress: number }) {
+// El fundido lo hace el contenedor con una transicion CSS, no un valor
+// recalculado en cada frame de scroll. `progress` queda como escala fija.
+function ChapterVisual({ index, progress = 1 }: { index: number; progress?: number }) {
   const S = 240;
   const C = S / 2;
 

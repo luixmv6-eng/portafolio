@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Send, User, Mail, MessageSquare, CheckCircle } from 'lucide-react';
 
-
 type FormData = {
   name: string;
   email: string;
@@ -20,6 +19,7 @@ export default function ContactForm() {
   const [submitError, setSubmitError] = useState(false);
 
   const onSubmit = async (data: FormData) => {
+    setSubmitError(false);
     try {
       const response = await fetch('https://formsubmit.co/ajax/luixmv6@gmail.com', {
         method: 'POST',
@@ -37,15 +37,14 @@ export default function ContactForm() {
           _autoresponse: 'Estimado/a,\n\nMuchas gracias por ponerte en contacto. Confirmo la correcta recepción de tu mensaje.\n\nEstaré analizando los detalles de tu solicitud y me comunicaré contigo a la brevedad posible para conversar sobre tu proyecto y explorar cómo podemos generar valor juntos.\n\nAgradezco sinceramente tu interés y el tiempo dedicado a escribirme.\n\nUn cordial saludo,\n\nPedro\nIngeniero Multimedia & Diseño Digital'
         })
       });
-      
+
       if (response.ok) {
         reset();
         setIsSuccess(true);
-        setSubmitError(false);
       } else {
         setSubmitError(true);
       }
-    } catch (error) {
+    } catch {
       setSubmitError(true);
     }
   };
@@ -53,47 +52,46 @@ export default function ContactForm() {
   if (isSuccess) {
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
+        role="status"
+        className="surface-card"
         style={{
           maxWidth: '600px',
           margin: '0 auto',
-          padding: '4rem 3rem',
+          padding: '3.5rem 2.5rem',
           textAlign: 'center',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid var(--border-subtle)',
-          borderRadius: '24px',
-          backdropFilter: 'blur(10px)',
+          borderRadius: 'var(--r-lg)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '1.5rem'
+          gap: '1.25rem'
         }}
       >
         <div style={{
-          width: '80px',
-          height: '80px',
+          width: '64px',
+          height: '64px',
           borderRadius: '50%',
-          background: 'rgba(74, 222, 128, 0.1)',
-          border: '1px solid rgba(74, 222, 128, 0.3)',
+          background: 'color-mix(in srgb, var(--success) 12%, transparent)',
+          border: '1px solid color-mix(in srgb, var(--success) 35%, transparent)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <CheckCircle size={40} color="#4ade80" />
+          <CheckCircle size={30} color="var(--success)" aria-hidden="true" />
         </div>
-        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', fontWeight: 400 }}>
-          ¡Mensaje en camino!
+        <h3 style={{ fontSize: 'var(--t-display-4)' }}>
+          {t('contact.successTitle')}
         </h3>
-        <p style={{ fontFamily: 'var(--font-sans)', opacity: 0.7, lineHeight: 1.8, fontSize: '1.1rem' }}>
-          Gracias por contactarme. He recibido tu mensaje y me pondré en contacto contigo lo más pronto posible.
+        <p className="body-copy" style={{ maxWidth: '40ch' }}>
+          {t('contact.successBody')}
         </p>
         <button
           onClick={() => setIsSuccess(false)}
           className="premium-button"
-          style={{ marginTop: '1.5rem', opacity: 0.8 }}
+          style={{ marginTop: '0.75rem' }}
         >
-          Enviar otro mensaje
+          {t('contact.sendAnother')}
         </button>
       </motion.div>
     );
@@ -101,148 +99,132 @@ export default function ContactForm() {
 
   return (
     <motion.form
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       style={{
         maxWidth: '600px',
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
+        gap: '1.5rem',
+        textAlign: 'left',
       }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', letterSpacing: '0.05em', opacity: 0.7 }}>
-          {t('contact.name') || 'Name'}
+      {/* label asociada al input con htmlFor/id: antes eran labels sueltas,
+          asi que ni el clic ni el lector de pantalla las vinculaba. */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <label htmlFor="contact-name" className="label">
+          {t('contact.name')}
         </label>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '1rem', 
-          padding: '1.5rem', 
-          border: '1px solid var(--border-subtle)', 
-          borderRadius: '16px',
-          background: 'rgba(255,255,255,0.03)',
-          backdropFilter: 'blur(10px)',
-        }}>
-          <User size={24} opacity={0.5} />
+        <div className="field" data-invalid={errors.name ? 'true' : 'false'}>
+          <User size={20} aria-hidden="true" style={{ opacity: 0.5, flexShrink: 0 }} />
           <input
+            id="contact-name"
+            autoComplete="name"
+            aria-invalid={errors.name ? 'true' : 'false'}
+            aria-describedby={errors.name ? 'contact-name-error' : undefined}
             {...register('name', { required: true })}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '1.1rem',
-              color: 'var(--foreground)',
-              width: '100%',
-              outline: 'none',
-            }}
-            placeholder={t('contact.namePlaceholder') || 'Your name'}
+            placeholder={t('contact.namePlaceholder')}
           />
         </div>
-        {errors.name && <span style={{ color: 'var(--accent)', fontSize: '0.8rem' }}>Name is required</span>}
+        {errors.name && (
+          <span id="contact-name-error" role="alert" className="field-error">
+            {t('contact.errors.name')}
+          </span>
+        )}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', letterSpacing: '0.05em', opacity: 0.7 }}>
-          {t('contact.email') || 'Email'}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <label htmlFor="contact-email" className="label">
+          {t('contact.email')}
         </label>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '1rem', 
-          padding: '1.5rem', 
-          border: '1px solid var(--border-subtle)', 
-          borderRadius: '16px',
-          background: 'rgba(255,255,255,0.03)',
-          backdropFilter: 'blur(10px)',
-        }}>
-          <Mail size={24} opacity={0.5} />
+        <div className="field" data-invalid={errors.email ? 'true' : 'false'}>
+          <Mail size={20} aria-hidden="true" style={{ opacity: 0.5, flexShrink: 0 }} />
           <input
+            id="contact-email"
             type="email"
-            {...register('email', { required: true })}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '1.1rem',
-              color: 'var(--foreground)',
-              width: '100%',
-              outline: 'none',
-            }}
-            placeholder={t('contact.emailPlaceholder') || 'your@email.com'}
+            autoComplete="email"
+            aria-invalid={errors.email ? 'true' : 'false'}
+            aria-describedby={errors.email ? 'contact-email-error' : undefined}
+            {...register('email', { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ })}
+            placeholder={t('contact.emailPlaceholder')}
           />
         </div>
-        {errors.email && <span style={{ color: 'var(--accent)', fontSize: '0.8rem' }}>Valid email required</span>}
+        {errors.email && (
+          <span id="contact-email-error" role="alert" className="field-error">
+            {t('contact.errors.email')}
+          </span>
+        )}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', letterSpacing: '0.05em', opacity: 0.7 }}>
-          {t('contact.message') || 'Message'}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <label htmlFor="contact-message" className="label">
+          {t('contact.message')}
         </label>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'flex-start', 
-          gap: '1rem', 
-          padding: '1.5rem', 
-          border: '1px solid var(--border-subtle)', 
-          borderRadius: '16px',
-          background: 'rgba(255,255,255,0.03)',
-          backdropFilter: 'blur(10px)',
-        }}>
-          <MessageSquare size={24} opacity={0.5} />
+        <div
+          className="field"
+          data-invalid={errors.message ? 'true' : 'false'}
+          style={{ alignItems: 'flex-start' }}
+        >
+          <MessageSquare size={20} aria-hidden="true" style={{ opacity: 0.5, flexShrink: 0, marginTop: '0.2rem' }} />
           <textarea
-            {...register('message', { required: true })}
+            id="contact-message"
             rows={5}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '1.1rem',
-              color: 'var(--foreground)',
-              width: '100%',
-              outline: 'none',
-              resize: 'vertical',
-            }}
-            placeholder={t('contact.messagePlaceholder') || 'Tell me about your project...'}
+            aria-invalid={errors.message ? 'true' : 'false'}
+            aria-describedby={errors.message ? 'contact-message-error' : undefined}
+            {...register('message', { required: true })}
+            placeholder={t('contact.messagePlaceholder')}
+            style={{ resize: 'vertical' }}
           />
         </div>
-        {errors.message && <span style={{ color: 'var(--accent)', fontSize: '0.8rem' }}>Message is required</span>}
+        {errors.message && (
+          <span id="contact-message-error" role="alert" className="field-error">
+            {t('contact.errors.message')}
+          </span>
+        )}
       </div>
 
-      <motion.button
+      <button
         type="submit"
         disabled={isSubmitting}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
         style={{
-          display: 'flex',
+          display: 'inline-flex',
           alignItems: 'center',
-          gap: '1rem',
-          padding: '1.5rem 3rem',
+          justifyContent: 'center',
+          gap: '0.75rem',
+          padding: '1.1rem 2.5rem',
           background: 'var(--foreground)',
           color: 'var(--background)',
-          border: 'none',
-          borderRadius: '100px',
+          border: '1px solid var(--foreground)',
+          borderRadius: 'var(--r-sm)',
           fontFamily: 'var(--font-sans)',
-          fontSize: '1.1rem',
-          fontWeight: 600,
-          letterSpacing: '0.05em',
-          cursor: 'pointer',
-          marginTop: '1rem',
-          transition: 'all 0.3s ease',
+          fontSize: 'var(--t-label)',
+          fontWeight: 700,
+          letterSpacing: 'var(--track-label)',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          cursor: isSubmitting ? 'progress' : 'pointer',
+          opacity: isSubmitting ? 0.65 : 1,
+          marginTop: '0.5rem',
+          alignSelf: 'flex-start',
+          transition: 'opacity var(--dur-fast) ease, transform var(--dur-fast) ease',
         }}
+        onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)'; }}
+        onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
       >
-        {isSubmitting ? 'Enviando...' : (t('contact.send') || 'Send Message')}
-        <Send size={20} />
-      </motion.button>
+        {isSubmitting ? t('contact.sending') : t('contact.send')}
+        <Send size={16} aria-hidden="true" />
+      </button>
+
       {submitError && (
-        <span style={{ color: 'var(--accent)', textAlign: 'center', marginTop: '1rem', fontFamily: 'var(--font-sans)' }}>
-          Hubo un problema al enviar el mensaje. Inténtalo directamente en luixmv6@gmail.com
+        <span role="alert" className="field-error">
+          {t('contact.errorBody')}
         </span>
       )}
     </motion.form>
   );
 }
-

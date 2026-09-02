@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
+const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, label';
+
 export default function Cursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
@@ -11,44 +13,78 @@ export default function Cursor() {
     const dot = dotRef.current;
     if (!ring || !dot) return;
 
-    const moveCursor = (e: MouseEvent) => {
-      const { clientX: x, clientY: y } = e;
+    // Solo donde hay un mouse real y el usuario no pidio menos movimiento.
+    const canUse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canUse || reduced) return;
 
-      dot.style.left = `${x}px`;
-      dot.style.top = `${y}px`;
+    const root = document.documentElement;
+    root.classList.add('has-custom-cursor');
 
-      ring.animate(
-        { left: `${x}px`, top: `${y}px` },
-        { duration: 600, fill: 'forwards', easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
-      );
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const ringPos = { ...target };
+    let raf = 0;
+
+    const onMove = (e: MouseEvent) => {
+      target.x = e.clientX;
+      target.y = e.clientY;
     };
 
-    const onEnter = () => ring.classList.add('cursor-hover');
-    const onLeave = () => ring.classList.remove('cursor-hover');
+    // transform en vez de left/top: no dispara layout en cada frame.
+    const loop = () => {
+      ringPos.x += (target.x - ringPos.x) * 0.18;
+      ringPos.y += (target.y - ringPos.y) * 0.18;
+      ring.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0) translate(-50%, -50%)`;
+      dot.style.transform = `translate3d(${target.x}px, ${target.y}px, 0) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
 
-    const bindInteractive = () => {
-      document.querySelectorAll('a, button, [role="button"], input, textarea, select, label').forEach((el) => {
-        el.addEventListener('mouseenter', onEnter);
-        el.addEventListener('mouseleave', onLeave);
-      });
+    // Delegacion: dos listeners fijos en lugar de re-vincular todo el DOM cada
+    // vez que muta. La version anterior acumulaba listeners duplicados sin
+    // quitarlos nunca.
+    const onOver = (e: MouseEvent) => {
+      if ((e.target as Element)?.closest?.(INTERACTIVE)) {
+        ring.classList.add('cursor-hover');
+      }
+    };
+    const onOut = (e: MouseEvent) => {
+      if ((e.target as Element)?.closest?.(INTERACTIVE)) {
+        ring.classList.remove('cursor-hover');
+      }
     };
 
-    bindInteractive();
-    window.addEventListener('mousemove', moveCursor);
+    // Ocultar cuando el puntero sale de la ventana.
+    const onLeaveWindow = () => {
+      ring.style.opacity = '0';
+      dot.style.opacity = '0';
+    };
+    const onEnterWindow = () => {
+      ring.style.opacity = '1';
+      dot.style.opacity = '1';
+    };
 
-    const observer = new MutationObserver(bindInteractive);
-    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    document.addEventListener('mouseover', onOver);
+    document.addEventListener('mouseout', onOut);
+    document.addEventListener('mouseleave', onLeaveWindow);
+    document.addEventListener('mouseenter', onEnterWindow);
 
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      observer.disconnect();
+      cancelAnimationFrame(raf);
+      root.classList.remove('has-custom-cursor');
+      window.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseover', onOver);
+      document.removeEventListener('mouseout', onOut);
+      document.removeEventListener('mouseleave', onLeaveWindow);
+      document.removeEventListener('mouseenter', onEnterWindow);
     };
   }, []);
 
   return (
     <>
-      <div ref={ringRef} className="cursor-ring" style={{ transform: 'translate(-50%, -50%)' }} />
-      <div ref={dotRef} className="cursor-dot" style={{ transform: 'translate(-50%, -50%)' }} />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
     </>
   );
 }

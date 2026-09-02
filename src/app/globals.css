@@ -1,73 +1,172 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Una sola paleta de marca (cian) en dos modos. Nada de un tercer tema.
+
+   Modo:
+   - :root                         -> claro (definicion completa)
+   - @media dark + :not([light])   -> oscuro cuando el SO lo pide y el usuario
+                                      no forzo claro  ("system")
+   - :root[data-theme="dark"]      -> oscuro forzado por el toggle
+   ========================================================================== */
+
 :root {
+  /* Superficies */
   --background: #f8f9fb;
   --background-alt: #eef2f7;
+  --surface: #ffffff;
+  --surface-raised: rgba(15, 23, 42, 0.025);
+  --surface-sunken: rgba(15, 23, 42, 0.04);
+
+  /* Texto */
   --foreground: #0c1420;
-  --accent: #0ea5e9;
-  --accent-alt: #0284c7;
-  --accent-rgb: 14, 165, 233;
-  --secondary: #e2e8f0;
+  --muted: rgba(15, 23, 42, 0.58);
+  --faint: rgba(15, 23, 42, 0.4);
+
+  /* Marca */
+  --accent: #0284c7;
+  --accent-alt: #0369a1;
+  --accent-rgb: 2, 132, 199;
+  --accent-contrast: #ffffff;
+
+  /* Estado */
+  --danger: #b42318;
+  --success: #067647;
+
+  /* Lineas */
   --border-subtle: rgba(15, 23, 42, 0.11);
-  --muted: rgba(15, 23, 42, 0.52);
-  --progress-bg: rgba(14, 165, 233, 0.2);
+  --border-strong: rgba(15, 23, 42, 0.2);
+
+  /* Compat heredada */
+  --secondary: #e2e8f0;
+  --progress-bg: rgba(2, 132, 199, 0.2);
+
+  /* Elevacion. La sombra se tinta con el fondo, nunca negro puro. */
+  --card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px rgba(15, 23, 42, 0.05);
+  --card-shadow-hover: 0 1px 2px rgba(15, 23, 42, 0.05), 0 24px 56px rgba(15, 23, 42, 0.09);
+  --ring: 0 0 0 3px rgba(var(--accent-rgb), 0.28);
+
+  /* ---- Tipografia ---- */
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
-  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --card-shadow: 0 0 0 1px var(--border-subtle), 0 24px 64px rgba(15, 23, 42, 0.06);
-  --card-shadow-hover: 0 0 0 1px color-mix(in srgb, var(--accent) 20%, var(--border-subtle)), 0 32px 80px rgba(15, 23, 42, 0.1);
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+
+  /* Escala fluida. Un solo set de tamanos para toda la pagina. */
+  --t-display-1: clamp(2.75rem, 8vw, 8.5rem);
+  --t-display-2: clamp(2.25rem, 5vw, 5rem);
+  --t-display-3: clamp(1.6rem, 3vw, 2.75rem);
+  --t-display-4: clamp(1.35rem, 2vw, 1.85rem);
+  --t-body-lg: clamp(1rem, 1.05vw, 1.125rem);
+  --t-body: 1rem;
+  --t-body-sm: 0.9375rem;
+  --t-label: 0.75rem;
+  --t-label-sm: 0.6875rem;
+
+  /* Tracking. Las mayusculas SIEMPRE abren, nunca cierran. */
+  --track-display: -0.025em;
+  --track-caps: 0.02em;
+  --track-label: 0.16em;
+  --track-label-wide: 0.26em;
+
+  /* ---- Espaciado ---- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --section-y: clamp(6rem, 11vh, 10rem);
+  --gutter: 4vw;
+
+  /* ---- Radios (bloqueado) ----
+     controles e imagenes -> sm | tarjetas -> md | overlays -> lg | pastillas -> pill */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  /* ---- Movimiento ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.2s;
+  --dur-mid: 0.4s;
+  --dur-slow: 0.7s;
+  --transition-smooth: var(--dur-mid) var(--ease-out);
+}
+
+/* Oscuro: mismos roles, mismos nombres. Solo cambian los valores. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #060810;
+    --background-alt: #0c1121;
+    --surface: #0e1424;
+    --surface-raised: rgba(255, 255, 255, 0.04);
+    --surface-sunken: rgba(0, 0, 0, 0.25);
+
+    --foreground: #e8eaf2;
+    --muted: rgba(232, 234, 242, 0.6);
+    --faint: rgba(232, 234, 242, 0.42);
+
+    --accent: #38bdf8;
+    --accent-alt: #7dd3fc;
+    --accent-rgb: 56, 189, 248;
+    --accent-contrast: #04121c;
+
+    --danger: #fda29b;
+    --success: #75e0a7;
+
+    --border-subtle: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.2);
+
+    --secondary: #111827;
+    --progress-bg: rgba(56, 189, 248, 0.25);
+
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.35);
+    --card-shadow-hover: 0 1px 2px rgba(0, 0, 0, 0.35), 0 24px 56px rgba(0, 0, 0, 0.5);
+    --ring: 0 0 0 3px rgba(var(--accent-rgb), 0.35);
+  }
 }
 
 :root[data-theme="dark"] {
   --background: #060810;
   --background-alt: #0c1121;
+  --surface: #0e1424;
+  --surface-raised: rgba(255, 255, 255, 0.04);
+  --surface-sunken: rgba(0, 0, 0, 0.25);
+
   --foreground: #e8eaf2;
+  --muted: rgba(232, 234, 242, 0.6);
+  --faint: rgba(232, 234, 242, 0.42);
+
   --accent: #38bdf8;
-  --accent-alt: #0ea5e9;
+  --accent-alt: #7dd3fc;
   --accent-rgb: 56, 189, 248;
+  --accent-contrast: #04121c;
+
+  --danger: #fda29b;
+  --success: #75e0a7;
+
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
   --secondary: #111827;
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --muted: rgba(232, 234, 242, 0.52);
   --progress-bg: rgba(56, 189, 248, 0.25);
-  --card-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 24px 64px rgba(0, 0, 0, 0.35);
-  --card-shadow-hover: 0 0 0 1px rgba(56,189,248,0.2), 0 32px 80px rgba(0, 0, 0, 0.5);
+
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: 0 1px 2px rgba(0, 0, 0, 0.35), 0 24px 56px rgba(0, 0, 0, 0.5);
+  --ring: 0 0 0 3px rgba(var(--accent-rgb), 0.35);
 }
 
-html[data-theme="system"] {
-  --background: #F4F3EF;
-  --background-alt: #ECEAE2;
-  --foreground: #1C1B18;
-  --accent: #B8943A;
-  --accent-alt: #8B6F2E;
-  --accent-rgb: 184, 148, 58;
-  --secondary: #E3E2DC;
-  --border-subtle: rgba(28, 27, 24, 0.09);
-  --muted: rgba(28, 27, 24, 0.52);
-  --progress-bg: rgba(184, 148, 58, 0.2);
-  --card-shadow: 0 0 0 1px rgba(28,27,24,0.08), 0 24px 64px rgba(28,27,24,0.05);
-  --card-shadow-hover: 0 0 0 1px rgba(184,148,58,0.2), 0 32px 80px rgba(28,27,24,0.09);
-}
-
-@media (prefers-color-scheme: dark) {
-  html[data-theme="system"] {
-    --background: #080806;
-    --background-alt: #111108;
-    --foreground: #F0EFE8;
-    --accent: #D4A853;
-    --accent-alt: #A68340;
-    --accent-rgb: 212, 168, 83;
-    --secondary: #1A1A16;
-    --border-subtle: rgba(240, 239, 232, 0.07);
-    --muted: rgba(240, 239, 232, 0.52);
-    --progress-bg: rgba(212, 168, 83, 0.25);
-    --card-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 24px 64px rgba(0,0,0,0.45);
-    --card-shadow-hover: 0 0 0 1px rgba(212,168,83,0.2), 0 32px 80px rgba(0,0,0,0.6);
-  }
-}
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  cursor: none !important;
 }
 
 html,
@@ -77,8 +176,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+  font-size: 16px;
   line-height: 1.6;
-  transition: background 0.5s ease, color 0.5s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background var(--dur-slow) ease, color var(--dur-slow) ease;
+}
+
+/* El cursor propio solo se activa donde hay mouse real y el usuario no pidio
+   menos movimiento. En tactil o con reduced-motion manda el cursor del sistema. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none;
+  }
+  html.has-custom-cursor :is(input, textarea, select) {
+    cursor: text;
+  }
 }
 
 /* Lenis smooth scrolling */
@@ -86,7 +200,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
-/* Subtle grid overlay */
+/* Rejilla de fondo. Fija y sin eventos: no repinta al hacer scroll. */
 body::after {
   content: "";
   position: fixed;
@@ -100,30 +214,100 @@ body::after {
   opacity: 0.4;
 }
 
-/* Typography */
+/* ==========================================================================
+   TIPOGRAFIA
+   ========================================================================== */
+
 h1, h2, h3 {
   font-family: var(--font-serif);
   font-weight: 400;
   line-height: 1.08;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
 }
 
-/* Custom Cursor — ring style */
+/* Los titulares del sitio van en mayusculas. Con caps el tracking negativo
+   pega las letras: se abre en vez de cerrarse. */
+.display-caps {
+  letter-spacing: var(--track-caps);
+}
+
+/* La cursiva de acento necesita aire abajo o `overflow: hidden` recorta las
+   colas de las descendentes (y, g, j, p, q). */
+.display-italic {
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1.12;
+  padding-bottom: 0.08em;
+}
+
+/* Micro-etiquetas. Dos tamanos, no diez. */
+.label,
+.label-sm {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.label { font-size: var(--t-label); letter-spacing: var(--track-label); }
+.label-sm { font-size: var(--t-label-sm); letter-spacing: var(--track-label-wide); }
+
+.body-copy {
+  font-family: var(--font-sans);
+  font-size: var(--t-body-lg);
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+section {
+  min-height: 100dvh;
+  padding: var(--section-y) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.container {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--s-6);
+}
+
+/* ==========================================================================
+   CURSOR
+   ========================================================================== */
+
 .cursor-ring {
   width: 34px;
   height: 34px;
   border: 1.5px solid rgba(var(--accent-rgb), 0.55);
   border-radius: 50%;
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10000;
   transition:
-    width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.3s ease,
-    border-color 0.3s ease,
-    opacity 0.3s ease;
-  will-change: left, top;
+    width var(--dur-fast) var(--ease-out),
+    height var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    opacity var(--dur-fast) ease;
+  will-change: transform;
 }
 
 .cursor-ring.cursor-hover {
@@ -140,44 +324,49 @@ h1, h2, h3 {
   background: var(--accent);
   border-radius: 50%;
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10001;
-  will-change: left, top;
-  transition: width 0.2s ease, height 0.2s ease;
+  will-change: transform;
 }
 
-/* Sections */
-section {
-  min-height: 100vh;
-  padding: 12rem 4vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
-}
+/* ==========================================================================
+   SUPERFICIES
+   ========================================================================== */
 
-.container {
-  max-width: 1600px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* Glass card */
+/* Tarjeta de vidrio. Con `prefers-reduced-transparency` cae a relleno solido. */
 .glass-card {
-  background: color-mix(in srgb, var(--background) 50%, rgba(255,255,255,0.04));
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
   border: 1px solid var(--border-subtle);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-radius: 20px;
+  border-radius: var(--r-md);
   box-shadow: var(--card-shadow);
 }
 
-/* Tilt card — 3D CSS effect */
+.surface-card {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card,
+  .surface-card {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 .tilt-card {
   transform-style: preserve-3d;
   will-change: transform;
-  transition: transform 0.08s ease-out, box-shadow 0.4s ease;
+  transition: transform 0.08s ease-out, box-shadow var(--dur-mid) ease;
 }
 
 .tilt-card:hover {
@@ -195,32 +384,56 @@ section {
   );
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dur-fast) ease;
 }
 
 .tilt-card:hover .tilt-card-glow { opacity: 1; }
 
-/* Premium button */
+.minimal-card {
+  background: var(--surface);
+  padding: var(--s-6);
+  border-radius: var(--r-md);
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.minimal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* ==========================================================================
+   CONTROLES
+   ========================================================================== */
+
+/* Se usa sobre button, a y span, asi que el display se fija aqui y no en cada
+   uso: en un span inline el padding vertical se desborda. */
 .premium-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   background: none;
-  border: 1px solid var(--foreground);
-  padding: 1.1rem 2.8rem;
+  color: var(--foreground);
+  border: 1px solid var(--border-strong);
+  padding: 1.05rem 2.6rem;
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.72rem;
+  letter-spacing: var(--track-label);
+  font-size: var(--t-label);
   font-weight: 600;
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  transition: color var(--transition-smooth);
-  border-radius: 4px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--transition-smooth), border-color var(--transition-smooth);
+  border-radius: var(--r-sm);
 }
 
 .premium-button::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   background: var(--foreground);
   transform: scaleX(0);
   transform-origin: right;
@@ -228,36 +441,76 @@ section {
   z-index: -1;
 }
 
-.premium-button:hover { color: var(--background); }
+.premium-button:hover {
+  color: var(--background);
+  border-color: var(--foreground);
+}
 .premium-button:hover::before { transform: scaleX(1); transform-origin: left; }
+.premium-button:active { transform: translateY(1px); }
 
-/* 12-col grid */
-.grid-12 {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+/* Campos de formulario. El foco tiene que verse: `outline: none` a secas es
+   una regresion de accesibilidad. */
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--surface-raised);
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
 }
 
-/* Text reveal */
+.field:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+
+.field[data-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.field input,
+.field textarea {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  color: var(--foreground);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--faint);
+}
+
+.field-error {
+  font-family: var(--font-sans);
+  font-size: var(--t-body-sm);
+  color: var(--danger);
+}
+
+::selection { background: var(--accent); color: var(--accent-contrast); }
+
+:is(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ==========================================================================
+   SECCIONES
+   ========================================================================== */
+
 .text-reveal { overflow: hidden; }
 .text-reveal span { display: block; transform: translateY(100%); }
 
-/* Text selection */
-::selection { background: var(--accent); color: #fff; }
-
-/* Focus */
-a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-/* Performance hints */
 .project-entry, .about-title, .about-content, .about-accent-line {
   will-change: transform, opacity;
 }
 
-/* Projects header accent line */
 .projects-header { position: relative; }
 .projects-header::after {
   content: "";
@@ -269,19 +522,18 @@ a:focus-visible, button:focus-visible {
   opacity: 0.45;
 }
 
-/* Project card */
 .project-premium-entry {
   border: 1px solid var(--border-subtle);
-  border-radius: 18px;
+  border-radius: var(--r-md);
   padding: clamp(1rem, 2.1vw, 1.8rem);
   background:
     radial-gradient(120% 140% at 0% 0%, rgba(var(--accent-rgb), 0.06), transparent 55%),
     var(--background);
   box-shadow: var(--card-shadow);
   transition:
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.45s ease,
-    border-color 0.35s ease;
+    transform var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) ease,
+    border-color var(--dur-fast) ease;
 }
 
 .project-premium-entry:hover {
@@ -291,32 +543,21 @@ a:focus-visible, button:focus-visible {
 }
 
 .project-premium-entry .premium-button {
-  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+  transition: transform var(--dur-fast) ease;
 }
 .project-premium-entry:hover .premium-button {
   transform: translateY(-1px);
 }
 
-/* Minimal card (legacy compat) */
-.minimal-card {
-  background: color-mix(in srgb, var(--background) 70%, white);
-  padding: 2rem;
-  border-radius: 6px;
-  box-shadow: var(--card-shadow);
-  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
-}
-.minimal-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--card-shadow-hover);
-}
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
 
-/* Scroll-driven fade-in utility */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Floating animation for decorative elements */
 @keyframes floatBlob1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33%  { transform: translate(30px, -20px) scale(1.04); }
@@ -329,28 +570,78 @@ a:focus-visible, button:focus-visible {
   70%  { transform: translate(14px, -14px) scale(0.97); }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  section {
-    padding: 6rem 5vw;
-    min-height: auto;
+/* ==========================================================================
+   MOVIMIENTO REDUCIDO
+   Obligatorio: el sitio anima bastante. Todo lo continuo se detiene, las
+   entradas quedan en su estado final y nada depende de una animacion para
+   ser visible.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 
-  .cursor-ring, .cursor-dot { display: none; }
-  * { cursor: auto !important; }
+  .cursor-ring,
+  .cursor-dot {
+    display: none;
+  }
+
+  /* Los elementos que arrancan en opacity: 0 esperando a anime.js */
+  .project-entry,
+  .about-stat,
+  .about-word,
+  .about-body,
+  .discipline-pill,
+  .tech-capsule,
+  .projects-headline,
+  .projects-subline,
+  .subtitle-fade,
+  .hero-cta,
+  .title-reveal span,
+  .vertical-tech-label {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-parallax] {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   MOVIL
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 5vw;
+    --section-y: 5.5rem;
+  }
+
+  section {
+    min-height: auto;
+  }
 
   .grid-12 {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--s-6);
   }
 
   .mobile-col-full { grid-column: 1 / -1 !important; }
-  h1 { font-size: clamp(3rem, 12vw, 4rem) !important; }
-  h2 { font-size: clamp(2.5rem, 10vw, 3.5rem) !important; }
 
   .project-premium-entry {
     padding: 1rem;
-    border-radius: 12px;
+    border-radius: var(--r-sm);
+  }
+
+  .premium-button {
+    padding: 0.95rem 1.8rem;
   }
 }

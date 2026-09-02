@@ -4,20 +4,33 @@
       "about": "SOBRE MÍ",
       "stack": "STACK",
       "projects": "PROYECTOS",
-      "contact": "CONTACTO"
+      "contact": "CONTACTO",
+      "menu": "Menu"
     },
     "hero": {
       "title1": "DISEÑO",
       "title2": "DIGITAL",
       "subtitle": "INGENIERO MULTIMEDIA & DESARROLLADOR WEB",
       "description": "Ingeniero Multimedia en formación por la Universidad de San Buenaventura. Combino una base en producción audiovisual y 3D con un enfoque principal en la ingeniería de plataformas web y Progressive Web Apps (PWAs), construyendo soluciones digitales de alto rendimiento.",
-      "cta": "EXPLORAR VISION"
+      "cta": "VER PROYECTOS",
+      "availability": "DISPONIBLE PARA PROYECTOS"
     },
     "about": {
       "title": "SOBRE MÍ",
       "quote": "Maximizando el valor digital: donde la robustez de la web se potencia con medios interactivos.",
       "p1": "Mi perfil técnico abarca la integración de diversas disciplinas, desde la composición audiovisual hasta el arte 3D. Sin embargo, mi mayor experiencia y enfoque se centran en el desarrollo web moderno. Me especializo en la estructuración, optimización e innovación funcional de Progressive Web Apps (PWAs) escalables.",
-      "p2": "Busco aportar mi energía creativa y conocimientos técnicos en mi práctica profesional dentro del sector corporativo. Ofrezco un balance estratégico: el rigor analítico para mejorar continuamente el código y el ecosistema de software, combinado con el criterio visual para elevar la experiencia del usuario final."
+      "p2": "Busco aportar mi energía creativa y conocimientos técnicos en mi práctica profesional dentro del sector corporativo. Ofrezco un balance estratégico: el rigor analítico para mejorar continuamente el código y el ecosistema de software, combinado con el criterio visual para elevar la experiencia del usuario final.",
+      "eyebrow": "SOBRE MÍ",
+      "title1": "Diseño",
+      "title2": "Digital",
+      "body": "Ingeniero Multimedia en formación por la Universidad de San Buenaventura. Combino producción audiovisual y 3D con ingeniería de plataformas web y PWAs, construyendo soluciones digitales de alto rendimiento.",
+      "statProjects": "Proyectos publicados",
+      "statYears": "Años construyendo",
+      "statTools": "Herramientas en el stack",
+      "yearsValue": "3",
+      "university": "U. de San Buenaventura",
+      "degree": "Ingeniería Multimedia, en formación",
+      "disciplines": "Desarrollo Web|Motion Graphics|Producción 3D|Ingeniería PWA|UI/UX|Audiovisual"
     },
     "stack": {
       "title": "HERRAMIENTAS",
@@ -34,7 +47,7 @@
     },
     "projects": {
       "title": "MIS PROYECTOS",
-      "subtitle": "08 PROYECTOS SELECCIONADOS",
+      "subtitle": "PROYECTOS SELECCIONADOS",
       "view": "VER PROYECTO",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
@@ -69,8 +82,15 @@
         "lumina": {
           "category": "LANDING PAGE / E-COMMERCE",
           "description": "Lumina es una landing page interactiva desarrollada con Next.js como proyecto personal, cuyo objetivo es demostrar la implementación de interfaces de alto nivel con especial atención a los micro-detalles y la experiencia de usuario (UX). Adicionalmente, gracias a su arquitectura modular, proyecta cómo se puede integrar fácilmente un flujo completo de autoservicio para gestionar pedidos desde la selección de productos hasta la coordinación de envíos, sirviendo como una base escalable para futuras integraciones."
+        },
+        "autopartes_erg": {
+          "category": "CATÁLOGO WEB / PANEL ADMINISTRABLE",
+          "description": "Autopartes ERG es una plataforma web desarrollada en Next.js, en la cual estuve a cargo del diseño, la creación de contenido, la programación y el despliegue. El sitio funciona como un catálogo virtual donde los usuarios pueden consultar la disponibilidad de repuestos específicos para sus vehículos. Además de una sección corporativa Nosotros, integra atención directa vía WhatsApp para la gestión de cotizaciones. Adicionalmente, desarrollé un panel de administración con acceso seguro, el cual le permite al cliente gestionar el catálogo de forma autónoma para añadir o eliminar productos según sus necesidades."
         }
-      }
+      },
+      "itemsLabel": "proyectos seleccionados",
+      "close": "Cerrar",
+      "gallery": "Galeria"
     },
     "contact": {
       "title": "¿LISTO PARA CONSTRUIR ALGO EXCEPCIONAL?",
@@ -85,7 +105,17 @@
       "success": "¡Mensaje enviado!",
       "error": "Error al enviar el mensaje",
       "emailSubject": "Exploremos una oportunidad de desarrollo interactivo",
-      "emailBody": "Hola Pedro,\n\nTu perfil como desarrollador y tu dominio construyendo arquitecturas web modernas llamó mi atención.\n\nEn [Nombre de tu empresa] tenemos un proyecto estratégico en puerta y consideramos que tu nivel técnico y tu enfoque en interfaces inmersivas encajan perfectamente con nuestra visión y estándares de calidad.\n\nMe gustaría agendar una rápida reunión para charlar sobre la posibilidad de generar sinergia y hacer equipo.\n\nSaludos cordiales,\n[Tu Nombre - Tu Cargo]"
+      "emailBody": "Hola Pedro,\n\nTu perfil como desarrollador y tu dominio construyendo arquitecturas web modernas llamó mi atención.\n\nEn [Nombre de tu empresa] tenemos un proyecto estratégico en puerta y consideramos que tu nivel técnico y tu enfoque en interfaces inmersivas encajan perfectamente con nuestra visión y estándares de calidad.\n\nMe gustaría agendar una rápida reunión para charlar sobre la posibilidad de generar sinergia y hacer equipo.\n\nSaludos cordiales,\n[Tu Nombre - Tu Cargo]",
+      "errors": {
+        "name": "Escribe tu nombre",
+        "email": "Escribe un correo valido",
+        "message": "Escribe un mensaje"
+      },
+      "sending": "ENVIANDO...",
+      "successTitle": "Mensaje en camino",
+      "successBody": "Recibi tu mensaje y te respondo lo antes posible.",
+      "sendAnother": "Enviar otro mensaje",
+      "errorBody": "No se pudo enviar. Escribeme directo a luixmv6@gmail.com"
     }
   },
   "en": {
@@ -93,20 +123,33 @@
       "about": "ABOUT",
       "stack": "TOOLS",
       "projects": "PROJECTS",
-      "contact": "CONTACT"
+      "contact": "CONTACT",
+      "menu": "Menu"
     },
     "hero": {
       "title1": "DIGITAL",
       "title2": "DESIGN",
       "subtitle": "MULTIMEDIA ENGINEER & WEB DEVELOPER",
       "description": "A final-year Multimedia Engineering student at U. de San Buenaventura. I combine a foundation in audiovisual and 3D production with a primary focus on web platform engineering and Progressive Web Apps (PWAs), building high-performance solutions.",
-      "cta": "EXPLORE VISION"
+      "cta": "VIEW PROJECTS",
+      "availability": "AVAILABLE FOR WORK"
     },
     "about": {
       "title": "ABOUT ME",
       "quote": "Maximizing digital value: where robust web architecture is enriched by interactive media.",
       "p1": "My technical background encompasses the integration of diverse disciplines, from audiovisual editing to 3D modeling. However, my strongest expertise lies in advanced web development. I specialize in designing, optimizing, and improving the functionality of scalable Progressive Web Apps (PWAs).",
-      "p2": "I'm looking to bring my drive and technical skills to my first corporate internship. I offer a strategic balance: the analytical rigor necessary to continuously improve codebases and architectures, paired with the visual criteria to elevate the end-user experience."
+      "p2": "I'm looking to bring my drive and technical skills to my first corporate internship. I offer a strategic balance: the analytical rigor necessary to continuously improve codebases and architectures, paired with the visual criteria to elevate the end-user experience.",
+      "eyebrow": "ABOUT",
+      "title1": "Digital",
+      "title2": "Design",
+      "body": "Multimedia Engineering student at Universidad de San Buenaventura. I combine audiovisual and 3D production with web platform and PWA engineering, building high-performance digital products.",
+      "statProjects": "Projects shipped",
+      "statYears": "Years building",
+      "statTools": "Tools in the stack",
+      "yearsValue": "3",
+      "university": "U. de San Buenaventura",
+      "degree": "Multimedia Engineering, in progress",
+      "disciplines": "Web Development|Motion Graphics|3D Production|PWA Engineering|UI/UX|Audiovisual"
     },
     "stack": {
       "title": "TOOLKIT",
@@ -123,7 +166,7 @@
     },
     "projects": {
       "title": "MY PROJECTS",
-      "subtitle": "08 SELECTED PROJECTS",
+      "subtitle": "SELECTED PROJECTS",
       "view": "VIEW PROJECT",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
@@ -141,7 +184,7 @@
         },
         "modelado_3d": {
           "category": "3D MODELING / ANIMATION",
-          "description": "Advanced exploration into 3D modeling and rendering logic. The portfolio showcases the creation of photorealistic commercial assets—spanning from a Coca-Cola can to high-end perfumery bottles—alongside a realistic lunar simulation. The production workflow encompassed polygonal modeling, UV unwrapping, PBR texturing, spatial lighting, and fluid animation to yield high-impact virtual environments."
+          "description": "Advanced exploration into 3D modeling and rendering logic. The portfolio showcases the creation of photorealistic commercial assets, spanning from a Coca-Cola can to high-end perfumery bottles, alongside a realistic lunar simulation. The production workflow encompassed polygonal modeling, UV unwrapping, PBR texturing, spatial lighting, and fluid animation to yield high-impact virtual environments."
         },
         "riopaila_agricola": {
           "category": "CORPORATE DEVELOPMENT / CLOUD",
@@ -157,9 +200,16 @@
         },
         "lumina": {
           "category": "LANDING PAGE / E-COMMERCE",
-          "description": "Lumina is an interactive landing page developed with Next.js as a personal project, aimed at demonstrating the implementation of high-level interfaces with special attention to micro-details and user experience (UX). Additionally, thanks to its modular architecture, it showcases how easily a complete self-service order management flow—from product selection to shipping coordination—can be integrated, serving as a scalable foundation for future integrations."
+          "description": "Lumina is an interactive landing page developed with Next.js as a personal project, aimed at demonstrating the implementation of high-level interfaces with special attention to micro-details and user experience (UX). Additionally, thanks to its modular architecture, it showcases how easily a complete self-service order management flow, from product selection to shipping coordination, can be integrated, serving as a scalable foundation for future integrations."
+        },
+        "autopartes_erg": {
+          "category": "WEB CATALOG / ADMIN DASHBOARD",
+          "description": "Autopartes ERG is a web platform built with Next.js, where I handled the design, content creation, development, and deployment. The site works as a virtual catalog where users can check the availability of specific spare parts for their vehicles. Along with a corporate About Us section, it integrates direct WhatsApp support for handling quote requests. I also developed a secure admin dashboard that lets the client manage the catalog independently, adding or removing products as needed."
         }
-      }
+      },
+      "itemsLabel": "selected projects",
+      "close": "Close",
+      "gallery": "Gallery"
     },
     "contact": {
       "title": "READY TO BUILD SOMETHING EXCEPTIONAL?",
@@ -174,7 +224,17 @@
       "success": "Message sent!",
       "error": "Error sending message",
       "emailSubject": "Exploring a High-End Digital Collaboration",
-      "emailBody": "Hi Pedro,\n\nYour profile as a scalable Web Developer and your expertise in modern software architecture caught my attention.\n\nAt [Company Name] we have a strategic project in mind and we firmly believe your technical rigor and focus on immersive interfaces align perfectly with our vision and quality standards.\n\nI'd like to schedule a quick sync to discuss how we could generate synergies together.\n\nBest regards,\n[Your Name - Your Title]"
+      "emailBody": "Hi Pedro,\n\nYour profile as a scalable Web Developer and your expertise in modern software architecture caught my attention.\n\nAt [Company Name] we have a strategic project in mind and we firmly believe your technical rigor and focus on immersive interfaces align perfectly with our vision and quality standards.\n\nI'd like to schedule a quick sync to discuss how we could generate synergies together.\n\nBest regards,\n[Your Name - Your Title]",
+      "errors": {
+        "name": "Please enter your name",
+        "email": "Please enter a valid email",
+        "message": "Please enter a message"
+      },
+      "sending": "SENDING...",
+      "successTitle": "Message on its way",
+      "successBody": "I got your message and will get back to you shortly.",
+      "sendAnother": "Send another message",
+      "errorBody": "Could not send. Email me directly at luixmv6@gmail.com"
     }
   }
 }

@@ -121,5 +121,22 @@
     "category": "web",
     "live": "https://menu-xi-jade.vercel.app/",
     "featured": true
+  },
+  {
+    "id": "autopartes_erg",
+    "title": "Autopartes ERG",
+    "description": "Autopartes ERG es una plataforma web desarrollada en Next.js, en la cual estuve a cargo del diseño, la creación de contenido, la programación y el despliegue. El sitio funciona como un catálogo virtual donde los usuarios pueden consultar la disponibilidad de repuestos específicos para sus vehículos. Además de una sección corporativa Nosotros, integra atención directa vía WhatsApp para la gestión de cotizaciones. Adicionalmente, desarrollé un panel de administración con acceso seguro, el cual le permite al cliente gestionar el catálogo de forma autónoma para añadir o eliminar productos según sus necesidades.",
+    "tech": ["Next.js", "Tailwind CSS"],
+    "image": "/imagenes/Autopartes/Captura de pantalla 2026-09-02 101930.png",
+    "gallery": [
+      "/imagenes/Autopartes/Captura de pantalla 2026-09-02 101930.png",
+      "/imagenes/Autopartes/Captura de pantalla 2026-09-02 102125.png",
+      "/imagenes/Autopartes/Captura de pantalla 2026-09-02 102149.png",
+      "/imagenes/Autopartes/Captura de pantalla 2026-09-02 102234.png"
+    ],
+    "category": "web",
+    "live": "https://autopartesergsas.com/",
+    "featured": true
   }
 ]
+
