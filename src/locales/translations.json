@@ -49,6 +49,15 @@
       "title": "MIS PROYECTOS",
       "subtitle": "PROYECTOS SELECCIONADOS",
       "view": "VER PROYECTO",
+      "all": "TODOS",
+      "filterLabel": "Filtrar proyectos por categoria",
+      "categories": {
+        "photo": "FOTOGRAFÍA",
+        "3d": "MODELADO 3D",
+        "design": "DISEÑO",
+        "web": "DESARROLLO WEB"
+      },
+      "empty": "Todavía no hay proyectos publicados en esta categoría.",
       "liveDemo": "VER PROYECTO EN VIVO",
       "items": {
         "castilla_agricola": {
@@ -89,6 +98,7 @@
         }
       },
       "itemsLabel": "proyectos seleccionados",
+      "itemLabel": "proyecto seleccionado",
       "close": "Cerrar",
       "gallery": "Galeria"
     },
@@ -168,6 +178,15 @@
       "title": "MY PROJECTS",
       "subtitle": "SELECTED PROJECTS",
       "view": "VIEW PROJECT",
+      "all": "ALL",
+      "filterLabel": "Filter projects by category",
+      "categories": {
+        "photo": "PHOTOGRAPHY",
+        "3d": "3D MODELING",
+        "design": "DESIGN",
+        "web": "WEB DEVELOPMENT"
+      },
+      "empty": "No projects published in this category yet.",
       "liveDemo": "VIEW LIVE PROJECT",
       "items": {
         "castilla_agricola": {
@@ -208,6 +227,7 @@
         }
       },
       "itemsLabel": "selected projects",
+      "itemLabel": "selected project",
       "close": "Close",
       "gallery": "Gallery"
     },
