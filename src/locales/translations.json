@@ -68,6 +68,18 @@
           "category": "DISEÑO DIGITAL / DIRECCIÓN DE ARTE",
           "description": "Desarrollo conceptual de un póster para el artista musical Post Malone. El proceso de diseño integró diversas técnicas de composición, fundamentadas en la creación de un moodboard estratégico que definió la dirección artística. El resultado final logra una estética altamente coherente con la identidad visual que el artista ha proyectado en los últimos años de su carrera."
         },
+        "campana_donacion_sangre": {
+          "category": "DISEÑO GRÁFICO / CAMPAÑA SOCIAL",
+          "description": "Propuesta gráfica para la campaña de donación de sangre de la Universidad de San Buenaventura en alianza con el Banco de Sangre. La pieza combina tipografía de alto impacto, una paleta verde institucional y una composición fotográfica central —un corazón formado por glóbulos rojos— para comunicar el mensaje de forma clara y emotiva, invitando a la comunidad universitaria a participar."
+        },
+        "fizz_etiqueta": {
+          "category": "DISEÑO DE EMPAQUE / BRANDING",
+          "description": "Diseño conceptual de identidad y etiqueta frontal para Peach Glow, el sérum capilar con aceite de durazno de Fizz Hair Co. Se construyó un logotipo de formas redondeadas acompañado de destellos que evocan brillo, una jerarquía tipográfica limpia y bilingüe, y una paleta de morado, fucsia, ámbar y crema que transmite frescura y feminidad. El resultado es un empaque minimalista, legible y listo para impresión que se adapta con coherencia a toda la línea de producto."
+        },
+        "fizz_campana_redes": {
+          "category": "PUBLICIDAD / REDES SOCIALES",
+          "description": "Diseño conceptual de una campaña publicitaria para redes sociales del lanzamiento de Peach Glow de Fizz Hair Co. La serie de cinco piezas recorre todo el embudo de comunicación: expectativa, beneficios del producto, promoción de lanzamiento y posicionamiento de marca. Se trabajó el diseño de cada pieza y el etalonaje de color de las imágenes, con una dirección de arte basada en tonos durazno, con titulares de alto impacto y un sistema visual consistente que refuerza la identidad de la marca en cada publicación."
+        },
         "fotografia_creativa": {
           "category": "FOTOGRAFÍA / RETOQUE",
           "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras."
@@ -196,6 +208,18 @@
         "diseno_grafico": {
           "category": "DIGITAL DESIGN / ART DIRECTION",
           "description": "Conceptual design of a poster and visual identity for musical artist Post Malone. The creative pipeline integrated diverse digital composition techniques rooted in a carefully curated moodboard to define the art direction. The final rendition achieves a profound visual coherence with the artist's contemporary aesthetic."
+        },
+        "campana_donacion_sangre": {
+          "category": "GRAPHIC DESIGN / SOCIAL CAMPAIGN",
+          "description": "Graphic proposal for the Universidad de San Buenaventura blood donation campaign, in partnership with the Blood Bank. The piece combines high-impact typography, an institutional green palette and a central photographic composition —a heart made of red blood cells— to deliver the message clearly and emotionally, inviting the university community to take part."
+        },
+        "fizz_etiqueta": {
+          "category": "PACKAGING DESIGN / BRANDING",
+          "description": "Conceptual brand identity and front label design for Peach Glow, Fizz Hair Co.'s peach-oil hair serum. The work features a rounded wordmark with sparkle accents that evoke shine, a clean bilingual typographic hierarchy, and a palette of purple, fuchsia, amber and cream that conveys freshness and femininity. The result is a minimal, legible, print-ready package that scales consistently across the whole product line."
+        },
+        "fizz_campana_redes": {
+          "category": "ADVERTISING / SOCIAL MEDIA",
+          "description": "Conceptual design of a social media advertising campaign for the launch of Fizz Hair Co.'s Peach Glow. The five-piece series covers the full communication funnel: teaser, product benefits, launch promotion and brand positioning. It covers the design of each piece and the color grading of the images, with a peach-toned art direction, with high-impact headlines and a consistent visual system that reinforces the brand identity in every post."
         },
         "fotografia_creativa": {
           "category": "PHOTOGRAPHY / RETOUCHING",

@@ -26,6 +26,42 @@
     "featured": true
   },
   {
+    "id": "campana_donacion_sangre",
+    "title": "Campaña Donación de Sangre",
+    "description": "Propuesta gráfica para la campaña de donación de sangre de la Universidad de San Buenaventura en alianza con el Banco de Sangre de la clinica Valle del Lili. La pieza combina tipografía de alto impacto, una paleta verde institucional y una composición fotográfica central —un corazón formado por glóbulos rojos— para comunicar el mensaje de forma clara y emotiva, invitando a la comunidad universitaria a participar.",
+    "tech": ["Photoshop", "Illustrator"],
+    "image": "/imagenes/diseño/Propuesta Campaña.jpg",
+    "gallery": ["/imagenes/diseño/Propuesta Campaña.jpg"],
+    "category": "design",
+    "featured": true
+  },
+  {
+    "id": "fizz_etiqueta",
+    "title": "Fizz Hair Co. — Etiqueta",
+    "description": "Diseño conceptual de identidad y etiqueta frontal para Peach Glow, el sérum capilar con aceite de durazno de Fizz Hair Co. Se construyó un logotipo de formas redondeadas acompañado de destellos que evocan brillo, una jerarquía tipográfica limpia y bilingüe, y una paleta de morado, fucsia, ámbar y crema que transmite frescura y feminidad. El resultado es un empaque minimalista, legible y listo para impresión que se adapta con coherencia a toda la línea de producto.",
+    "tech": ["Illustrator", "Photoshop"],
+    "image": "/imagenes/Diseños/Etiqueta.jpg",
+    "gallery": ["/imagenes/Diseños/Etiqueta.jpg"],
+    "category": "design",
+    "featured": true
+  },
+  {
+    "id": "fizz_campana_redes",
+    "title": "Fizz Hair Co. — Campaña en Redes",
+    "description": "Diseño conceptual de una campaña publicitaria para redes sociales del lanzamiento de Peach Glow de Fizz Hair Co. La serie de cinco piezas recorre todo el embudo de comunicación: expectativa, beneficios del producto, promoción de lanzamiento y posicionamiento de marca. Se trabajó el diseño de cada pieza y el etalonaje de color de las imágenes, con una dirección de arte basada en tonos durazno, con titulares de alto impacto y un sistema visual consistente que refuerza la identidad de la marca en cada publicación.",
+    "tech": ["Photoshop", "Illustrator"],
+    "image": "/imagenes/Diseños/Post 5.jpg",
+    "gallery": [
+      "/imagenes/Diseños/Post 1.jpg",
+      "/imagenes/Diseños/Post 2.jpg",
+      "/imagenes/Diseños/Post 3.jpg",
+      "/imagenes/Diseños/Post 4.jpg",
+      "/imagenes/Diseños/Post 5.jpg"
+    ],
+    "category": "design",
+    "featured": true
+  },
+  {
     "id": "fotografia_creativa",
     "title": "Fotografía Creativa",
     "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras.",
@@ -139,4 +175,3 @@
     "featured": true
   }
 ]
-
