@@ -62,6 +62,16 @@
     "featured": true
   },
   {
+    "id": "pepsi_promocional",
+    "title": "Pepsi — Diseño Promocional",
+    "description": "Diseño conceptual promocional para Pepsi en el que se fusionaron el diseño gráfico y el modelado 3D. El fondo se construyó en Affinity con una composición tipográfica de alto impacto, repeticiones en relleno y contorno, cortes diagonales y trazos curvos en la paleta azul característica de la marca. La lata fue modelada, texturizada e iluminada en 3D, con gotas de condensación que transmiten frescura, y luego integrada en la composición para lograr una pieza dinámica y coherente con la identidad visual de Pepsi.",
+    "tech": ["Affinity", "Blender"],
+    "image": "/imagenes/Diseños/pepsi diseño.jpg",
+    "gallery": ["/imagenes/Diseños/pepsi diseño.jpg"],
+    "category": "design",
+    "featured": true
+  },
+  {
     "id": "fotografia_creativa",
     "title": "Fotografía Creativa",
     "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras.",
