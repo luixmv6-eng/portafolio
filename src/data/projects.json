@@ -72,6 +72,26 @@
     "featured": true
   },
   {
+    "id": "cocacola_promocional",
+    "title": "Coca-Cola — Diseño Promocional",
+    "description": "Diseño conceptual promocional para Coca-Cola en el que se aplicó la mezcla de Affinity y Blender para la generación de la imagen. El fondo se construyó en Affinity con una composición tipográfica de alto impacto bajo el lema \"Taste the Feeling\", alternando texto en relleno y contorno, un corte diagonal y texturas desgastadas en la paleta roja, negra y blanca característica de la marca. La lata y los cubos de hielo fueron modelados, texturizados e iluminados en Blender, con desenfoque de profundidad que aporta dinamismo, y luego integrados en la composición para lograr una pieza con fuerza visual y coherente con la identidad de Coca-Cola.",
+    "tech": ["Affinity", "Blender"],
+    "image": "/imagenes/Diseños/Cocacoladiseño.jpg",
+    "gallery": ["/imagenes/Diseños/Cocacoladiseño.jpg"],
+    "category": "design",
+    "featured": true
+  },
+  {
+    "id": "snickers_promocional",
+    "title": "Snickers — Diseño Promocional",
+    "description": "Diseño conceptual promocional para Snickers en el que se mezcló Blender para la creación del chocolate con un fondo diseñado en Affinity. El fondo se construyó con una composición tipográfica vertical de gran formato que repite el nombre de la marca en azul, rojo y crema sobre un cálido tono mostaza, acompañada de los mensajes \"Protein\" y \"Chocolate\" y de maníes en distintos planos que aportan profundidad y movimiento. La barra fue modelada, texturizada e iluminada en Blender y luego integrada en la composición para lograr una pieza llamativa y coherente con la identidad visual de Snickers.",
+    "tech": ["Affinity", "Blender"],
+    "image": "/imagenes/Diseños/snickersdiseño.jpg",
+    "gallery": ["/imagenes/Diseños/snickersdiseño.jpg"],
+    "category": "design",
+    "featured": true
+  },
+  {
     "id": "fotografia_creativa",
     "title": "Fotografía Creativa",
     "description": "Una cuidadosa selección fotográfica que captura momentos y escenas desde una perspectiva única. Se emplearon técnicas profesionales que evidencian un dominio técnico integral: desde el manejo avanzado de la cámara hasta la dirección estratégica de la iluminación en cada toma. Este portafolio visual destaca un profundo sentido de la composición y el fotorrealismo, transformando escenarios convencionales en piezas artísticas evocadoras.",
