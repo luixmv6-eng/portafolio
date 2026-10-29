@@ -25,6 +25,7 @@ export default function BackToTop() {
           whileHover={{ scale: 1.1, rotate: -8 }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollTop}
+          className="back-to-top"
           aria-label="Back to top"
           style={{
             position: 'fixed',

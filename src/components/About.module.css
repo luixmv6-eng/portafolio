@@ -1,0 +1,408 @@
+/* Sobre mi / Bento (Figma 12:2). */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 40px;
+  min-height: 0;
+  padding: 64px 64px 112px;
+}
+
+/* ---- Cabecera (mismo patron que la secuencia) ---- */
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mono {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.monoSm {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 7.8vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--grafito);
+  white-space: nowrap;
+  font-variation-settings: "wdth" 100;
+}
+
+.titleAccent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.214em;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Rejilla ---- */
+
+.bento {
+  display: grid;
+  grid-template-columns: 300fr 300fr 148fr 516fr;
+  grid-template-rows: 440px 320px auto;
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  min-width: 0;
+}
+
+/* ---- Bio ---- */
+
+.bio {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px 36px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+}
+
+.bioText {
+  margin: 0;
+  font-family: var(--font-accent);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1.087;
+  letter-spacing: -0.01em;
+  color: var(--grafito);
+  text-wrap: pretty;
+}
+
+.bioAccent {
+  font-style: italic;
+  color: var(--naranja);
+}
+
+/* ---- Cifra: proyectos ---- */
+
+.projects {
+  grid-column: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px;
+  background: var(--grafito);
+  color: var(--crema);
+  text-decoration: none;
+}
+
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.projects .monoSm { color: var(--gris-claro); }
+
+.arrow {
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.projects:hover .arrow,
+.eduArrow:hover img,
+.edu:hover .eduArrow img {
+  transform: translate(3px, -3px);
+}
+
+.figure {
+  margin: 0;
+  font-family: var(--font-figures);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.figureXl { font-size: clamp(110px, 13.2vw, 190px); }
+.figureLg { font-size: clamp(84px, 8.3vw, 120px); }
+
+.chart {
+  display: flex;
+  gap: 4px;
+  height: 14px;
+}
+
+.chartBar {
+  min-width: 6px;
+  height: 100%;
+  border-radius: 4px;
+  transform-origin: 0 50%;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris-claro);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* ---- Cifra: anos ---- */
+
+.years {
+  grid-column: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  background: var(--naranja);
+  color: var(--grafito);
+}
+
+/* ---- Cifra: herramientas ---- */
+
+.tools {
+  grid-column: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px;
+  background: var(--hueso-profundo);
+  color: var(--grafito);
+}
+
+.tools .monoSm { color: var(--gris); }
+
+.toolDots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toolDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--grafito);
+}
+
+/* ---- Especialidades / stickers ---- */
+
+.stickers {
+  grid-column: 3 / 5;
+  background: var(--grafito);
+  container-type: inline-size;
+  min-height: 300px;
+}
+
+.stickersLabel {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  color: var(--gris-claro);
+}
+
+.dragHint {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  color: var(--gris);
+}
+
+/* Posicion en % de la tarjeta (diseno: 680 x 320). En tarjetas estrechas
+   se usa una composicion mas apilada para que nada se salga. */
+.stickerSlot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+}
+
+@container (max-width: 520px) {
+  .stickerSlot {
+    left: var(--xs);
+    top: var(--ys);
+  }
+}
+
+.sticker {
+  display: inline-block;
+  padding: 0.47em 0.87em;
+  border: 2px solid var(--grafito);
+  border-radius: var(--r-pill);
+  background: var(--sticker-bg);
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(19px, 4.4cqw, 30px);
+  line-height: normal;
+  color: var(--grafito);
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.sticker:active {
+  cursor: grabbing;
+}
+
+/* ---- Formacion ---- */
+
+.edu {
+  grid-column: 1 / 5;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 24px 24px 32px;
+  border: 1.5px solid var(--grafito);
+  border-radius: var(--r-pill);
+  min-height: 100px;
+}
+
+.edu .mono { flex-shrink: 0; }
+
+.eduName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--grafito);
+  font-variation-settings: "wdth" 100;
+}
+
+.eduDegree {
+  margin: 0 0 0 auto;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.15;
+  color: var(--gris);
+  text-align: right;
+}
+
+.eduArrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--grafito);
+}
+
+.eduArrow img {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .section { padding: 56px 40px 96px; }
+  .bento {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .bio { grid-column: 1 / 3; }
+  .projects { grid-column: 3 / 5; min-height: 400px; }
+  .years { grid-column: 1 / 2; min-height: 300px; }
+  .tools { grid-column: 2 / 3; }
+  .stickers { grid-column: 3 / 5; }
+}
+
+@media (max-width: 860px) {
+  .head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .bento { grid-template-columns: 1fr 1fr; }
+  .bio { grid-column: 1 / 3; }
+  .projects { grid-column: 1 / 3; min-height: 360px; }
+  .years { grid-column: 1 / 2; min-height: 260px; }
+  .tools { grid-column: 2 / 3; }
+  .stickers { grid-column: 1 / 3; min-height: 320px; }
+  .edu {
+    grid-column: 1 / 3;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    border-radius: 28px;
+    padding: 24px;
+  }
+  .edu .mono { width: 100%; }
+  .eduName { flex: 1 1 100%; }
+  .eduDegree { margin: 0; text-align: left; flex: 1; }
+}
+
+@media (max-width: 560px) {
+  .section { padding: 48px 16px 72px; gap: 28px; }
+  .bento { gap: 12px; }
+  .card { border-radius: 22px; }
+  .bio { padding: 24px; }
+  .projects { padding: 24px; min-height: 320px; }
+  .years,
+  .tools { padding: 20px; min-height: 220px; }
+  .figureLg { font-size: clamp(64px, 18vw, 84px); }
+  .stickers { min-height: 400px; }
+  .stickersLabel { top: 22px; left: 22px; }
+  .dragHint { right: 22px; bottom: 18px; }
+}
+
+@media (max-width: 380px) {
+  .years,
+  .tools { grid-column: 1 / 3; }
+}

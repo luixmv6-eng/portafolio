@@ -44,9 +44,14 @@ export default function Cursor() {
     // vez que muta. La version anterior acumulaba listeners duplicados sin
     // quitarlos nunca.
     const onOver = (e: MouseEvent) => {
-      if ((e.target as Element)?.closest?.(INTERACTIVE)) {
+      const el = e.target as Element;
+      if (el?.closest?.(INTERACTIVE)) {
         ring.classList.add('cursor-hover');
       }
+      // Zonas con cursor propio (visor en cruz, muro "Arrastra"): el anillo sobra.
+      const off = !!el?.closest?.('[data-cursor]');
+      ring.classList.toggle('cursor-off', off);
+      dot.classList.toggle('cursor-off', off);
     };
     const onOut = (e: MouseEvent) => {
       if ((e.target as Element)?.closest?.(INTERACTIVE)) {

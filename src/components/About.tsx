@@ -1,415 +1,300 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { animate, stagger } from 'animejs';
+import { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+  type Variants,
+} from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { requestProjectCategory, type ProjectCategory } from '../data/categories';
 import projectsData from '../data/projects.json';
 import techData from '../data/tech.json';
+import styles from './About.module.css';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 // Las cifras salen de los datos, no de constantes que se quedan viejas.
-// Antes decia "12+ proyectos" con 9 en projects.json, y un "100% orientado
-// al rendimiento" que no mide nada.
-const STAT_VALUES = {
-  projects: projectsData.length,
-  years: 3,
-  tools: techData.length,
-} as const;
+const PROJECT_COUNT = projectsData.length;
+const TOOL_COUNT = techData.length;
 
-function StatCard({
-  suffix,
-  label,
-  count,
-}: {
-  suffix: string;
-  label: string;
-  count: number;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
+// Reparto por disciplina para el grafico de la tarjeta de proyectos.
+const DISCIPLINES: { id: ProjectCategory; color: string }[] = [
+  { id: 'web', color: 'var(--naranja)' },
+  { id: 'design', color: 'var(--crema)' },
+  { id: 'photo', color: 'var(--gris-claro)' },
+  { id: '3d', color: 'var(--linea-oscura)' },
+];
+const BY_DISCIPLINE = DISCIPLINES.map((d) => ({
+  ...d,
+  count: projectsData.filter((p) => p.category === d.id).length,
+}));
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const rotX = ((y - cy) / cy) * -6;
-    const rotY = ((x - cx) / cx) * 6;
+// Stickers: posicion en % de la tarjeta (x, y) y su version compacta.
+const STICKERS = [
+  { bg: 'var(--crema)', rotate: 8, x: 3, y: 22, xs: 4, ys: 15 },
+  { bg: 'var(--naranja)', rotate: -6, x: 36.8, y: 10.5, xs: 30, ys: 29 },
+  { bg: 'var(--hueso-profundo)', rotate: -4, x: 11.8, y: 42, xs: 5, ys: 44 },
+  { bg: 'var(--crema)', rotate: 5, x: 43.2, y: 43.8, xs: 34, ys: 58 },
+  { bg: 'var(--naranja)', rotate: 12, x: 22.8, y: 69.4, xs: 9, ys: 73 },
+  { bg: 'var(--crema)', rotate: -7, x: 44.1, y: 63.5, xs: 46, ys: 74 },
+];
 
-    el.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(8px)`;
-    el.style.boxShadow = 'var(--card-shadow-hover)';
+const pad2 = (n: number) => String(Math.round(n)).padStart(2, '0');
 
-    if (glowRef.current) {
-      glowRef.current.style.setProperty('--mx', `${(x / rect.width) * 100}%`);
-      glowRef.current.style.setProperty('--my', `${(y / rect.height) * 100}%`);
-      glowRef.current.style.opacity = '1';
+/** Contador 0 -> valor al entrar en pantalla (notas de motion, 04). El HTML
+ *  del servidor ya trae la cifra final: sin JS o con movimiento reducido no
+ *  hay nada que esperar. */
+function Counter({ to, padded = false }: { to: number; padded?: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const reduce = useReducedMotion();
+  const value = useMotionValue(to);
+  const text = useTransform(value, (v) => (padded ? pad2(v) : String(Math.round(v))));
+
+  useEffect(() => {
+    if (reduce) return;
+    if (!inView) {
+      value.set(0);
+      return;
     }
-  };
+    const controls = animate(value, to, { duration: 1.6, ease: EASE });
+    return () => controls.stop();
+  }, [inView, reduce, to, value]);
 
-  const handleMouseLeave = () => {
-    const el = cardRef.current;
-    if (!el) return;
-    el.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    el.style.boxShadow = 'var(--card-shadow)';
-    if (glowRef.current) glowRef.current.style.opacity = '0';
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      className="about-stat surface-card"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        opacity: 0,
-        padding: '1.9rem 2.2rem',
-        display: 'flex',
-        alignItems: 'baseline',
-        gap: '1.5rem',
-        transition: 'transform 0.08s ease-out, box-shadow var(--dur-mid) ease',
-        cursor: 'default',
-        position: 'relative',
-        overflow: 'hidden',
-        willChange: 'transform',
-        transformStyle: 'preserve-3d',
-      }}
-    >
-      <div ref={glowRef} className="tilt-card-glow" aria-hidden="true" />
-
-      <div
-        style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
-          fontWeight: 400,
-          lineHeight: 1,
-          letterSpacing: '-0.02em',
-          minWidth: '3.2ch',
-        }}
-      >
-        {count}
-        {suffix}
-      </div>
-      <div className="label" style={{ maxWidth: '18ch' }}>
-        {label}
-      </div>
-    </div>
-  );
+  return <motion.span ref={ref}>{text}</motion.span>;
 }
+
+const cardIn: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.07, duration: 0.8, ease: EASE },
+  }),
+};
+
+// Los stickers caen desde arriba con un muelle flojo, como si tuvieran peso.
+const stickerIn: Variants = {
+  hidden: ({ rotate }: { rotate: number; i: number }) => ({
+    opacity: 0,
+    y: -320,
+    rotate: rotate - 24,
+  }),
+  show: ({ rotate, i }: { rotate: number; i: number }) => ({
+    opacity: 1,
+    y: 0,
+    rotate,
+    transition: {
+      delay: 0.25 + i * 0.09,
+      y: { type: 'spring', stiffness: 210, damping: 12, mass: 0.9 },
+      rotate: { type: 'spring', stiffness: 120, damping: 9 },
+      opacity: { duration: 0.2 },
+    },
+  }),
+};
 
 export default function About() {
   const { t } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [counts, setCounts] = useState<number[]>([0, 0, 0]);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [activeDiscipline, setActiveDiscipline] = useState(0);
-
-  const stats = [
-    { value: STAT_VALUES.projects, suffix: '', label: t('about.statProjects') },
-    { value: STAT_VALUES.years, suffix: '', label: t('about.statYears') },
-    { value: STAT_VALUES.tools, suffix: '', label: t('about.statTools') },
-  ];
-
+  const stickersRef = useRef<HTMLDivElement>(null);
   const disciplines = t('about.disciplines').split('|');
 
-  useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting || hasAnimated) return;
-          setHasAnimated(true);
-          observer.unobserve(entry.target);
-
-          if (reduced) {
-            // Sin animacion: las cifras se muestran en su valor final.
-            setCounts(Object.values(STAT_VALUES));
-            return;
-          }
-
-          animate('.about-word', {
-            translateY: ['110%', '0%'],
-            opacity: [0, 1],
-            delay: stagger(75),
-            duration: 1200,
-            easing: 'easeOutExpo',
-          });
-
-          animate('.about-body', {
-            opacity: [0, 1],
-            translateY: [24, 0],
-            delay: 550,
-            duration: 1000,
-            easing: 'easeOutExpo',
-          });
-
-          animate('.about-stat', {
-            opacity: [0, 1],
-            translateY: [36, 0],
-            scale: [0.94, 1],
-            delay: stagger(110, { start: 750 }),
-            duration: 900,
-            easing: 'easeOutExpo',
-          });
-
-          animate('.about-accent-line', {
-            scaleX: [0, 1],
-            opacity: [0, 1],
-            delay: 350,
-            duration: 1000,
-            easing: 'easeOutExpo',
-          });
-
-          animate('.discipline-pill', {
-            opacity: [0, 1],
-            translateX: [-16, 0],
-            delay: stagger(55, { start: 950 }),
-            duration: 700,
-            easing: 'easeOutExpo',
-          });
-
-          const targets = Object.values(STAT_VALUES);
-          const frames: number[] = [];
-          targets.forEach((target, i) => {
-            let startTime: number | null = null;
-            const duration = 1800;
-            const step = (ts: number) => {
-              if (startTime === null) startTime = ts;
-              const progress = Math.min((ts - startTime) / duration, 1);
-              const eased = 1 - Math.pow(1 - progress, 3);
-              setCounts((prev) => {
-                const next = [...prev];
-                next[i] = Math.round(eased * target);
-                return next;
-              });
-              if (progress < 1) frames[i] = requestAnimationFrame(step);
-            };
-            frames[i] = requestAnimationFrame(step);
-          });
-        });
-      },
-      { threshold: 0.12 }
+  // La frase destacada de la bio va en cursiva naranja, como en el diseno.
+  const body = t('about.body');
+  const accent = t('about.bodyAccent');
+  const at = body.indexOf(accent);
+  const bio =
+    at === -1 ? (
+      body
+    ) : (
+      <>
+        {body.slice(0, at)}
+        <em className={styles.bioAccent}>{accent}</em>
+        {body.slice(at + accent.length)}
+      </>
     );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  // Rotacion de la disciplina destacada. Se detiene con reduced-motion.
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => {
-      setActiveDiscipline((p) => (p + 1) % 6);
-    }, 1800);
-    return () => clearInterval(id);
-  }, []);
+  const card = (i: number) => ({
+    variants: cardIn,
+    custom: i,
+    initial: 'hidden',
+    whileInView: 'show',
+    viewport: { once: true, amount: 0.25 },
+  });
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      style={{ background: 'var(--background)', overflow: 'hidden', position: 'relative' }}
-    >
-      {/* Halos ambientales */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: '12%',
-          left: '-10%',
-          width: '400px',
-          height: '400px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(var(--accent-rgb), 0.05) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          animation: 'floatBlob1 9s ease-in-out infinite',
-        }}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: '8%',
-          right: '-6%',
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(var(--accent-rgb), 0.04) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          animation: 'floatBlob2 11s ease-in-out infinite',
-        }}
-      />
+    <section id="about" className={styles.section} aria-labelledby="about-title">
+      <motion.header
+        className={`${styles.head} sk-host`}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8, ease: EASE }}
+      >
+        <div className={styles.headText}>
+          <span className={`${styles.mono} sk`}>{t('about.sectionEyebrow')}</span>
+          <h2 id="about-title" className={styles.title}>
+            {t('about.sectionTitle1')}{' '}
+            <span className={styles.titleAccent}>{t('about.sectionTitle2')}</span>
+          </h2>
+        </div>
+        <span className={styles.mono}>{t('about.sectionMeta')}</span>
+      </motion.header>
 
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="about-grid">
-          {/* Copy editorial */}
-          <div className="about-copy">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
-              <div
-                className="about-accent-line"
-                aria-hidden="true"
-                style={{
-                  width: '56px',
-                  height: '1px',
-                  background: 'var(--accent)',
-                  transformOrigin: 'left center',
-                  opacity: 0,
-                }}
-              />
-              <span className="label-sm">{t('about.eyebrow')}</span>
-            </div>
+      <div className={styles.bento}>
+        {/* ---- Bio ---- */}
+        <motion.article className={`${styles.card} ${styles.bio} sk-host`} {...card(0)}>
+          <span className={`${styles.mono} sk`}>{t('about.bio')}</span>
+          <p className={styles.bioText}>
+            <span className="sk">{bio}</span>
+          </p>
+        </motion.article>
 
-            <div style={{ overflow: 'hidden', marginBottom: '0.3rem' }}>
-              <h2 style={{ fontSize: 'var(--t-display-2)' }}>
-                <span className="about-word" style={{ display: 'inline-block', opacity: 0 }}>
-                  {t('about.title1')}
-                </span>
-              </h2>
-            </div>
-            <div style={{ overflow: 'hidden', marginBottom: '2.8rem' }}>
-              <h2
-                className="about-title-italic display-italic"
-                style={{
-                  fontSize: 'var(--t-display-2)',
-                  marginLeft: 'var(--about-title-indent, 2.5rem)',
-                }}
-              >
-                <span className="about-word" style={{ display: 'inline-block', opacity: 0 }}>
-                  {t('about.title2')}
-                </span>
-              </h2>
-            </div>
-
-            <p className="about-body body-copy" style={{ maxWidth: '46ch', marginBottom: '3rem' }}>
-              {t('about.body')}
-            </p>
-
-            <div className="about-body" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem' }}>
-              {disciplines.map((d, i) => (
-                <span
-                  key={d}
-                  className="discipline-pill"
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--t-label)',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    padding: '0.5rem 1.1rem',
-                    borderRadius: 'var(--r-pill)',
-                    border: '1px solid',
-                    borderColor: activeDiscipline === i ? 'var(--accent)' : 'var(--border-subtle)',
-                    background: activeDiscipline === i ? 'var(--accent)' : 'transparent',
-                    color: activeDiscipline === i ? 'var(--accent-contrast)' : 'var(--muted)',
-                    opacity: 0,
-                    transition: 'all var(--dur-mid) var(--ease-out)',
-                  }}
-                >
-                  {d}
-                </span>
-              ))}
-            </div>
+        {/* ---- Proyectos publicados ---- */}
+        <motion.a
+          href="#projects"
+          onClick={() => requestProjectCategory('all')}
+          className={`${styles.card} ${styles.projects} sk-host sk-dark`}
+          {...card(1)}
+        >
+          <div className={styles.cardHead}>
+            <span className={styles.monoSm}>{t('about.statProjects')}</span>
+            <Image
+              src="/v3/flecha-crema.svg"
+              alt=""
+              width={22}
+              height={22}
+              className={styles.arrow}
+              unoptimized
+            />
           </div>
 
-          {/* Cifras */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {stats.map((stat, i) => (
-              <StatCard
-                key={stat.label}
-                suffix={stat.suffix}
-                label={stat.label}
-                count={counts[i]}
+          <p className={`${styles.figure} ${styles.figureXl}`}>
+            <Counter to={PROJECT_COUNT} />
+          </p>
+
+          <div className={styles.chart} aria-hidden="true">
+            {BY_DISCIPLINE.map((d, i) => (
+              <motion.span
+                key={d.id}
+                className={`${styles.chartBar} sk-host`}
+                style={{ flex: `${d.count} 0 0`, background: d.color }}
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 + i * 0.12, duration: 0.9, ease: EASE }}
               />
             ))}
-
-            <div
-              className="about-stat surface-card"
-              style={{
-                opacity: 0,
-                padding: '1.5rem 2.2rem',
-                background:
-                  'linear-gradient(135deg, rgba(var(--accent-rgb), 0.07) 0%, color-mix(in srgb, var(--surface) 70%, transparent) 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1.2rem',
-              }}
-            >
-              <div
-                style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: 'var(--r-sm)',
-                  background: 'var(--accent)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--accent-contrast)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                </svg>
-              </div>
-              <div>
-                <div
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--t-body-sm)',
-                    fontWeight: 700,
-                  }}
-                >
-                  {t('about.university')}
-                </div>
-                <div className="label-sm" style={{ marginTop: '0.25rem' }}>
-                  {t('about.degree')}
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
+
+          <ul className={styles.legend}>
+            {BY_DISCIPLINE.map((d) => (
+              <li key={d.id} className={styles.legendItem}>
+                <span className={styles.dot} style={{ background: d.color }} aria-hidden="true" />
+                {t(`about.legend.${d.id}`)} {pad2(d.count)}
+              </li>
+            ))}
+          </ul>
+        </motion.a>
+
+        {/* ---- Anos construyendo ---- */}
+        <motion.div className={`${styles.card} ${styles.years} sk-host`} {...card(2)}>
+          <span className={styles.monoSm}>{t('about.statYears')}</span>
+          <p className={`${styles.figure} ${styles.figureLg}`}>
+            <Counter to={Number(t('about.yearsValue'))} padded />
+          </p>
+        </motion.div>
+
+        {/* ---- Herramientas ---- */}
+        <motion.div className={`${styles.card} ${styles.tools} sk-host`} {...card(3)}>
+          <span className={styles.monoSm}>{t('about.statTools')}</span>
+          <ul className={styles.toolDots}>
+            {techData.map((tool, i) => (
+              <motion.li
+                key={tool.name}
+                className={`${styles.toolDot} sk-host`}
+                title={tool.name}
+                aria-label={tool.name}
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.035, type: 'spring', stiffness: 500, damping: 20 }}
+              />
+            ))}
+          </ul>
+          <p className={`${styles.figure} ${styles.figureLg}`}>
+            <Counter to={TOOL_COUNT} />
+          </p>
+        </motion.div>
+
+        {/* ---- Especialidades: stickers que caen y se arrastran ---- */}
+        <motion.div
+          ref={stickersRef}
+          className={`${styles.card} ${styles.stickers} sk-host`}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.35 }}
+        >
+          <span className={`${styles.monoSm} ${styles.stickersLabel}`}>{t('about.specialties')}</span>
+          <span className={`${styles.monoSm} ${styles.dragHint}`} aria-hidden="true">
+            {t('about.dragHint')} ↔
+          </span>
+
+          <ul aria-label={t('about.specialties')} style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            {disciplines.map((label, i) => {
+              const s = STICKERS[i % STICKERS.length];
+              return (
+                <motion.li
+                  key={label}
+                  className={`${styles.stickerSlot} sk-host`}
+                  style={
+                    {
+                      '--x': `${s.x}%`,
+                      '--y': `${s.y}%`,
+                      '--xs': `${s.xs}%`,
+                      '--ys': `${s.ys}%`,
+                    } as React.CSSProperties
+                  }
+                  variants={stickerIn}
+                  custom={{ rotate: s.rotate, i }}
+                >
+                  <motion.span
+                    className={styles.sticker}
+                    style={{ '--sticker-bg': s.bg, position: 'relative' } as React.CSSProperties}
+                    drag
+                    dragConstraints={stickersRef}
+                    dragElastic={0.18}
+                    dragTransition={{ bounceStiffness: 300, bounceDamping: 18 }}
+                    whileDrag={{ scale: 1.08, zIndex: 10 }}
+                    whileHover={{ scale: 1.04 }}
+                  >
+                    {label}
+                  </motion.span>
+                </motion.li>
+              );
+            })}
+          </ul>
+        </motion.div>
+
+        {/* ---- Formacion ---- */}
+        <motion.div className={`${styles.edu} sk-host`} {...card(4)}>
+          <span className={styles.mono}>{t('about.education')}</span>
+          <p className={styles.eduName}>
+            <span className="sk">{t('about.university')}</span>
+          </p>
+          <p className={styles.eduDegree}>
+            <span className="sk">{t('about.degree')}</span>
+          </p>
+          <span className={styles.eduArrow} aria-hidden="true">
+            <Image src="/v3/flecha-formacion.svg" alt="" width={20} height={20} unoptimized />
+          </span>
+        </motion.div>
       </div>
-
-      <style>{`
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 6rem;
-          align-items: center;
-        }
-
-        /* El colapso a una columna se declara aqui, con una clase propia.
-           Antes dependia de #about .container > div, que se rompe si cambia
-           el orden del markup. */
-        @media (max-width: 900px) {
-          .about-grid {
-            grid-template-columns: 1fr;
-            gap: 4rem;
-            text-align: center;
-          }
-          .about-copy {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          .about-title-italic { --about-title-indent: 0; }
-          .about-accent-line { display: none; }
-          .about-body { margin-left: auto; margin-right: auto; }
-          .about-copy .about-body:last-child { justify-content: center; }
-          .about-stat { text-align: left; }
-        }
-      `}</style>
     </section>
   );
 }

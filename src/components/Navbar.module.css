@@ -1,0 +1,414 @@
+/* Barra de app (Figma 11:4). Fija y fuera del flujo: el desplazamiento de la
+   pagina lo absorbe `main { padding-top: var(--bar-h) }`. */
+
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: var(--frame) var(--frame) 0;
+  transition:
+    transform var(--dur-mid) var(--ease-out),
+    opacity var(--dur-fast) ease;
+  will-change: transform;
+}
+
+/* El fondo aparece con opacidad en un pseudo-elemento: nada de animar padding
+   ni background (solo transform/opacity, notas de motion 10). */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -12px;
+  background: color-mix(in srgb, var(--hueso) 86%, transparent);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid var(--linea);
+  opacity: 0;
+  transition: opacity var(--dur-mid) ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bar[data-scrolled="true"]::before {
+  opacity: 1;
+}
+
+.bar[data-hidden="true"] {
+  transform: translateY(-130%);
+}
+
+.bar[data-modal="true"] {
+  transform: translateY(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- Logo ---- */
+
+.logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--grafito);
+  color: var(--crema);
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.logo:hover {
+  transform: rotate(-4deg) scale(1.04);
+}
+
+/* ---- Menu ---- */
+
+.menu {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-ctl);
+}
+
+.group {
+  position: relative;
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: normal;
+  color: var(--grafito);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease;
+}
+
+.item:hover {
+  color: var(--naranja);
+}
+
+.item[aria-current="true"] {
+  color: var(--crema);
+}
+
+.itemLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.itemChevron {
+  position: relative;
+  z-index: 1;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.itemChevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+/* Pastilla activa: un solo elemento que viaja entre items (layoutId). */
+.activePill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-sm);
+  background: var(--grafito);
+}
+
+/* ---- Desplegable de categorias ---- */
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: -4px;
+  /* El relleno superior hace de puente: el puntero pasa del enlace al panel
+     sin salir del grupo. */
+  padding-top: 10px;
+}
+
+.dropdownPanel {
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-ctl);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: var(--track-mono);
+  color: var(--grafito);
+  text-decoration: none;
+  transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+
+.dropdownItem span {
+  color: var(--gris-claro);
+}
+
+.dropdownItem:hover,
+.dropdownItem:focus-visible {
+  background: var(--grafito);
+  color: var(--crema);
+}
+
+/* ---- Nombre de archivo ---- */
+
+.file {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.fileName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Disponible ---- */
+
+.status {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 12px 14px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-pill);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: var(--track-mono);
+  color: var(--grafito);
+  white-space: nowrap;
+}
+
+.statusDot {
+  position: relative;
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+.statusDot img {
+  position: relative;
+  display: block;
+}
+
+/* Pulso del punto: un anillo que escala y se desvanece. */
+.statusDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--naranja);
+  animation: status-pulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes status-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---- Idioma ---- */
+
+.lang {
+  flex-shrink: 0;
+  display: flex;
+  padding: 4px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-pill);
+}
+
+.langOption {
+  position: relative;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: var(--track-mono);
+  color: var(--grafito);
+  cursor: pointer;
+  transition: color var(--dur-fast) ease;
+}
+
+.langOption[aria-pressed="true"] {
+  color: var(--crema);
+}
+
+.langText {
+  position: relative;
+  z-index: 1;
+}
+
+.langPill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-pill);
+  background: var(--grafito);
+}
+
+/* ---- Movil ---- */
+
+.burger {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  background: var(--crema);
+  color: var(--grafito);
+  cursor: pointer;
+}
+
+.mobilePanel {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--frame);
+  background: var(--hueso);
+}
+
+.mobileHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobileNav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8px 8vh;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--linea);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 10vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--grafito);
+  text-decoration: none;
+}
+
+.mobileLink[aria-current="true"] {
+  color: var(--naranja);
+}
+
+.mobileIndex {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: var(--track-mono);
+  color: var(--gris);
+}
+
+.mobileSub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+.mobileSubLink {
+  padding: 8px 12px;
+  border: 1px solid var(--linea);
+  border-radius: var(--r-pill);
+  background: var(--crema);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: var(--track-mono);
+  color: var(--grafito);
+  text-decoration: none;
+}
+
+.mobileFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 1180px) {
+  .file { visibility: hidden; }
+}
+
+@media (max-width: 960px) {
+  .menu,
+  .file { display: none; }
+  .burger { display: flex; }
+  .bar { justify-content: space-between; }
+  .status { margin-left: auto; }
+}
+
+@media (max-width: 560px) {
+  .bar .status { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statusDot::after { animation: none; opacity: 0; }
+  .logo:hover { transform: none; }
+}

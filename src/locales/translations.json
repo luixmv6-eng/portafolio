@@ -5,15 +5,39 @@
       "stack": "STACK",
       "projects": "PROYECTOS",
       "contact": "CONTACTO",
-      "menu": "Menu"
+      "menu": "Menu",
+      "aboutLabel": "Sobre mí",
+      "stackLabel": "Herramientas",
+      "projectsLabel": "Proyectos",
+      "contactLabel": "Contacto",
+      "language": "Idioma"
     },
     "hero": {
       "title1": "DISEÑO",
       "title2": "DIGITAL",
       "subtitle": "INGENIERO MULTIMEDIA & DESARROLLADOR WEB",
-      "description": "Ingeniero Multimedia en formación por la Universidad de San Buenaventura. Combino una base en producción audiovisual y 3D con un enfoque principal en la ingeniería de plataformas web y Progressive Web Apps (PWAs), construyendo soluciones digitales de alto rendimiento.",
+      "description": "Ingeniero Multimedia por la Universidad de San Buenaventura. Combino una base en producción audiovisual y 3D con un enfoque principal en la ingeniería de plataformas web y Progressive Web Apps (PWAs), construyendo soluciones digitales de alto rendimiento.",
       "cta": "VER PROYECTOS",
-      "availability": "DISPONIBLE PARA PROYECTOS"
+      "availability": "DISPONIBLE PARA PROYECTOS",
+      "tagline": "// DEL PRIMER RENDER AL PRIMER DEPLOY",
+      "viewport": "VIEWPORT · PERSPECTIVA · 01_INICIO",
+      "selection": "Texto",
+      "role": "Ingeniero Multimedia & Desarrollador Web",
+      "status": "Disponible para proyectos",
+      "ctaLabel": "Ver proyectos",
+      "inspector": {
+        "title": "PROPIEDADES",
+        "object": "OBJETO",
+        "role": "ROL",
+        "education": "FORMACIÓN",
+        "status": "ESTADO",
+        "description": "DESCRIPCIÓN",
+        "material": "MATERIAL"
+      },
+      "timeline": {
+        "label": "Línea de tiempo del portafolio",
+        "start": "INICIO"
+      }
     },
     "about": {
       "title": "SOBRE MÍ",
@@ -23,18 +47,42 @@
       "eyebrow": "SOBRE MÍ",
       "title1": "Diseño",
       "title2": "Digital",
-      "body": "Ingeniero Multimedia en formación por la Universidad de San Buenaventura. Combino producción audiovisual y 3D con ingeniería de plataformas web y PWAs, construyendo soluciones digitales de alto rendimiento.",
+      "body": "Ingeniero Multimedia por la Universidad de San Buenaventura. Combino producción audiovisual y 3D con ingeniería de plataformas web y PWAs, construyendo soluciones digitales de alto rendimiento.",
       "statProjects": "Proyectos publicados",
       "statYears": "Años construyendo",
       "statTools": "Herramientas en el stack",
       "yearsValue": "3",
       "university": "U. de San Buenaventura",
-      "degree": "Ingeniería Multimedia, en formación",
-      "disciplines": "Desarrollo Web|Motion Graphics|Producción 3D|Ingeniería PWA|UI/UX|Audiovisual"
+      "degree": "Ingeniería Multimedia",
+      "disciplines": "Desarrollo Web|Motion Graphics|Producción 3D|Ingeniería PWA|UI/UX|Audiovisual",
+      "sectionEyebrow": "(02) SOBRE MÍ",
+      "sectionTitle1": "SOBRE",
+      "sectionTitle2": "mí",
+      "sectionMeta": "PERFIL · CIFRAS · ESPECIALIDADES",
+      "bio": "[ BIO ]",
+      "bodyAccent": "alto rendimiento",
+      "specialties": "ESPECIALIDADES",
+      "education": "FORMACIÓN",
+      "dragHint": "Arrastra los stickers",
+      "legend": {
+        "web": "WEB",
+        "design": "DISEÑO",
+        "photo": "FOTO",
+        "3d": "3D"
+      }
     },
     "stack": {
       "title": "HERRAMIENTAS",
-      "subtitle": "MI ARSENAL TÉCNICO Y CREATIVO"
+      "subtitle": "MI ARSENAL TÉCNICO Y CREATIVO",
+      "eyebrow": "(03) HERRAMIENTAS",
+      "title1": "ARSENAL",
+      "title2": "técnico y creativo",
+      "meta": "{n} HERRAMIENTAS · DISEÑO + DESARROLLO",
+      "legendDesign": "FILA 1 · DISEÑO Y PRODUCCIÓN",
+      "legendDev": "CINTA · DESARROLLO",
+      "legendLoop": "← DESPLAZAMIENTO INFINITO →",
+      "level": "NIVEL",
+      "list": "Herramientas"
     },
     "stats": {
       "projects": "PROYECTOS",
@@ -112,7 +160,36 @@
       "itemsLabel": "proyectos seleccionados",
       "itemLabel": "proyecto seleccionado",
       "close": "Cerrar",
-      "gallery": "Galeria"
+      "gallery": "Galeria",
+      "sectionEyebrow": "(04) PROYECTOS",
+      "headCount": "{n} PROYECTOS",
+      "headCountOne": "{n} PROYECTO",
+      "headAccent": "seleccionados",
+      "headAccentOne": "seleccionado",
+      "intro": "Cada proyecto se presenta en el formato de su medio: la web en el navegador, el diseño en la pared, el 3D en el visor y la foto en la película.",
+      "channel": "CANAL",
+      "channels": {
+        "web": "Desarrollo web",
+        "design": "Diseño gráfico y publicidad",
+        "media": "3D y fotografía"
+      },
+      "short": {
+        "all": "TODOS",
+        "web": "WEB",
+        "design": "DISEÑO",
+        "photo": "FOTO",
+        "3d": "3D"
+      },
+      "featured": "★ CASO DESTACADO",
+      "capture": "[ CAPTURA ]",
+      "drag": "ARRASTRA",
+      "orbit": "ORBITAR ↻",
+      "viewer": "VISOR 3D · BLENDER",
+      "pieces": "piezas",
+      "open": "Abrir proyecto",
+      "modelChips": "COCA-COLA|DEPORTIVOS|PERFUMERÍA|LUNA",
+      "prev": "Anterior",
+      "next": "Siguiente"
     },
     "contact": {
       "title": "¿LISTO PARA CONSTRUIR ALGO EXCEPCIONAL?",
@@ -137,7 +214,33 @@
       "successTitle": "Mensaje en camino",
       "successBody": "Recibi tu mensaje y te respondo lo antes posible.",
       "sendAnother": "Enviar otro mensaje",
-      "errorBody": "No se pudo enviar. Escribeme directo a luixmv6@gmail.com"
+      "errorBody": "No se pudo enviar. Escribeme directo a luixmv6@gmail.com",
+      "eyebrow": "(05) CONTACTO · EXPORTAR",
+      "meta": "RENDER FINAL — 00:15:00",
+      "titleLead": "¿LISTO PARA CONSTRUIR ALGO",
+      "titleAccent": "excepcional?",
+      "writeMe": "ESCRÍBEME",
+      "dialogTitle": "Exportar mensaje",
+      "progress": "PROGRESO DE RENDER",
+      "sendLabel": "Enviar mensaje",
+      "sendingLabel": "Exportando…"
+    },
+    "bar": {
+      "file": "pedro-luis-martinez_portafolio.blend",
+      "saved": "guardado"
+    },
+    "sequence": {
+      "eyebrow": "(01) SECUENCIA",
+      "title1": "ORIGEN",
+      "title2": "visión",
+      "meta": "4 CLIPS · 00:00 — 00:20",
+      "clip": "CLIP"
+    },
+    "footer": {
+      "sequence": "SECUENCIA",
+      "end": "FIN DE LA SECUENCIA · 00:15:00",
+      "back": "VOLVER AL INICIO ↑",
+      "nav": "Secciones"
     }
   },
   "en": {
@@ -146,15 +249,39 @@
       "stack": "TOOLS",
       "projects": "PROJECTS",
       "contact": "CONTACT",
-      "menu": "Menu"
+      "menu": "Menu",
+      "aboutLabel": "About",
+      "stackLabel": "Tools",
+      "projectsLabel": "Projects",
+      "contactLabel": "Contact",
+      "language": "Language"
     },
     "hero": {
       "title1": "DIGITAL",
       "title2": "DESIGN",
       "subtitle": "MULTIMEDIA ENGINEER & WEB DEVELOPER",
-      "description": "A final-year Multimedia Engineering student at U. de San Buenaventura. I combine a foundation in audiovisual and 3D production with a primary focus on web platform engineering and Progressive Web Apps (PWAs), building high-performance solutions.",
+      "description": "Multimedia Engineer from U. de San Buenaventura. I combine a foundation in audiovisual and 3D production with a primary focus on web platform engineering and Progressive Web Apps (PWAs), building high-performance solutions.",
       "cta": "VIEW PROJECTS",
-      "availability": "AVAILABLE FOR WORK"
+      "availability": "AVAILABLE FOR WORK",
+      "tagline": "// FROM FIRST RENDER TO FIRST DEPLOY",
+      "viewport": "VIEWPORT · PERSPECTIVE · 01_HOME",
+      "selection": "Text",
+      "role": "Multimedia Engineer & Web Developer",
+      "status": "Available for work",
+      "ctaLabel": "View projects",
+      "inspector": {
+        "title": "PROPERTIES",
+        "object": "OBJECT",
+        "role": "ROLE",
+        "education": "EDUCATION",
+        "status": "STATUS",
+        "description": "DESCRIPTION",
+        "material": "MATERIAL"
+      },
+      "timeline": {
+        "label": "Portfolio timeline",
+        "start": "START"
+      }
     },
     "about": {
       "title": "ABOUT ME",
@@ -164,18 +291,42 @@
       "eyebrow": "ABOUT",
       "title1": "Digital",
       "title2": "Design",
-      "body": "Multimedia Engineering student at Universidad de San Buenaventura. I combine audiovisual and 3D production with web platform and PWA engineering, building high-performance digital products.",
+      "body": "Multimedia Engineer from Universidad de San Buenaventura. I combine audiovisual and 3D production with web platform and PWA engineering, building high-performance digital products.",
       "statProjects": "Projects shipped",
       "statYears": "Years building",
       "statTools": "Tools in the stack",
       "yearsValue": "3",
       "university": "U. de San Buenaventura",
-      "degree": "Multimedia Engineering, in progress",
-      "disciplines": "Web Development|Motion Graphics|3D Production|PWA Engineering|UI/UX|Audiovisual"
+      "degree": "Multimedia Engineering",
+      "disciplines": "Web Development|Motion Graphics|3D Production|PWA Engineering|UI/UX|Audiovisual",
+      "sectionEyebrow": "(02) ABOUT",
+      "sectionTitle1": "ABOUT",
+      "sectionTitle2": "me",
+      "sectionMeta": "PROFILE · NUMBERS · SPECIALTIES",
+      "bio": "[ BIO ]",
+      "bodyAccent": "high-performance",
+      "specialties": "SPECIALTIES",
+      "education": "EDUCATION",
+      "dragHint": "Drag the stickers",
+      "legend": {
+        "web": "WEB",
+        "design": "DESIGN",
+        "photo": "PHOTO",
+        "3d": "3D"
+      }
     },
     "stack": {
       "title": "TOOLKIT",
-      "subtitle": "MY TECHNICAL AND CREATIVE ARSENAL"
+      "subtitle": "MY TECHNICAL AND CREATIVE ARSENAL",
+      "eyebrow": "(03) TOOLKIT",
+      "title1": "ARSENAL",
+      "title2": "technical & creative",
+      "meta": "{n} TOOLS · DESIGN + DEVELOPMENT",
+      "legendDesign": "ROW 1 · DESIGN & PRODUCTION",
+      "legendDev": "RIBBON · DEVELOPMENT",
+      "legendLoop": "← INFINITE SCROLL →",
+      "level": "LEVEL",
+      "list": "Tools"
     },
     "stats": {
       "projects": "PROJECTS",
@@ -253,7 +404,36 @@
       "itemsLabel": "selected projects",
       "itemLabel": "selected project",
       "close": "Close",
-      "gallery": "Gallery"
+      "gallery": "Gallery",
+      "sectionEyebrow": "(04) PROJECTS",
+      "headCount": "{n} PROJECTS",
+      "headCountOne": "{n} PROJECT",
+      "headAccent": "selected",
+      "headAccentOne": "selected",
+      "intro": "Each project is shown in the format of its medium: the web in the browser, design on the wall, 3D in the viewer and photography on film.",
+      "channel": "CHANNEL",
+      "channels": {
+        "web": "Web development",
+        "design": "Graphic design & advertising",
+        "media": "3D & photography"
+      },
+      "short": {
+        "all": "ALL",
+        "web": "WEB",
+        "design": "DESIGN",
+        "photo": "PHOTO",
+        "3d": "3D"
+      },
+      "featured": "★ FEATURED CASE",
+      "capture": "[ SCREENSHOT ]",
+      "drag": "DRAG",
+      "orbit": "ORBIT ↻",
+      "viewer": "3D VIEWER · BLENDER",
+      "pieces": "pieces",
+      "open": "Open project",
+      "modelChips": "COCA-COLA|SPORTS|PERFUMERY|MOON",
+      "prev": "Previous",
+      "next": "Next"
     },
     "contact": {
       "title": "READY TO BUILD SOMETHING EXCEPTIONAL?",
@@ -278,7 +458,33 @@
       "successTitle": "Message on its way",
       "successBody": "I got your message and will get back to you shortly.",
       "sendAnother": "Send another message",
-      "errorBody": "Could not send. Email me directly at luixmv6@gmail.com"
+      "errorBody": "Could not send. Email me directly at luixmv6@gmail.com",
+      "eyebrow": "(05) CONTACT · EXPORT",
+      "meta": "FINAL RENDER — 00:15:00",
+      "titleLead": "READY TO BUILD SOMETHING",
+      "titleAccent": "exceptional?",
+      "writeMe": "WRITE TO ME",
+      "dialogTitle": "Export message",
+      "progress": "RENDER PROGRESS",
+      "sendLabel": "Send message",
+      "sendingLabel": "Exporting…"
+    },
+    "bar": {
+      "file": "pedro-luis-martinez_portfolio.blend",
+      "saved": "saved"
+    },
+    "sequence": {
+      "eyebrow": "(01) SEQUENCE",
+      "title1": "ORIGIN",
+      "title2": "vision",
+      "meta": "4 CLIPS · 00:00 — 00:20",
+      "clip": "CLIP"
+    },
+    "footer": {
+      "sequence": "SEQUENCE",
+      "end": "END OF SEQUENCE · 00:15:00",
+      "back": "BACK TO TOP ↑",
+      "nav": "Sections"
     }
   }
 }

@@ -1,0 +1,337 @@
+/* Manifiesto / Secuencia (Figma 11:154).
+   Seccion fijada: el envoltorio mide varias pantallas de alto y el escenario
+   se queda pegado mientras el scroll mueve el playhead (notas de motion, 03). */
+
+.wrapper {
+  position: relative;
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+/* El escenario mide lo que su contenido: asi, al soltarse, "Sobre mi" queda
+   justo debajo y no sube una pantalla de hueco vacio. */
+.sticky {
+  position: sticky;
+  /* Lo calcula Sequence.tsx: centrado en el alto util de la pantalla. */
+  top: var(--pin-top, 0px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 4.4vh, 40px);
+  padding: calc(var(--bar-h) + clamp(16px, 3vh, 40px)) 64px clamp(24px, 4vh, 48px);
+  overflow: hidden;
+}
+
+/* Recorrido de scroll de la secuencia, sin contenido visible. */
+.pinSpace {
+  height: 150svh;
+}
+
+/* ---- Cabecera ---- */
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.eyebrow,
+.meta {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 7.8vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--grafito);
+  white-space: nowrap;
+  font-variation-settings: "wdth" 100;
+  text-wrap: nowrap;
+}
+
+.titleAccent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.214em;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Linea de tiempo ---- */
+
+.timeline {
+  position: relative;
+  /* Ancho del carril visible. La tira puede ser mas ancha (movil). */
+  width: 100%;
+}
+
+.strip {
+  position: relative;
+  width: max(100%, var(--strip-min));
+  --clip-w: calc((100% - 3 * 16px) / 4);
+  --strip-min: 0px;
+}
+
+/* Regla: menor cada 16px (linea), mayor cada 80px (grafito). */
+.ruler {
+  position: relative;
+  height: 20px;
+  background-image:
+    repeating-linear-gradient(to right, var(--grafito) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to right, var(--linea) 0 1px, transparent 1px 16px);
+  background-size: 100% 20px, 100% 12px;
+  background-position: 0 0, 0 8px;
+  background-repeat: no-repeat;
+}
+
+.rulerLabels {
+  position: relative;
+  height: 32px;
+}
+
+.rulerLabel {
+  position: absolute;
+  top: 6px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris);
+  translate: -50% 0;
+}
+
+.rulerLabel:first-child { translate: 4px 0; }
+.rulerLabel:last-child { translate: calc(-100% + 1px) 0; }
+
+.clips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Clip ---- */
+
+.clip {
+  --clip-bg: var(--grafito);
+  --clip-fg: var(--crema);
+  --clip-muted: var(--gris-claro);
+  --clip-bar: var(--crema);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  height: clamp(300px, 37vh, 340px);
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: var(--clip-bg);
+  color: var(--clip-fg);
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.clip[data-tone="light"] {
+  --clip-bg: var(--crema);
+  --clip-fg: var(--grafito);
+  --clip-muted: var(--gris);
+  --clip-bar: var(--grafito);
+  border: 1.5px solid var(--grafito);
+}
+
+.clip[data-tone="panel"] {
+  --clip-bg: var(--panel);
+}
+
+.clip[data-tone="signal"] {
+  --clip-bg: var(--naranja);
+  --clip-fg: var(--grafito);
+  --clip-muted: var(--grafito);
+  --clip-bar: var(--grafito);
+}
+
+.clip[data-active="true"] {
+  transform: translateY(-6px);
+}
+
+.clipHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--clip-muted);
+  white-space: nowrap;
+}
+
+.clipTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 1.95vw, 28px);
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  white-space: pre-line;
+  font-variation-settings: "wdth" 100;
+  text-wrap: balance;
+}
+
+.clipBody {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--clip-muted);
+}
+
+.clip[data-tone="signal"] .clipBody {
+  opacity: 0.85;
+}
+
+/* Forma de onda: barras de 3px que laten solo en el clip activo. */
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.bar {
+  flex-shrink: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--clip-bar);
+  transform-origin: 50% 50%;
+}
+
+.clip[data-active="true"] .bar {
+  animation: wave-pulse 0.9s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes wave-pulse {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0.35); }
+}
+
+/* ---- Playhead ---- */
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.playheadLine {
+  position: absolute;
+  top: 0;
+  bottom: -8px;
+  left: -1px;
+  width: 2px;
+  background: var(--naranja);
+}
+
+.playheadCap {
+  position: absolute;
+  top: -12px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  background: var(--naranja);
+  rotate: 45deg;
+}
+
+.playheadTime {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  padding: 3px 8px;
+  border-radius: var(--r-xs);
+  background: var(--naranja);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.02em;
+  color: var(--grafito);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Cerca del final la etiqueta pasa al otro lado del cabezal. */
+.playhead[data-flip="true"] .playheadTime {
+  right: auto;
+  left: -12px;
+  translate: -100% 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .sticky { padding-left: 40px; padding-right: 40px; }
+  .clipBody { font-size: 13px; line-height: 19px; }
+}
+
+/* Tablet y movil: los clips conservan un ancho legible y la tira se vuelve
+   mas ancha que la pantalla; el scroll la desliza bajo el playhead. */
+@media (max-width: 1024px) {
+  .strip { --strip-min: calc(4 * 300px + 3 * 16px); }
+  .pinSpace { height: 220svh; }
+}
+
+@media (max-width: 760px) {
+  .sticky {
+    padding: calc(var(--bar-h) + 16px) 16px 24px;
+    gap: 28px;
+  }
+  .head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .title { font-size: clamp(2.5rem, 14vw, 4rem); white-space: normal; text-wrap: balance; }
+  .titleAccent { display: inline-block; }
+  .strip { --strip-min: calc(4 * min(78vw, 300px) + 3 * 12px); }
+  .clips { gap: 12px; }
+  .clip { height: auto; min-height: min(56svh, 360px); padding: 18px; }
+  .clipTitle { font-size: 24px; }
+  .clipBody { font-size: 14px; line-height: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clip[data-active="true"] .bar { animation: none; }
+  .clip[data-active="true"] { transform: none; }
+}
+
+/* Skeleton sobre naranja: barras grafito translucidas. */
+.clip[data-tone="signal"] {
+  --sk-base: rgba(22, 23, 26, 0.16);
+  --sk-hi: rgba(22, 23, 26, 0.06);
+}

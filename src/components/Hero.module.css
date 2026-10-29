@@ -1,0 +1,661 @@
+/* Hero V3 (Figma 11:26): visor 3D + inspector de propiedades.
+   El visor es un contenedor de consulta: todas las medidas internas van en cqw
+   con base 1052px (su ancho en el diseno), asi la composicion escala entera. */
+
+.hero {
+  display: flex;
+  gap: var(--frame);
+  align-items: stretch;
+  min-height: 0;
+  height: max(680px, calc(100svh - var(--bar-h)));
+  padding: var(--frame);
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+/* ==========================================================================
+   VISOR
+   ========================================================================== */
+
+.viewport {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background-color: var(--grafito);
+  /* Rejilla de 66px en linea oscura. */
+  background-image:
+    linear-gradient(to right, var(--linea-oscura) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--linea-oscura) 1px, transparent 1px);
+  background-size: 66px 66px;
+  background-position: 66px 66px;
+  container-type: inline-size;
+  color: var(--crema);
+}
+
+.monoLabel {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: var(--track-mono);
+  color: var(--gris-claro);
+  white-space: nowrap;
+}
+
+.marca {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.viewLabel {
+  position: absolute;
+  top: 26px;
+  left: 28px;
+}
+
+.viewMeta {
+  position: absolute;
+  top: 26px;
+  right: 28px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Esfera ---- */
+
+.sphere {
+  position: absolute;
+  left: 44.68cqw;
+  top: 70px;
+  width: 53.23cqw;
+  height: 53.23cqw;
+  pointer-events: none;
+}
+
+.sphereSvg {
+  position: absolute;
+  inset: 1.79%;
+  transform-style: preserve-3d;
+}
+
+.sphereSvg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sphereCanvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---- Titular ---- */
+
+.stage {
+  position: absolute;
+  inset: 0 0 calc(92px + 32px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 7cqw 0 0 3.42cqw;
+  pointer-events: none;
+}
+
+.tagline {
+  width: fit-content;
+  margin: 0 0 1.2cqw 0.76cqw;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: clamp(10px, 1.24cqw, 13px);
+  letter-spacing: 0.06em;
+  color: var(--gris-claro);
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font: inherit;
+  letter-spacing: normal;
+  line-height: normal;
+}
+
+/* Mascara de entrada. El relleno superior deja aire a la tilde de la N. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.22em;
+  margin-top: -0.22em;
+}
+
+.maskBlock {
+  font-size: 19.58cqw;
+}
+
+.titleBlock {
+  display: block;
+  width: fit-content;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1em;
+  line-height: 0.86;
+  letter-spacing: -0.06em;
+  color: var(--crema);
+  white-space: nowrap;
+  font-variation-settings: "wdth" 100;
+}
+
+.titleAccentRow {
+  display: block;
+  margin: 0.84cqw 0 0 27.95cqw;
+  font-size: 23.76cqw;
+  pointer-events: auto;
+  width: fit-content;
+}
+
+/* Contenedor de "digital" y su caja de seleccion. */
+.selectable {
+  position: relative;
+  display: inline-block;
+}
+
+.titleAccent {
+  display: block;
+  width: fit-content;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--crema);
+  white-space: nowrap;
+}
+
+/* Caja de seleccion: 604 x 205 sobre "digital" de 250px en el diseno. */
+.selection {
+  position: absolute;
+  top: 0.104em;
+  bottom: -0.064em;
+  left: -0.056em;
+  right: -0.056em;
+  border: 1.5px solid var(--naranja);
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  background: var(--crema);
+  border: 1.5px solid var(--naranja);
+}
+
+.selTag,
+.selSize {
+  position: absolute;
+  padding: 4px 8px;
+  border-radius: var(--r-xs);
+  background: var(--naranja);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.02em;
+  color: var(--grafito);
+  white-space: nowrap;
+}
+
+.selTag {
+  left: -1.5px;
+  bottom: calc(100% + 6px);
+}
+
+.selSize {
+  top: calc(100% + 10px);
+  left: 50%;
+  padding: 3px 8px;
+  font-variant-numeric: tabular-nums;
+  translate: -50% 0;
+}
+
+/* ---- Gizmo de ejes ---- */
+
+.gizmo {
+  position: absolute;
+  left: 44px;
+  bottom: 150px;
+  width: 110px;
+  height: 110px;
+}
+
+.gizmo img {
+  display: block;
+}
+
+.axis {
+  position: absolute;
+}
+
+.axisX { left: 118px; top: 70px; color: var(--naranja); }
+.axisY { left: 22px; top: -8px; color: var(--crema); }
+.axisZ { left: -8px; top: 112px; }
+
+/* ==========================================================================
+   TIMELINE / NAVEGACION (Figma 11:95)
+   ========================================================================== */
+
+.timeline {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  height: 92px;
+  border-radius: var(--r-md);
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.play {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+}
+
+.playCircle {
+  position: relative;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.playCircle > img {
+  position: absolute;
+  inset: 0;
+}
+
+.playCircle > .playIcon {
+  inset: auto;
+  position: absolute;
+  left: 21px;
+  top: 17px;
+}
+
+.play:hover .playCircle {
+  transform: scale(1.06);
+}
+
+.playText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.playTitle {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--crema);
+}
+
+.playTime {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris-claro);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pista: de x=290 a x=984 en un panel de 1020. */
+.track {
+  position: absolute;
+  left: 290px;
+  right: 36px;
+  top: 0;
+  bottom: 0;
+}
+
+.rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 46px;
+  height: 2px;
+  background: var(--linea-oscura);
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45px;
+  height: 4px;
+  background: var(--naranja);
+  transform-origin: 0 50%;
+}
+
+.markers {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marker {
+  position: absolute;
+  top: 30px;
+  bottom: 0;
+  width: 0;
+}
+
+.markerBtn {
+  position: absolute;
+  top: 0;
+  bottom: 6px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 6px 0;
+  border: 0;
+  background: none;
+  translate: -50% 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris-claro);
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease;
+}
+
+.marker:first-child .markerBtn {
+  align-items: flex-start;
+  translate: -7px 0;
+}
+
+.marker:last-child .markerBtn {
+  align-items: flex-end;
+  translate: calc(-100% + 7px) 0;
+}
+
+.tick {
+  display: block;
+  width: 2px;
+  height: 18px;
+  background: var(--gris-claro);
+  transition: background var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.marker:first-child .tick { margin-left: 6px; }
+.marker:last-child .tick { margin-right: 6px; }
+
+.markerBtn[aria-current="true"] {
+  color: var(--crema);
+}
+
+.markerBtn[aria-current="true"] .tick,
+.marker:first-child .tick {
+  background: var(--naranja);
+}
+
+.markerBtn:hover {
+  color: var(--crema);
+}
+
+.markerBtn:hover .tick {
+  transform: scaleY(1.25);
+}
+
+/* El cabezal recorre la pista: este carril mide lo mismo que la pista para
+   que translateX en % sea el progreso exacto. */
+.headRail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.playhead {
+  position: absolute;
+  top: 12px;
+  left: -1.5px;
+  width: 3px;
+  height: 68px;
+  background: var(--naranja);
+}
+
+.playheadCap {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background: var(--naranja);
+  rotate: 45deg;
+}
+
+/* ==========================================================================
+   INSPECTOR (Figma 11:117)
+   ========================================================================== */
+
+.inspector {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 24px;
+  background: var(--crema);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-xl);
+  color: var(--grafito);
+}
+
+.inspectorHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 18px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: var(--track-mono);
+}
+
+.inspectorHead kbd {
+  font: inherit;
+  color: var(--gris);
+}
+
+.prop {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 0;
+  border-top: 1px solid var(--linea);
+}
+
+/* La descripcion cede alto al resto; si no cabe, se desvanece en vez de
+   cortarse a media linea. */
+.propGrow {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
+}
+
+.propLabel {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  color: var(--gris);
+}
+
+.propValue {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--grafito);
+  font-variation-settings: "wdth" 100;
+  text-wrap: pretty;
+}
+
+.propName { font-size: 22px; line-height: normal; letter-spacing: -0.01em; }
+.propRole { font-size: 18px; line-height: 24px; letter-spacing: -0.01em; }
+.propEdu { font-size: 15px; line-height: 20px; letter-spacing: -0.01em; }
+.propStatus { font-size: 16px; line-height: normal; letter-spacing: -0.01em; }
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.propText {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--gris);
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: normal;
+  color: var(--gris);
+}
+
+.swatchChip {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+}
+
+.cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: var(--r-ctl);
+  background: var(--grafito);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.01em;
+  color: var(--crema);
+  text-decoration: none;
+  transition: background var(--dur-fast) ease;
+}
+
+.cta img {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--naranja);
+}
+
+.cta:hover img {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .inspector { flex-basis: 300px; padding: 20px; }
+  .track { left: 250px; }
+}
+
+/* Tablet: el inspector baja debajo del visor. */
+@media (max-width: 960px) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+  }
+  .viewport {
+    flex: none;
+    height: clamp(460px, 68svh, 680px);
+  }
+  .inspector { flex: none; }
+  .propGrow { flex: none; mask-image: none; }
+  .playText { display: none; }
+  .track { left: 96px; }
+}
+
+/* Movil: la linea de tiempo se queda fija abajo y sirve de navegacion para
+   toda la pagina (notas de motion, 02). */
+@media (max-width: 760px) {
+  .viewport { height: clamp(400px, 56svh, 520px); }
+  .stage { inset: 48px 0 24px; padding-top: 0; }
+  .sphere { left: 16cqw; top: 22%; width: 96cqw; height: 96cqw; }
+  .gizmo { zoom: 0.62; left: 32px; bottom: 32px; }
+
+  .timeline {
+    position: fixed;
+    z-index: 900;
+    left: 8px;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    height: 60px;
+    border-radius: var(--r-ctl);
+    box-shadow: 0 10px 30px rgba(22, 23, 26, 0.28);
+  }
+  .play { top: 8px; left: 8px; }
+  .playCircle { zoom: 0.786; }
+  .track { left: 68px; right: 22px; }
+  .rail { top: 22px; }
+  .progress { top: 21px; }
+  .marker { top: 10px; }
+  .markerBtn { gap: 6px; padding-top: 2px; }
+  .tick { height: 14px; }
+  .markerName { display: none; }
+  .playhead { top: 6px; height: 48px; }
+  .playheadCap { top: -4px; width: 9px; height: 9px; margin-left: -4.5px; }
+
+  .inspector { padding: 20px; border-radius: 20px; }
+  .propName { font-size: 20px; }
+  .propRole { font-size: 17px; line-height: 22px; }
+}
+
+@media (max-width: 480px) {
+  .viewMeta { display: none; }
+  .swatches { flex-wrap: wrap; }
+}

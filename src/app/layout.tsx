@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Archivo, Instrument_Serif, IBM_Plex_Mono, Unbounded } from "next/font/google";
 import "./globals.css";
 import Cursor from "@/components/Cursor";
 import Navbar from "@/components/Navbar";
@@ -7,17 +7,36 @@ import SmoothScrolling from "@/components/SmoothScrolling";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { ThemeProvider } from "@/context/ThemeContext";
 
-const inter = Inter({
+// Titulares. Variable con eje de ancho: el diseno usa wdth 100.
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-inter",
+  axes: ["wdth"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+// Acentos en cursiva ("digital", "visión"...) y la bio en redonda.
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+// Etiquetas tecnicas.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+// Cifras de los contadores.
+const unbounded = Unbounded({
+  subsets: ["latin"],
+  variable: "--font-unbounded",
   display: "swap",
 });
 
@@ -52,41 +71,28 @@ export const metadata: Metadata = {
   },
 };
 
-// Corre antes del primer paint: sin esto, quien eligio tema oscuro ve un
-// destello del tema claro mientras React hidrata.
-const themeScript = `
-(function() {
-  try {
-    var t = localStorage.getItem('theme');
-    if (t === 'dark' || t === 'light') {
-      document.documentElement.setAttribute('data-theme', t);
-    }
-  } catch (e) {}
-})();
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className={`${inter.variable} ${playfair.variable}`}>
-        <ThemeProvider>
-          <LanguageProvider>
-            <SmoothScrolling>
-              <ScrollProgress />
-              <Navbar />
-              <Cursor />
-              <main>{children}</main>
-              <BackToTop />
-            </SmoothScrolling>
-          </LanguageProvider>
-        </ThemeProvider>
+    // Las variables de fuente van en <html>: los tokens de :root las leen.
+    <html
+      lang="es"
+      suppressHydrationWarning
+      className={`${archivo.variable} ${instrumentSerif.variable} ${plexMono.variable} ${unbounded.variable}`}
+    >
+      <body>
+        <LanguageProvider>
+          <SmoothScrolling>
+            <ScrollProgress />
+            <Navbar />
+            <Cursor />
+            <main>{children}</main>
+            <BackToTop />
+          </SmoothScrolling>
+        </LanguageProvider>
       </body>
     </html>
   );

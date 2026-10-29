@@ -19,10 +19,10 @@ export default function ScrollProgress() {
         left: 0,
         right: 0,
         height: '2px',
-        background: 'linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #818cf8))',
+        background: 'var(--naranja)',
         transformOrigin: '0%',
         zIndex: 9999,
-        boxShadow: '0 0 12px rgba(var(--accent-rgb), 0.6)',
+        
       }}
     />
   );
